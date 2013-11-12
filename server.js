@@ -206,6 +206,41 @@ client.connect(function(err) {
 	 d) DELETE - Remove an individual object, or collection (Database delete operation)
 	 ====================================================================================================================================*/
 
+/*====================================================================================================================================
+	 Get paths
+	 ====================================================================================================================================*/
+	app.get("/", function(req,res){
+		res.sendfile("index.html");
+	});
+	
+	app.get("/jcss", function(req,res){
+		res.sendfile("App/css/jquery.mobile-1.3.1.css");
+	});
+	app.get("/App/css/custom.css", function(req,res){
+		res.sendfile("App/css/custom.css");
+	});
+	
+	app.get("/App/js/jquery-1.10.2.js", function(req,res){
+		res.sendfile("App/js/jquery-1.10.2.js");
+	});
+	
+	app.get("/App/js/jquery.mobile-1.3.1.js", function(req,res){
+		res.sendfile("App/js/jquery.mobile-1.3.1.js");
+	});
+	
+	app.get("/App/appjs/app.js", function(req,res){
+		res.sendfile("App/appjs/app.js");
+	});
+	
+	app.get("/App/view/AddressOrPayment.html", function(req,res){
+		res.sendfile("App/view/AddressOrPayment.html");
+	});
+	
+	app.get("/App/view/addNewAddress.html", function(req,res){
+		res.sendfile("App/view/addNewAddress.html");
+	});
+	
+
 	/*====================================================================================================================================
 	 REST Opertaion : HTTP GET
 	 ====================================================================================================================================*/
