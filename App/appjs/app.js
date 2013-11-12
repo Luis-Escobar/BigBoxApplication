@@ -1,6 +1,6 @@
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/items" ,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
