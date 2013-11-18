@@ -213,7 +213,7 @@ client.connect(function(err) {
 		res.sendfile("index.html");
 	});
 	
-	app.get("App/css/jquery.mobile-1.3.1.css", function(req,res){
+	app.get("/App/css/jquery.mobile-1.3.1.css", function(req,res){
 		res.sendfile("App/css/jquery.mobile-1.3.1.css");
 	});
 	app.get("/App/css/custom.css", function(req,res){
