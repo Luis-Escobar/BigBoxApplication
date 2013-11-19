@@ -73,59 +73,6 @@ client.connect(function(err) {
 
 	app.use(express.bodyParser());
 
-/*	var users = [{
-		id : 1,
-		fname : 'Frasisco',
-		lname : 'Dechoudens',
-		address : 'abc',
-		city : 'Humacao',
-		state : 'PR',
-		country : 'US',
-		zipcode : '00980',
-		phone : '7875555555',
-		username : '',
-		email : 'frankie@somewhere.who',
-		password : '',
-		question : 'question',
-		answer : 'answer',
-		bids : ['item1', 'item2', 'item3', 'item4'],
-		sold : ['sold1', 'sold2', 'sold3', 'sold4'],
-		cc : [{
-			type : 'type1',
-			num : '1234567890',
-			exp : '11/18',
-			cardName : 'FRANSISCO DECHOUDENS',
-			billAddress : 'address1'
-		}],
-		isAdmin : true
-	}, {
-		id : 2,
-		fname : 'Derick',
-		lname : 'Melendez',
-		address : 'Carr 828 Km 2.2',
-		city : 'Toa Alta',
-		state : 'PR',
-		country : 'US',
-		zipcode : '00953-8130',
-		phone : '7874008093',
-		username : 'macalao914',
-		email : 'macalao914@yahoo.com',
-		password : '123',
-		question : 'question',
-		answer : 'answer',
-		bids : ['item1', 'item2', 'item3', 'item4'],
-		sold : ['sold1', 'sold2', 'sold3', 'sold4'],
-		cc : [{
-			type : 'type1',
-			num : '1234567890',
-			exp : '11/18',
-			cardName : 'DERICK MELENDEZ MEDINA',
-			billAddress : 'address1'
-		}],
-		isAdmin : false
-	}];
-	*/
-
 	var cookie = new Array();
 
 	var Category = require("./category.js");
@@ -213,28 +160,29 @@ client.connect(function(err) {
 		res.sendfile("index.html");
 	});
 	
-	app.get("/App/css/jquery.mobile-1.3.1.css", function(req,res){
-		res.sendfile("App/css/jquery.mobile-1.3.1.css");
+	app.get("/App*", function(req,res){
+		console.log(req.params[0]);
+		res.sendfile("App" + req.params[0]);
 	});
-	app.get("/App/css/custom.css", function(req,res){
-		res.sendfile("App/css/custom.css");
-	});
+//	app.get("/App/css/custom.css", function(req,res){
+//		res.sendfile("App/css/custom.css");
+//	});
 	
-	app.get("/App/js/jquery-1.10.2.js", function(req,res){
-		res.sendfile("App/js/jquery-1.10.2.js");
-	});
+//	app.get("/App/js/jquery-1.10.2.js", function(req,res){
+//		res.sendfile("App/js/jquery-1.10.2.js");
+//	});
 	
-	app.get("/App/js/jquery.mobile-1.3.1.js", function(req,res){
-		res.sendfile("App/js/jquery.mobile-1.3.1.js");
-	});
+//	app.get("/App/js/jquery.mobile-1.3.1.js", function(req,res){
+//		res.sendfile("App/js/jquery.mobile-1.3.1.js");
+//	});
 	
-	app.get("/App/appjs/app.js", function(req,res){
-		res.sendfile("App/appjs/app.js");
-	});
+//	app.get("/App/appjs/app.js", function(req,res){
+//		res.sendfile("App/appjs/app.js");
+//	});
 	
-	app.get("/App/view/AddressOrPayment.html", function(req,res){
-		res.sendfile("App/view/AddressOrPayment.html");
-	});
+//	app.get("/App/view/AddressOrPayment.html", function(req,res){
+//		res.sendfile("App/view/AddressOrPayment.html");
+//	});
 	
 //	app.get("App/view/login.html", function(req,res){
 //		res.sendfile("App/view/login.html");
