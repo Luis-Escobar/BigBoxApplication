@@ -17,7 +17,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			for (var i = 0; i < len; ++i) {
 				item = itemList[i];
 
-				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='../image/" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
 			}
 			list.listview("refresh");
 		},
@@ -60,7 +60,7 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 					//alert(newCategory.numbSub);
 					//list.append('<li><a onclick= GetCategory("' + newCategory.getSubCategory(i).cid + '") >' + newCategory.getSubCategory(i).cname + '</a></li>');
 					if(categoriesList[i].count == 0)
-						list.append('<li><a href="../view/results.html"  >' + categoriesList[i].cname + '</a></li>');
+						list.append('<li><a href="/App/view/results.html"  >' + categoriesList[i].cname + '</a></li>');
 					else
 						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + '") >' + categoriesList[i].cname + '</a></li>');
 				}
@@ -120,7 +120,7 @@ $(document).on('pagebeforeshow', "#subcategories", function(event, ui) {
 			currentCategories.push(categoriesList[0].getSubCategory(cid).getSubCategory(i));
 			}
 			alert(1);
-			$.mobile.navigate("../view/subcategories.html");
+			$.mobile.navigate("/App/view/subcategories.html");
 			*/
 
 			//Get root; and cast it
@@ -128,7 +128,7 @@ $(document).on('pagebeforeshow', "#subcategories", function(event, ui) {
 			//Check number of root subcategory
 			//if (categoriesList.length == 0) {
 			//alert("Here");
-			//$.mobile.navigate("../view/results.html");
+			//$.mobile.navigate("/App/view/results.html");
 			//} else {
 
 			for (var i = 0; i < categoriesList.length; i++) {
@@ -136,7 +136,7 @@ $(document).on('pagebeforeshow', "#subcategories", function(event, ui) {
 				//alert(JSON.stringify(newCategory.getSubCategory(i)));
 				//alert(newCategory.numbSub);
 				if(categoriesList[i].count == 0)
-					list.append('<li><a href="../view/results.html"  >' + categoriesList[i].scname + '</a></li>');
+					list.append('<li><a href="/App/view/results.html"  >' + categoriesList[i].scname + '</a></li>');
 				else
 					list.append('<li><a onclick= GetSecondCategory("' + categoriesList[i].subid + '") >' + categoriesList[i].scname + '</a></li>');
 			}
@@ -205,7 +205,7 @@ $(document).on('pagebeforeshow', "#secondsubcategories", function(event, ui) {
 			for (var i = 0; i < categoriesList.length; i++) {
 
 				//list.append('<li><a onclick= GetSecondCategory("' + newCategory3.getSubCategory(i).cid + '") >' + newCategory3.getSubCategory(i).cname + '</a></li>');
-				list.append('<li><a href="../view/results.html" >' + categoriesList[i].sscname + '</a></li>');
+				list.append('<li><a href="/App/view/results.html" >' + categoriesList[i].sscname + '</a></li>');
 
 			}
 			//alert("termine");
@@ -215,7 +215,7 @@ $(document).on('pagebeforeshow', "#secondsubcategories", function(event, ui) {
 			currentCategories.push(categoriesList[0].getSubCategory(cid).getSubCategory(i));
 			}
 			alert(1);
-			$.mobile.navigate("../view/subcategories.html");
+			$.mobile.navigate("/App/view/subcategories.html");
 			*/
 
 			//Get root; and cast it
@@ -254,7 +254,7 @@ $(document).on('pagebeforeshow', "#details", function(event, ui) {
 
 	var detailsImg = $("#details-image");
 	detailsImg.empty();
-	detailsImg.append("<img src='../image/" + currentItem[0].i_img + "'>");
+	detailsImg.append("<img src='/App/image/" + currentItem[0].i_img + "'>");
 
 	var detailsPara = $("#detailsPara");
 	detailsPara.empty();
@@ -290,8 +290,8 @@ $(document).on('pagebeforeshow', "#bidPage", function(event, ui) {
 
 	//var prodBidInfo = $("#imgSpace");
 	//prodBidInfo.empty();
-	$('#imgSpace').attr('src', "../image/" + currentItem[0].i_img);
-	//prodBidInfo.append("<img src= '../image/" + currentItem.img + "class='ui-li-thumb'>");
+	$('#imgSpace').attr('src', "/App/image/" + currentItem[0].i_img);
+	//prodBidInfo.append("<img src= '/App/image/" + currentItem.img + "class='ui-li-thumb'>");
 
 	var currentBid = $("#currentBid");
 	currentBid.empty();
@@ -313,7 +313,7 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 	
 	for (var i = 0; i < len; ++i) {
 		item = cartList[i];
-		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='../image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
+		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
 		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
 		sTotal += parseFloat(item.i_price) * item.qtyToPurchase;
@@ -355,7 +355,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 			}
 			shippingTotal += parseFloat(item.i_shippingprice);
 			subTotal += parseFloat(item.i_price);
-			items_ship.append("<li>" + "<img src='../image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
+			items_ship.append("<li>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
@@ -370,7 +370,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		for ( i = 1; i <= item[0].i_qtyavailable; i++) {
 			options += "<option value=' " + i + "'>  " + i + "  </option>";
 		}
-		items_ship.append("<li>" + "<img src='../image/" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
+		items_ship.append("<li>" + "<img src='/App/image/" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 	}
 	total = shippingTotal + subTotal;
 
@@ -444,7 +444,7 @@ $(document).on('pagebeforeshow', "#ShippingOrPaymentSel", function(event, ui) {
 		newSoP.empty();
 		savedSoP.empty();
 		head.append("Select Address");
-		newSoP.append("<br /><li data-icon='plus' data-iconpos='left'><a href='../view/addNewAddress.html'><h5>Add new address</h5></a></li><br />");
+		newSoP.append("<br /><li data-icon='plus' data-iconpos='left'><a href='/App/view/addNewAddress.html'><h5>Add new address</h5></a></li><br />");
 
 		//conseguir todas las direcciones del usuario y apendiarlas
 		var len = addressList.length;
@@ -459,7 +459,7 @@ $(document).on('pagebeforeshow', "#ShippingOrPaymentSel", function(event, ui) {
 		newSoP.empty();
 		savedSoP.empty();
 		head.append("Payment Method");
-		newSoP.append("<br /><li data-icon='plus'><a href='../view/addNewCard.html'><h5>Add new card</h5></a></li>");
+		newSoP.append("<br /><li data-icon='plus'><a href='/App/view/addNewCard.html'><h5>Add new card</h5></a></li>");
 
 		//conseguir todas las tarjetas del usuario y apendiarlas
 		var lenC = creditcardList.length;
@@ -512,14 +512,14 @@ function ConverToJSON(formData) {
 var currentcid;
 function GetCategory(cid) {
 	currentcid = cid;
-	$.mobile.navigate("../view/subcategories.html");
+	$.mobile.navigate("/App/view/subcategories.html");
 }
 
 var currentcid2;
 function GetSecondCategory(cid) {
 	//alert("subid:"+cid);
 	currentcid2 = cid;
-	$.mobile.navigate("../view/secondSubCategory.html");
+	$.mobile.navigate("/App/view/secondSubCategory.html");
 }
 
 //get a item by its id
@@ -541,7 +541,7 @@ function GetItem(id, display) {
 			//alert(currentItem[0].i_name);
 			$.mobile.loading("hide");
 			if (display) {
-				$.mobile.navigate("../view/details.html");
+				$.mobile.navigate("/App/view/details.html");
 			}
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -568,7 +568,7 @@ var is_ship;
 
 function SetAddress(is_address) {
 	is_addr = is_address;
-	$.mobile.navigate("../view/AddressOrPayment.html");
+	$.mobile.navigate("/App/view/AddressOrPayment.html");
 }
 
 //Add an address to the saved list
@@ -617,7 +617,7 @@ function GetAddress(id) {
 				billing_address = data.address;
 				b_address_selected = true;
 			}
-			$.mobile.navigate("../view/checkout.html");
+			$.mobile.navigate("/App/view/checkout.html");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
@@ -677,10 +677,10 @@ function GetCart(show) {
 	});
 	$.mobile.loading("hide");
 	if (show && cartList != "") {
-		$.mobile.navigate("../view/cart.html");
+		$.mobile.navigate("/App/view/cart.html");
 	}
 	else if(show && cartList ==""){
-		$.mobile.navigate("../view/emptyCart.html");
+		$.mobile.navigate("/App/view/emptyCart.html");
 	}
 
 }
@@ -797,7 +797,7 @@ function GetCreditCard(id) {
 			paymentMethod = currentCreditCard;
 			$.mobile.loading("hide");
 			payment_selected = true;
-			$.mobile.navigate("../view/checkout.html");
+			$.mobile.navigate("/App/view/checkout.html");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
@@ -836,7 +836,7 @@ var payment_selected;
 
 function CheckoutFromCart(isFromCart) {
 	is_from_cart = isFromCart;
-	$.mobile.navigate("../view/checkout.html");
+	$.mobile.navigate("/App/view/checkout.html");
 }
 
 function prepareOrder(is_from_cart) {
@@ -845,7 +845,7 @@ function prepareOrder(is_from_cart) {
 	payment_selected = false;
 	this.is_from_cart = is_from_cart;
 
-	$.mobile.navigate("../view/checkout.html");
+	$.mobile.navigate("/App/view/checkout.html");
 }
 
 function displayunicode(e) {
@@ -855,7 +855,7 @@ function displayunicode(e) {
 
 	//Check if Enter was received.
 	if (unicode == 13) {
-		$.mobile.navigate("../view/results.html");
+		$.mobile.navigate("/App/view/results.html");
 	}
 }
 
@@ -932,12 +932,12 @@ function login() {
 			clearInfo();
 			//alert(currentUser);
 			$.mobile.navigate("/App/view/user.html");
-			//$.mobile.navigate("../view/user.html")
+			//$.mobile.navigate("/App/view/user.html")
 		},
 		error : function(data, textStatus, jqXHR) {
 
 			alert("Wrong username or password.");
-			//$.mobile.navigate("../index.html");
+			//$.mobile.navigate("/index.html");
 
 		}
 	});
@@ -1020,7 +1020,7 @@ function register() {
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
-			$.mobile.navigate("../index.html");
+			$.mobile.navigate("/index.html");
 
 		}
 	});
@@ -1116,7 +1116,7 @@ function placeOrder(){
 		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--; sin usar el cart
 	}
 	
-	$.mobile.navigate("../view/orderSubmitted.html");
+	$.mobile.navigate("/App/view/orderSubmitted.html");
 }
 /*===============================================================================================
  Helper Function

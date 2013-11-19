@@ -159,7 +159,9 @@ client.connect(function(err) {
 	app.get("/", function(req,res){
 		res.sendfile("index.html");
 	});
-	
+	app.get("/index.html", function(req,res){
+		res.sendfile("index.html");
+	});
 	app.get("/App*", function(req,res){
 		console.log(req.params[0]);
 		res.sendfile("App" + req.params[0]);
