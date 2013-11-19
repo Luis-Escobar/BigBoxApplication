@@ -34,7 +34,7 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 
-			//$.getScript("/BigBoxApp/appjs/category.js", function() {
+			//$.getScript("/App/appjs/category.js", function() {
 				//alert("Script loaded and executed.");
 
 				var categoriesList = data.categories;
@@ -86,7 +86,7 @@ $(document).on('pagebeforeshow', "#subcategories", function(event, ui) {
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 
-			//$.getScript("/BigBoxApp/appjs/category.js", function() {
+			//$.getScript("/App/appjs/category.js", function() {
 
 			//alert("Second Script loaded and executed.");
 			var categoriesList = data.categories;
@@ -164,7 +164,7 @@ $(document).on('pagebeforeshow', "#secondsubcategories", function(event, ui) {
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 
-			//$.getScript("/BigBoxApp/appjs/category.js", function() {
+			//$.getScript("/App/appjs/category.js", function() {
 
 			//alert("Third Script loaded and executed.");
 			var categoriesList = data.categories;
@@ -931,7 +931,7 @@ function login() {
 			currentUser = data.user;
 			clearInfo();
 			//alert(currentUser);
-			$.mobile.navigate("/BigBoxApp/view/user.html");
+			$.mobile.navigate("/App/view/user.html");
 			//$.mobile.navigate("../view/user.html")
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -950,7 +950,7 @@ function logout() {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/logout",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/BigBoxApp/index.html");
+			$.mobile.navigate("/index.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -965,7 +965,7 @@ function account() {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/account",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/BigBoxApp/view/account/watching.html");
+			$.mobile.navigate("/App/view/account/watching.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1015,7 +1015,7 @@ function register() {
 		contentType : "application/json",
 		data : registerInfo,
 		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/BigBoxApp/view/signedUp.html");
+			$.mobile.navigate("/App/view/signedUp.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1038,7 +1038,7 @@ function registerChecker(num) {
 			success : function(data, textStatus, jqXHR) {
 				console.log(data);
 				if (data != 'OK')
-					$.mobile.navigate("/BigBoxApp/view/user.html");
+					$.mobile.navigate("/App/view/user.html");
 			},
 			error : function(data, textStatus, jqXHR) {
 			}
@@ -1065,8 +1065,8 @@ function registerChecker(num) {
 			url : "http://bigbox.herokuapp.com/BigBoxServer/verify/",
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
-				$(".user_header").empty
-				$(".user_header").append('<a href="/BigBoxApp/view/account/watching.html" data-rel="page"  class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! ' + data.fname + ' ' + data.lname + '</h5></a>');
+				$(".user_header").empty;
+				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page"  class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! ' + data.fname + ' ' + data.lname + '</h5></a>');
 				$('.account').append('Account: ' + data.id);
 				if (data.isAdmin) {
 					$('#navbar_admin' + num).show();
