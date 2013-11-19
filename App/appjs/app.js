@@ -824,8 +824,9 @@ function GetCreditCards() {
 
 		},
 		error : function(data, textStatus, jqXHR) {
+			console.log("data: " + data);
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("Data not found! Error");
 		}
 	});
 }
