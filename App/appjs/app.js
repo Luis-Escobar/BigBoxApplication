@@ -467,7 +467,7 @@ $(document).on('pagebeforeshow', "#ShippingOrPaymentSel", function(event, ui) {
 		var cardNumberDisp;
 		for ( i = 0; i < lenC; ++i) {
 			aCredCard = creditcardList[i];
-			cardNumberDisp = new Array(aCredCard.cc_number.length - 4 + 1).join('x') + aCredCard.cc_number.slice(-4);
+			cardNumberDisp = new Array(aCredCard.cc_number.length - 3).join('x') + aCredCard.cc_number.slice(-1);
 			cardNumberDisp = cardNumberDisp.substring(cardNumberDisp.length - 7);
 			savedSoP.append("<li><a onClick='GetCreditCard(" + aCredCard.cc_number + ")'>" + "<p>" + aCredCard.cc_holdername + "<br />" + cardNumberDisp + "<br />Exp. Date " + aCredCard.cc_expmonth + "/" + aCredCard.cc_expyear + "</p></a></li>");
 		}
@@ -787,6 +787,7 @@ function AddCreditCard() {
 var currentCreditCard = {};
 function GetCreditCard(id) {
 	$.mobile.loading("show");
+	console.log(id);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/creditcards/" + id,
 		method : 'get',
@@ -803,7 +804,7 @@ function GetCreditCard(id) {
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404) {
-				alert("Crdit Card not found.");
+				alert("Credit Card not found.");
 			} else {
 				alert("Internal Server Error.");
 			}
