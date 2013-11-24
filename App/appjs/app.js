@@ -1,6 +1,6 @@
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items" ,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
@@ -850,9 +850,10 @@ function prepareOrder(is_from_cart) {
 	$.mobile.navigate("/App/view/checkout.html");
 }
 
+var searchValue;
 function displayunicode(e) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
-	var searchValue = document.getElementsByName('searchValue')[0].value;
+	searchValue = document.getElementsByName('searchValue')[0].value;
 	// Got the User Search Value;
 
 	//Check if Enter was received.
