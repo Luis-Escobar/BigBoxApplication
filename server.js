@@ -291,23 +291,34 @@ client.connect(function(err) {
 	//Verify if user a user is logged
 	app.get('/BigBoxServer/verify/', function(req, res) {
 
-		res.send(200);
-
 		// if user is not logged in, ask them to login
-		/*
-		 console.log(cookie[0]);
-		 if (cookie[0] != undefined) {
-		 console.log("made it");
-		 if ( typeof cookie[0].username == 'undefined') {
-		 console.log("then here");
-		 res.send(401, "Please Login.");
-		 } else {
-		 console.log("or here");
-		 res.send(findByUsername(cookie[0].username));
-		 }
-		 } else
-		 res.send(200);
-		 //catch bug when reloading site after user is logged in*/
+		console.log(cookie[0]);
+		if (cookie[0] != undefined) {
+			console.log("made it");
+			if ( typeof cookie[0].username == 'undefined') {
+				console.log("then here");
+				res.send(401, "Please Login.");
+			} else {
+
+				var queryString = "select * from users where u_username = $1";
+
+				client.query(queryString, [cookie[0].username], function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"user" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			}
+		} else
+			res.send(200);
+		//catch bug when reloading site after user is logged in
 	});
 
 	//User logout, back to home page
