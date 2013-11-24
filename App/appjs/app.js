@@ -1041,7 +1041,7 @@ function registerChecker(num) {
 			success : function(data, textStatus, jqXHR) {
 				console.log(data);
 				if (data != 'OK')
-					$.mobile.navigate("/App/view/user.html");
+					$.mobile.navigate("/BigBoxApp/view/user.html");
 			},
 			error : function(data, textStatus, jqXHR) {
 			}
@@ -1052,10 +1052,10 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				console.log(data);
-				//alert(JSON.stringify(currentUser[0].u_fname));
 				$(".user_header").empty;
 				$(".user_header").append('<a href="" data-rel="page"  class="ui-btn-left"\
-				style="color: #FFFFFF" onclick="account()"><h5>Welcome ' + currentUser[0].u_fname + ' ' + currentUser[0].u_lname + '!</h5> </a>');
+				style="color: #FFFFFF" onclick="account()"><h5>Welcome\
+				 ' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname + '!</h5> </a>');
 			},
 			error : function(data, textStatus, jqXHR) {
 				console.log("try again");
@@ -1069,9 +1069,12 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				$(".user_header").empty;
-				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page"  class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! ' + data.fname + ' ' + data.lname + '</h5></a>');
-				$('.account').append('Account: ' + data.id);
-				if (data.isAdmin) {
+				$(".user_header").append('<a href="/BigBoxApp/view/account/watching.html" data-rel="page" \
+				class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! \
+				' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname  + '</h5></a>');
+				
+				$('.account').append('Account: ' + data.rows[0].u_id);
+				if (data.rows[0].u_admin) {
 					$('#navbar_admin' + num).show();
 					$('#navbar_user' + num).hide();
 				} else {
