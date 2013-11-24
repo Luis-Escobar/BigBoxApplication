@@ -380,39 +380,26 @@ client.connect(function(err) {
 		//user = findByUsername(req.body.username);
 		// store the username as a session variable
 
-		console.log("USERNAME" + JSON.stringify(req.body.username));
-		console.log("PWD" + JSON.stringify(req.body.password));
+		var queryString = "select * from users where u_username = $1 and u_password = $2";
 
-		client.query("select * from users where u_username = '" + req.body.username + "' and u_password = '" + req.body.password + "'", function(err, result) {
+		client.query(queryString, [req.body.username, req.body.password], function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			}
 			console.log("QWERTY " + JSON.stringify(result.rows));
-			console.log("QWERTY_2 " + result.rows);
-
 			if (JSON.stringify(result.rows) == "[]") {
 				res.send(404, "Please Login.");
-
 			} else {
-				user_id = result.rows[0].u_id;
 				var response = {
 					"user" : result.rows
 				};
+				req.session.username = req.body.username;
+				cookie.pop();
+				cookie.push(req.session);
 				res.json(response);
 			}
 
 		});
-
-		/*
-		 if (req.body.username == user.username && req.body.password == user.password) {
-		 req.session.username = req.body.username;
-		 cookie.push(req.session);
-		 res.send(200);
-		 } else {
-
-		 res.send(401, "Incorect username or password.");
-		 }*/
-
 	});
 
 	//Login
