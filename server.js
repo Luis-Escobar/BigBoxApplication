@@ -198,7 +198,7 @@ client.connect(function(err) {
 
 
 
-
+/**
 	app.get('/BigBoxServer/itemsearchbycat/:currentcid/:currentcid2', function(req, res) {
 			var cidValue = req.params.currentcid;
 			var subidValue = req.params.currentcid2;
@@ -216,7 +216,7 @@ client.connect(function(err) {
 				res.json(response);
 			});
 		});
-
+**/
 
 	app.get('/BigBoxServer/itemsearch/:searchValue', function(req, res) {
 		var searchValue = req.params.searchValue;
