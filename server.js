@@ -196,6 +196,28 @@ client.connect(function(err) {
 		});
 	});
 
+
+
+
+	app.get('/BigBoxServer/itemsearch/:currentcid/:currentcid2', function(req, res) {
+			var cidValue = req.params.currentcid;
+			var subidValue = req.params.currentcid2;
+			
+			console.log("searchValue: " + searchValue.slice(1, searchValue.length));
+					
+			client.query("select * from items where cid = " + cidValue + "or subid =" + subidValue, function(err, result) {
+				if (err) {
+					return console.error('error running query', err);
+				}
+				console.log(" " + JSON.stringify(result.rows[0]));
+				var response = {
+					"items" : result.rows
+				};
+				res.json(response);
+			});
+		});
+
+
 	app.get('/BigBoxServer/itemsearch/:searchValue', function(req, res) {
 		var searchValue = req.params.searchValue;
 		console.log("searchValue: " + searchValue.slice(1, searchValue.length));
@@ -343,10 +365,7 @@ client.connect(function(err) {
 						var response = {
 							"user" : result.rows
 						};
-						user_id = result.rows[0].uid;
-						console.log(result.rows);
-						console.log(user_id);
-						console.log(result.rows[0]);
+						user_id = result.rows[0].u_id;
 						console.log("Response: " + JSON.stringify(response));
 						res.json(result);
 

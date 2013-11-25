@@ -7,6 +7,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
+			alert(itemList);
 			}
 			list.listview("refresh");
 		},
