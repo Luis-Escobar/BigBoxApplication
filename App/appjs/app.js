@@ -3,17 +3,26 @@ var isSearchbyCat;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
-		alert("Is search by category:"+isSearchbyCat);
 		$.ajax({										
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
-			alert(JSON.stringify(itemList));
-			alert(JSON.stringify(itemList[0].i_name));
-			alert(itemList.length);
-			alert(itemList[0].i_name);
+			//alert(JSON.stringify(itemList));
+			//alert(JSON.stringify(itemList[0].i_name));
+			//alert(itemList.length);
+			//alert(itemList[0].i_name);
 			//list.listview("refresh");
+			var len = itemList.length;
+			var list = $("#items-list");
+			list.empty();
+			var item;
+			for (var i = 0; i < len; ++i) {
+				item = itemList[i];
+
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+			}
+			list.listview("refresh");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
