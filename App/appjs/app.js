@@ -123,16 +123,15 @@ $.ajax({
 
 var currentCatId_editSub;
 function editSubCategory(cid){
-	alert(cid);
 	currentCat_editSub = cid;
-	$.mobile.navigate("../view/changeSubcategories.html");
+	$.mobile.navigate("/App/view/changeSubcategories.html");
 	
 				
 }
 var currentCatId_editSub2;
 function editSecSubCategory(cid){
 	currentCatId_editSub2 = cid;
-	$.mobile.navigate("../view/changeSecSubcategories.html");
+	$.mobile.navigate("/App/view/changeSecSubcategories.html");
 	
 				
 }
@@ -1247,7 +1246,7 @@ function registerChecker(num) {
 			success : function(data, textStatus, jqXHR) {
 				console.log(data);
 				if (data != 'OK')
-					$.mobile.navigate("/BigBoxApp/view/user.html");
+					$.mobile.navigate("/App/view/user.html");
 			},
 			error : function(data, textStatus, jqXHR) {
 			}
@@ -1275,7 +1274,7 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				$(".user_header").empty;
-				$(".user_header").append('<a href="/BigBoxApp/view/account/watching.html" data-rel="page" \
+				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page" \
 				class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! \
 				' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname  + '</h5></a>');
 				
