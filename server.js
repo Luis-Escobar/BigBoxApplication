@@ -199,7 +199,7 @@ client.connect(function(err) {
 
 
 
-	app.get('/BigBoxServer/itemsearch/:currentcid/:currentcid2', function(req, res) {
+	app.get('/BigBoxServer/itemsearchbycat/:currentcid/:currentcid2', function(req, res) {
 			var cidValue = req.params.currentcid;
 			var subidValue = req.params.currentcid2;
 			
