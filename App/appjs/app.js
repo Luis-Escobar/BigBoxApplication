@@ -1395,8 +1395,9 @@ $.ajax({
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("buying_list");
 		 var purchase_history = "";
-		 for (var i=0; i < data[0].item.length; i++) {
-		 	purchase_history += '<li>Order:'+data[0].item[i].o_number+' Item:'+ data[0].item[i].i_name;
+		 console.log(data);
+		 for (var i=0; i < data.item.length; i++) {
+		 	purchase_history += '<li>Order:'+data.item[i].o_number+' Item:'+ data[0].item[i].i_name;
 		 };
 		 
 		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
