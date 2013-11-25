@@ -1393,7 +1393,7 @@ $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/buying",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("#buying_list");
+		 var list=$("#buying_list").listview();
 		 var purchase_history = "";
 		 console.log("DATA");
 		 console.log(data);
@@ -1406,7 +1406,8 @@ $.ajax({
 					<li data-role="list-divider" role="heading">Purchase History</li>'
 					+purchase_history+
 					'<li data-role="list-divider" role="heading">Didn\'t Win</li></ul>');
-		   list.listview();
+					
+		
 		   list.listview("refresh");
 		   
 		
