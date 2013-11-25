@@ -1406,7 +1406,7 @@ $.ajax({
 					<li data-role="list-divider" role="heading">Purchase History</li>'
 					+purchase_history+
 					'<li data-role="list-divider" role="heading">Didn\'t Win</li></ul>');
-		   
+		   list.listview();
 		   list.listview("refresh");
 		   
 		
