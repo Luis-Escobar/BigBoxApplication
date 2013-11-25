@@ -401,6 +401,10 @@ app.get('/BigBoxServer/selling', function(req, res) {
 				from (select o_number,i_id,i_name from  items natural\
 					join items_orders) as tmp natural join orders\
 					where u_id=$1 order by o_number";
+					console.log("COOKIE");
+					console.log(cookie);
+					console.log("USER ID");
+					console.log(cookie[0].u_i);
 
 				client.query(queryString,[cookie[0].u_id],function(err, result) {
 					if (err) {
