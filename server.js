@@ -394,7 +394,7 @@ client.connect(function(err) {
 	});
 	
 	
-app.get('/BigBoxServer/verify/', function(req, res) {
+app.get('/BigBoxServer/selling', function(req, res) {
 
 		// if user is not logged in, ask them to login
 		console.log(cookie[0]);
