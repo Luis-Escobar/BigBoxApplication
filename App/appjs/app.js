@@ -1,6 +1,6 @@
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items" ,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
@@ -17,7 +17,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			for (var i = 0; i < len; ++i) {
 				item = itemList[i];
 
-				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
 			}
 			list.listview("refresh");
 		},
@@ -27,6 +27,211 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		}
 	});
 });
+
+$(document).on('pagebeforeshow', "#rmvcategories", function(event, ui) {
+	
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/rmvcategories",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			
+			var categoriesList = data.categories;
+			var subcategoriesList = data.subcategories;
+			var secsubcategoriesList = data.secsubcategories;
+			/*
+			alert(JSON.stringify(categoriesList));
+			alert(categoriesList.length);
+			alert(categoriesList[0].cid);
+			alert(categoriesList[0].cname);
+			
+			
+			alert(JSON.stringify(subcategoriesList));
+			alert(subcategoriesList.length);
+			
+			alert(JSON.stringify(secsubcategoriesList));
+			alert(secsubcategoriesList.length);
+			*/
+			//alert(categoriesList[0].cname);
+			var list = $("#dataPointList");
+			list.empty();
+			
+			for (var i = 0; i < categoriesList.length; i++) {
+				//alert();
+				
+				list.append('<li>\
+						<input type="checkbox"  id="checkbox-'+categoriesList[i].cid+'"/>\
+						<label for="checkbox-'+categoriesList[i].cid+'">'+ categoriesList[i].cname + '</label>\
+					</li>').listview('refresh');
+             // list.append('<li>' + categoriesList[i].cname + " ("+categoriesList[i].count+')</li>');
+		 	
+		 }
+				//list.listview("refresh");
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+		
+});
+
+$(document).on('pagebeforeshow', "#changecategories", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/rmvcategories",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			
+			var categoriesList = data.categories;
+			var subcategoriesList = data.subcategories;
+			var secsubcategoriesList = data.secsubcategories;
+			/*
+			alert(JSON.stringify(categoriesList));
+			alert(categoriesList.length);
+			alert(categoriesList[0].cid);
+			alert(categoriesList[0].cname);
+			
+			
+			alert(JSON.stringify(subcategoriesList));
+			alert(subcategoriesList.length);
+			
+			alert(JSON.stringify(secsubcategoriesList));
+			alert(secsubcategoriesList.length);
+			
+			//alert(categoriesList[0].cname);
+			*/
+			var list = $("#changecategorylist");
+			list.empty();
+			
+			for (var i = 0; i < categoriesList.length; i++) {
+				//alert();
+				
+				list.append('<li><a onclick= getButtonValue("' + categoriesList[i].cname + '") >'+categoriesList[i].cname+'<a data-icon="arrow-d" onclick= editSubCategory("' + categoriesList[i].cid + '") ></a></a></li></li>');
+             // list.append('<li>' + categoriesList[i].cname + " ("+categoriesList[i].count+')</li>');
+		 	
+		 }
+				list.listview("refresh");
+				
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+var currentCatId_editSub;
+function editSubCategory(cid){
+	currentCat_editSub = cid;
+	$.mobile.navigate("/App/view/changeSubcategories.html");
+	
+				
+}
+var currentCatId_editSub2;
+function editSecSubCategory(cid){
+	currentCatId_editSub2 = cid;
+	$.mobile.navigate("/App/view/changeSecSubcategories.html");
+	
+				
+}
+
+$(document).on('pagebeforeshow', "#changesubcategories", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/rmvcategories",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			
+			var categoriesList = data.categories;
+			var subcategoriesList = data.subcategories;
+			var secsubcategoriesList = data.secsubcategories;
+			/*
+			alert(JSON.stringify(categoriesList));
+			alert(categoriesList.length);
+			alert(categoriesList[0].cid);
+			alert(categoriesList[0].cname);
+			
+			
+			alert(JSON.stringify(subcategoriesList));
+			alert(subcategoriesList.length);
+			
+			alert(JSON.stringify(secsubcategoriesList));
+			alert(secsubcategoriesList.length);
+			
+			//alert(categoriesList[0].cname);
+			*/
+			var list = $("#changesubcategorylist");
+			list.empty();
+			
+			for (var i = 0; i < subcategoriesList.length; i++) {
+				//alert();
+				if(currentCat_editSub == subcategoriesList[i].cid )
+				list.append('<li><a onclick= getButtonValue("' + subcategoriesList[i].scname + '") >'+subcategoriesList[i].scname+'<a data-icon="arrow-d" onclick= editSecSubCategory("' + subcategoriesList[i].subid + '")></a></a></li></li>');
+             // list.append('<li>' + categoriesList[i].cname + " ("+categoriesList[i].count+')</li>');
+		 	
+		 }
+				list.listview("refresh");
+				
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+$(document).on('pagebeforeshow', "#changesecsubcategories", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/rmvcategories",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			
+			var categoriesList = data.categories;
+			var subcategoriesList = data.subcategories;
+			var secsubcategoriesList = data.secsubcategories;
+			/*
+			alert(JSON.stringify(categoriesList));
+			alert(categoriesList.length);
+			alert(categoriesList[0].cid);
+			alert(categoriesList[0].cname);
+			
+			
+			alert(JSON.stringify(subcategoriesList));
+			alert(subcategoriesList.length);
+			
+			alert(JSON.stringify(secsubcategoriesList));
+			alert(secsubcategoriesList.length);
+			
+			//alert(categoriesList[0].cname);
+			*/
+			var list = $("#changesecsubcategorylist");
+			list.empty();
+			
+			for (var i = 0; i < secsubcategoriesList.length; i++) {
+				//alert();
+				if(currentCatId_editSub2 == secsubcategoriesList[i].subid )
+				list.append('<li><a onclick= getButtonValue("' + secsubcategoriesList[i].sscname + '") >'+secsubcategoriesList[i].sscname+'<a data-icon="arrow-d"  ></a></a></li></li>');
+             // list.append('<li>' + categoriesList[i].cname + " ("+categoriesList[i].count+')</li>');
+		 	
+		 }
+				list.listview("refresh");
+				
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+function getButtonValue(name){
+	
+	$( "input" ).val( name);
+				
+}
+
+
 
 $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 	$.ajax({
@@ -254,7 +459,7 @@ $(document).on('pagebeforeshow', "#details", function(event, ui) {
 
 	var detailsImg = $("#details-image");
 	detailsImg.empty();
-	detailsImg.append("<img src='/App/image/" + currentItem[0].i_img + "'>");
+	detailsImg.append("<img src='" + currentItem[0].i_img + "'>");
 
 	var detailsPara = $("#detailsPara");
 	detailsPara.empty();
@@ -290,7 +495,7 @@ $(document).on('pagebeforeshow', "#bidPage", function(event, ui) {
 
 	//var prodBidInfo = $("#imgSpace");
 	//prodBidInfo.empty();
-	$('#imgSpace').attr('src', "/App/image/" + currentItem[0].i_img);
+	$('#imgSpace').attr('src', "" + currentItem[0].i_img);
 	//prodBidInfo.append("<img src= '/App/image/" + currentItem.img + "class='ui-li-thumb'>");
 
 	var currentBid = $("#currentBid");
@@ -313,7 +518,7 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 	
 	for (var i = 0; i < len; ++i) {
 		item = cartList[i];
-		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
+		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
 		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
 		sTotal += parseFloat(item.i_price) * item.qtyToPurchase;
@@ -355,7 +560,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 			}
 			shippingTotal += parseFloat(item.i_shippingprice);
 			subTotal += parseFloat(item.i_price);
-			items_ship.append("<li>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
+			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
@@ -370,7 +575,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		for ( i = 1; i <= item[0].i_qtyavailable; i++) {
 			options += "<option value=' " + i + "'>  " + i + "  </option>";
 		}
-		items_ship.append("<li>" + "<img src='/App/image/" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
+		items_ship.append("<li>" + "<img src='" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 	}
 	total = shippingTotal + subTotal;
 
@@ -850,9 +1055,10 @@ function prepareOrder(is_from_cart) {
 	$.mobile.navigate("/App/view/checkout.html");
 }
 
+var searchValue;
 function displayunicode(e) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
-	var searchValue = document.getElementsByName('searchValue')[0].value;
+	searchValue = document.getElementsByName('searchValue')[0].value;
 	// Got the User Search Value;
 
 	//Check if Enter was received.
@@ -1051,10 +1257,10 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				console.log(data);
-				//alert(JSON.stringify(currentUser[0].u_fname));
 				$(".user_header").empty;
 				$(".user_header").append('<a href="" data-rel="page"  class="ui-btn-left"\
-				style="color: #FFFFFF" onclick="account()"><h5>Welcome ' + currentUser[0].u_fname + ' ' + currentUser[0].u_lname + '!</h5> </a>');
+				style="color: #FFFFFF" onclick="account()"><h5>Welcome\
+				 ' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname + '!</h5> </a>');
 			},
 			error : function(data, textStatus, jqXHR) {
 				console.log("try again");
@@ -1068,9 +1274,12 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				$(".user_header").empty;
-				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page"  class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! ' + data.fname + ' ' + data.lname + '</h5></a>');
-				$('.account').append('Account: ' + data.id);
-				if (data.isAdmin) {
+				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page" \
+				class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! \
+				' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname  + '</h5></a>');
+				
+				$('.account').append('Account: ' + data.rows[0].u_id);
+				if (data.rows[0].u_admin) {
 					$('#navbar_admin' + num).show();
 					$('#navbar_user' + num).hide();
 				} else {

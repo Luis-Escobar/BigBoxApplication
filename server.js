@@ -109,6 +109,39 @@ client.connect(function(err) {
 	 REST Opertaion : HTTP GET
 	 ====================================================================================================================================*/
 
+	app.get('/BigBoxServer/rmvcategories', function(req, res) {
+		client.query("select  * from category", function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+			
+		client.query("select cid,subid,scname from category natural full join subcategory where subid is not null", function(err, result2) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+			
+		client.query("select cid,subid,ssubid,sscname from subcategory natural full join secondsubcategory where ssubid is not null", function(err, result3) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+
+			var response = {
+				"categories" : result.rows,
+				"subcategories" : result2.rows,
+				"secsubcategories" : result3.rows
+			};
+			console.log("reponse:" + JSON.stringify(response));
+			res.json(response);
+		});
+		});
+		});
+	});
+
+
+
 	app.get('/BigBoxServer/categories', function(req, res) {
 		client.query("select  cid,cname,count(subid) from category natural full join subcategory group by cid, cname", function(err, result) {
 			if (err) {
@@ -163,10 +196,18 @@ client.connect(function(err) {
 		});
 	});
 
-	app.get('/BigBoxServer/items', function(req, res) {
+	app.get('/BigBoxServer/itemsearch/:searchValue', function(req, res) {
+		var searchValue = req.params.searchValue;
+		console.log("searchValue: " + searchValue.slice(1, searchValue.length));
+
+		//Use to improve search (Case Insensitive and Space Insensitive)
+		var Upper = "";
+		Upper = Upper.concat(searchValue.toUpperCase());
+		Upper = Upper.replace(/ /g, "%");
+		console.log("upper:" + Upper);
 		console.log("GET-itemS");
 
-		client.query("select * from items", function(err, result) {
+		client.query("select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%'", function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			}
@@ -283,23 +324,34 @@ client.connect(function(err) {
 	//Verify if user a user is logged
 	app.get('/BigBoxServer/verify/', function(req, res) {
 
-		res.send(200);
-
 		// if user is not logged in, ask them to login
-		/*
-		 console.log(cookie[0]);
-		 if (cookie[0] != undefined) {
-		 console.log("made it");
-		 if ( typeof cookie[0].username == 'undefined') {
-		 console.log("then here");
-		 res.send(401, "Please Login.");
-		 } else {
-		 console.log("or here");
-		 res.send(findByUsername(cookie[0].username));
-		 }
-		 } else
-		 res.send(200);
-		 //catch bug when reloading site after user is logged in*/
+		console.log(cookie[0]);
+		if (cookie[0] != undefined) {
+			console.log("made it");
+			if ( typeof cookie[0].username == 'undefined') {
+				console.log("then here");
+				res.send(401, "Please Login.");
+			} else {
+
+				var queryString = "select * from users where u_username = $1";
+
+				client.query(queryString, [cookie[0].username], function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"user" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			}
+		} else
+			res.send(200);
+		//catch bug when reloading site after user is logged in
 	});
 
 	//User logout, back to home page
@@ -361,39 +413,26 @@ client.connect(function(err) {
 		//user = findByUsername(req.body.username);
 		// store the username as a session variable
 
-		console.log("USERNAME" + JSON.stringify(req.body.username));
-		console.log("PWD" + JSON.stringify(req.body.password));
+		var queryString = "select * from users where u_username = $1 and u_password = $2";
 
-		client.query("select * from users where u_username = '" + req.body.username + "' and u_password = '" + req.body.password + "'", function(err, result) {
+		client.query(queryString, [req.body.username, req.body.password], function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			}
 			console.log("QWERTY " + JSON.stringify(result.rows));
-			console.log("QWERTY_2 " + result.rows);
-
 			if (JSON.stringify(result.rows) == "[]") {
 				res.send(404, "Please Login.");
-
 			} else {
-				user_id = result.rows[0].u_id;
 				var response = {
 					"user" : result.rows
 				};
+				req.session.username = req.body.username;
+				cookie.pop();
+				cookie.push(req.session);
 				res.json(response);
 			}
 
 		});
-
-		/*
-		 if (req.body.username == user.username && req.body.password == user.password) {
-		 req.session.username = req.body.username;
-		 cookie.push(req.session);
-		 res.send(200);
-		 } else {
-
-		 res.send(401, "Incorect username or password.");
-		 }*/
-
 	});
 
 	//Login

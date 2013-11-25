@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 	<head>
-		<title>addPhoto</title>
+		<title>User</title>
 		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
 		<link rel="stylesheet" href="../css/jquery.mobile-1.3.1.css" />
 		<link  rel="stylesheet" type="text/css" href="../css/custom.css"/>
@@ -9,35 +9,24 @@
 		<script src="../js/jquery.mobile-1.3.1.js"></script>
 		<script src="../appjs/item.js"></script>
 		<script src="../appjs/app.js"></script>
+		<script src="../raty/jquery.raty.min.js"></script>
+		<script src="../raty/jquery.raty.js"></script>
 	</head>
 	<body>
-
-		<div id ="" data-role="page">
+		<!-- homepage -->
+		<div data-role="page" id="home">
 			<div data-role="header" data-theme="a" data-position="fixed">
 				<a data-role="button" data-rel="back"> Back </a>
 				<h1 id = "detailsHeader"></h1>
 			</div>
 
-			<div data-role="content" data-inset="true">
-
-				<form>
-
-					<h3>Image URL</h3>
-
-					<div data-role="fieldcontain">
-
-						<div data-role="fieldcontain">
-							<input align="left"  type="text" id="tile" name="title" placeholder="Product Picture"  />
-						</div>
-
-					</div>
-
-					<div align="left">
-						<input type="submit"  data-inline="true" data-theme="b" value="Done"/>
-					</div>
-				</form>
-
+			<div align="center">
+				<input type="search" name="searchValue" id="searchValue" onkeyup="searchUser(event,2)" placeholder="User">
+				<img width="" height="" src="../image/service.png"/>
 			</div>
+
 		</div>
+
 	</body>
+
 </html>
