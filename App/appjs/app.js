@@ -1,4 +1,7 @@
+var isSearchbyCat;
+
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	alert(isSearchbyCat);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
@@ -238,7 +241,7 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/categories",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-
+				isSearchbyCat = true;
 			//$.getScript("/App/appjs/category.js", function() {
 				//alert("Script loaded and executed.");
 
@@ -1063,6 +1066,7 @@ function displayunicode(e) {
 
 	//Check if Enter was received.
 	if (unicode == 13) {
+		isSearchbyCat = false;
 		$.mobile.navigate("/App/view/results.html");
 	}
 }
