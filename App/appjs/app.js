@@ -73,8 +73,9 @@ $.ajax({
         }
 	});
 
-		
 });
+
+
 
 $(document).on('pagebeforeshow', "#changecategories", function(event, ui) {
 $.ajax({

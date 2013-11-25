@@ -334,7 +334,7 @@ client.connect(function(err) {
 			} else {
 
 				var queryString = "select * from users where u_username = $1";
-
+				
 				client.query(queryString, [cookie[0].username], function(err, result) {
 					if (err) {
 						return console.error('error running query', err);
@@ -343,6 +343,7 @@ client.connect(function(err) {
 						var response = {
 							"user" : result.rows
 						};
+						user_id = result.rows[0].uid;
 						console.log("Response: " + JSON.stringify(response));
 						res.json(result);
 
@@ -452,21 +453,6 @@ client.connect(function(err) {
 		}
 	});
 
-	//Login
-	app.post('/BigBoxServer/user', function(req, res) {
-		// if the username is not submitted, give it a default of "Anonymous"
-		user = findByUsername(req.body.username);
-		// store the username as a session variable
-
-		if (req.body.username == user.username && req.body.password == user.password) {
-			req.session.username = req.body.username;
-			cookie.push(req.session);
-			res.send(200);
-		} else {
-
-			res.send(401, "Incorect username or password.");
-		}
-	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
 		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);
