@@ -1407,6 +1407,7 @@ $.ajax({
 					+purchase_history+
 					'<li data-role="list-divider" role="heading">Didn\'t Win</li></ul>');
 		   
+		   list.listview("refresh");
 		   
 		
 		},
