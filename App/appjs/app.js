@@ -1389,10 +1389,19 @@ $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/buying",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("purchase_history");
+		 var list=$("buying_list");
+		 var purchase_history = "";
 		 for (var i=0; i < data[0].item.length; i++) {
-		   list.append('<li>Order:'+data[0].item[i].o_number+' Item:'+ data[0].item[i].i_name);
-		 };		
+		 	purchase_history += '<li>Order:'+data[0].item[i].o_number+' Item:'+ data[0].item[i].i_name;
+		 };
+		 
+		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
+					<li data-role="list-divider" role="heading">Purchase History</li>'
+					+purchase_history+
+					'<li data-role="list-divider" role="heading">Didn\'t Win</li>');
+		   
+		   
+		
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
