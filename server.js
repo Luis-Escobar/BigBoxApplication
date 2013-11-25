@@ -109,6 +109,39 @@ client.connect(function(err) {
 	 REST Opertaion : HTTP GET
 	 ====================================================================================================================================*/
 
+	app.get('/BigBoxServer/rmvcategories', function(req, res) {
+		client.query("select  * from category", function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+			
+		client.query("select cid,subid,scname from category natural full join subcategory where subid is not null", function(err, result2) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+			
+		client.query("select cid,subid,ssubid,sscname from subcategory natural full join secondsubcategory where ssubid is not null", function(err, result3) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+
+			var response = {
+				"categories" : result.rows,
+				"subcategories" : result2.rows,
+				"secsubcategories" : result3.rows
+			};
+			console.log("reponse:" + JSON.stringify(response));
+			res.json(response);
+		});
+		});
+		});
+	});
+
+
+
 	app.get('/BigBoxServer/categories', function(req, res) {
 		client.query("select  cid,cname,count(subid) from category natural full join subcategory group by cid, cname", function(err, result) {
 			if (err) {
