@@ -1,6 +1,7 @@
 var isSearchbyCat;
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	alert("Is search by category:"+isSearchbyCat);
 	if(isSearchbyCat){
 		
 		$.ajax({										
@@ -12,7 +13,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			alert(JSON.stringify(itemList[0].i_name));
 			alert(itemList.length);
 			alert(itemList[0].i_name);
-			list.listview("refresh");
+			//list.listview("refresh");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
