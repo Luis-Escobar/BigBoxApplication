@@ -9,14 +9,15 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
 			alert(itemList);
-			}
+			
 			list.listview("refresh");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
 			alert("Data not found!");
 		}
-		
+		});
+	
 	}
 	else{
 	$.ajax({
