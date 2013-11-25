@@ -1,7 +1,21 @@
 var isSearchbyCat;
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
-	alert(isSearchbyCat);
+	if(isSearchbyCat){
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+currentcid+"/"+currentcid2,
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			var itemList = data.items;
+			}
+			list.listview("refresh");
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	}
+	else{
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
@@ -29,6 +43,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			alert("Data not found!");
 		}
 	});
+	}
 });
 
 $(document).on('pagebeforeshow', "#rmvcategories", function(event, ui) {
@@ -76,9 +91,8 @@ $.ajax({
         }
 	});
 
+		
 });
-
-
 
 $(document).on('pagebeforeshow', "#changecategories", function(event, ui) {
 $.ajax({
