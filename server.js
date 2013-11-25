@@ -394,7 +394,7 @@ client.connect(function(err) {
 	});
 	
 	
-app.get('/BigBoxServer/selling', function(req, res) {
+app.get('/BigBoxServer/buying', function(req, res) {
 
 
 				var queryString = "select u_username,o_number,i_name,i_id\

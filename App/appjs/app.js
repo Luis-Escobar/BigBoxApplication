@@ -1388,12 +1388,15 @@ function refreshPage() {
  
 //Selling
  
-$(document).on('pagebeforeshow', "#selling", function(event, ui) {
+$(document).on('pagebeforeshow', "#buying", function(event, ui) {
 $.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/buying",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			console.log(data);				
+		 var list=$("purchase_history");
+		 for (var i=0; i < data[0].item.length; i++) {
+		   list.append('<li>Order:'+data[0].item[i].o_number+' Item:'+ data[0].item[i].i_name);
+		 };		
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
