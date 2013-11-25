@@ -343,10 +343,7 @@ client.connect(function(err) {
 						var response = {
 							"user" : result.rows
 						};
-						user_id = result.rows[0].uid;
-						console.log(result.rows);
-						console.log(user_id);
-						console.log(result.rows[0]);
+						user_id = result.rows[0].u_id;
 						console.log("Response: " + JSON.stringify(response));
 						res.json(result);
 
