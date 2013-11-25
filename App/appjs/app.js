@@ -459,7 +459,7 @@ $(document).on('pagebeforeshow', "#details", function(event, ui) {
 
 	var detailsImg = $("#details-image");
 	detailsImg.empty();
-	detailsImg.append("<img src='/App/image/" + currentItem[0].i_img + "'>");
+	detailsImg.append("<img src='" + currentItem[0].i_img + "'>");
 
 	var detailsPara = $("#detailsPara");
 	detailsPara.empty();
@@ -495,7 +495,7 @@ $(document).on('pagebeforeshow', "#bidPage", function(event, ui) {
 
 	//var prodBidInfo = $("#imgSpace");
 	//prodBidInfo.empty();
-	$('#imgSpace').attr('src', "/App/image/" + currentItem[0].i_img);
+	$('#imgSpace').attr('src', "" + currentItem[0].i_img);
 	//prodBidInfo.append("<img src= '/App/image/" + currentItem.img + "class='ui-li-thumb'>");
 
 	var currentBid = $("#currentBid");
@@ -518,7 +518,7 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 	
 	for (var i = 0; i < len; ++i) {
 		item = cartList[i];
-		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
+		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
 		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
 		sTotal += parseFloat(item.i_price) * item.qtyToPurchase;
@@ -560,7 +560,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 			}
 			shippingTotal += parseFloat(item.i_shippingprice);
 			subTotal += parseFloat(item.i_price);
-			items_ship.append("<li>" + "<img src='/App/image/" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
+			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
@@ -575,7 +575,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		for ( i = 1; i <= item[0].i_qtyavailable; i++) {
 			options += "<option value=' " + i + "'>  " + i + "  </option>";
 		}
-		items_ship.append("<li>" + "<img src='/App/image/" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
+		items_ship.append("<li>" + "<img src='" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 	}
 	total = shippingTotal + subTotal;
 
