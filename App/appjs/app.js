@@ -123,6 +123,7 @@ $.ajax({
 
 var currentCatId_editSub;
 function editSubCategory(cid){
+	alert(cid);
 	currentCat_editSub = cid;
 	$.mobile.navigate("../view/changeSubcategories.html");
 	
