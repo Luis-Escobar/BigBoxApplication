@@ -3,7 +3,8 @@ var isSearchbyCat;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
-		$.ajax({										
+		alert("cid"+currentcid+"subid"+currentcid2);	
+		$.ajax({									
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
