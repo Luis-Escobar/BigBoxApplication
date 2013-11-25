@@ -8,8 +8,10 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
-			alert(itemList);
-			
+			alert(JSON.stringify(itemList));
+			alert(JSON.stringify(itemList[0].i_name));
+			alert(itemList.length);
+			alert(itemList[0].i_name);
 			list.listview("refresh");
 		},
 		error : function(data, textStatus, jqXHR) {
