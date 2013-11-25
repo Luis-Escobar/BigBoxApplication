@@ -2,7 +2,7 @@ var isSearchbyCat;
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	if(isSearchbyCat){
-		/**
+		
 		$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
@@ -15,7 +15,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
 			alert("Data not found!");
-		}**/
+		}
 	}
 	else{
 	$.ajax({
