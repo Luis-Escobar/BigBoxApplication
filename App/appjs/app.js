@@ -1,4 +1,7 @@
+var isSearchbyCat;
+
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	alert(isSearchbyCat);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
@@ -17,7 +20,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			for (var i = 0; i < len; ++i) {
 				item = itemList[i];
 
-				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
 			}
 			list.listview("refresh");
 		},
@@ -73,8 +76,9 @@ $.ajax({
         }
 	});
 
-		
 });
+
+
 
 $(document).on('pagebeforeshow', "#changecategories", function(event, ui) {
 $.ajax({
@@ -238,7 +242,7 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/categories",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-
+				isSearchbyCat = true;
 			//$.getScript("/App/appjs/category.js", function() {
 				//alert("Script loaded and executed.");
 
@@ -1063,6 +1067,7 @@ function displayunicode(e) {
 
 	//Check if Enter was received.
 	if (unicode == 13) {
+		isSearchbyCat = false;
 		$.mobile.navigate("/App/view/results.html");
 	}
 }
