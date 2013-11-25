@@ -1364,3 +1364,21 @@ function refreshPage() {
 	b_address_selected = false;
 	payment_selected = false; 	
  }
+ 
+//Selling
+ 
+$(document).on('pagebeforeshow', "#selling", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			console.log(data);				
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
