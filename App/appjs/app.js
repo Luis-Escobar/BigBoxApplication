@@ -1,9 +1,9 @@
 var isSearchbyCat;
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
-	alert("Is search by category:"+isSearchbyCat);
+	
 	if(isSearchbyCat){
-		
+		alert("Is search by category:"+isSearchbyCat);
 		$.ajax({										
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
