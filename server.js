@@ -392,7 +392,42 @@ client.connect(function(err) {
 		} else
 			res.send(200);
 	});
+	
+	
+app.get('/BigBoxServer/selling', function(req, res) {
 
+		// if user is not logged in, ask them to login
+		console.log(cookie[0]);
+		if (cookie[0] != undefined) {
+			console.log("made it");
+			if ( typeof cookie[0].username == 'undefined') {
+				console.log("then here");
+				res.send(401, "Please Login.");
+			} else {
+
+				var queryString = "select o_number,i_id,i_name,u_id\
+				from (select o_number,i_id,i_name from  items natural\
+					join items_orders) as tmp natural join orders order by o_number";
+
+				client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"item" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			}
+		} else
+			res.send(200);
+		//catch bug when reloading site after user is logged in
+	});
+	
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
