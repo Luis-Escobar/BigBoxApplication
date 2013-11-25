@@ -397,16 +397,18 @@ client.connect(function(err) {
 app.get('/BigBoxServer/selling', function(req, res) {
 
 
-				var queryString = "select o_number,i_id,i_name,u_id\
-				from (select o_number,i_id,i_name from  items natural\
-					join items_orders) as tmp natural join orders\
-					where u_id=$1 order by o_number";
+				var queryString = "select u_username,o_number,i_name,i_id\
+								   from (select o_number,i_id,i_name,u_id\
+								   from (select o_number,i_id,i_name from items natural\
+								   join items_orders)as tmp natural join orders) as a\
+								   natural join users where u_username=$1";
+								   
 					console.log("COOKIE");
 					console.log(cookie);
 					console.log("USER ID");
-					console.log(cookie[0].u_i);
+					console.log(cookie[0]);
 
-				client.query(queryString,[cookie[0].u_id],function(err, result) {
+				client.query(queryString,[cookie[0].username],function(err, result) {
 					if (err) {
 						return console.error('error running query', err);
 					} else {
