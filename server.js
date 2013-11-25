@@ -203,7 +203,7 @@ client.connect(function(err) {
 			var cidValue = req.params.currentcid;
 			var subidValue = req.params.currentcid2;
 			
-			console.log("searchValue: " + searchValue.slice(1, searchValue.length));
+			console.log("cidValue: "+cidValue );
 					
 			client.query("select * from items where cid = " + cidValue + "or subid =" + subidValue, function(err, result) {
 				if (err) {
