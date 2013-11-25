@@ -300,9 +300,9 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 					//alert(newCategory.numbSub);
 					//list.append('<li><a onclick= GetCategory("' + newCategory.getSubCategory(i).cid + '") >' + newCategory.getSubCategory(i).cname + '</a></li>');
 					if(categoriesList[i].count == 0)
-						list.append('<li><a href="/App/view/results.html"  >' + categoriesList[i].cname + '</a></li>');
+						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + ',false")  >' + categoriesList[i].cname + '</a></li>');
 					else
-						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + '") >' + categoriesList[i].cname + '</a></li>');
+						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + ',true") >' + categoriesList[i].cname + '</a></li>');
 				}
 				list.listview("refresh");
 				//alert(newCategory);
@@ -750,9 +750,13 @@ function ConverToJSON(formData) {
 }
 
 var currentcid;
-function GetCategory(cid) {
+function GetCategory(cid, condition) {
+	alert(condition);
 	currentcid = cid;
-	$.mobile.navigate("/App/view/subcategories.html");
+	if(condition)
+		$.mobile.navigate("/App/view/subcategories.html");
+	else
+		$.mobile.navigate("/App/view/result.html");
 }
 
 var currentcid2;
