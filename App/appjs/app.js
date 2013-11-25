@@ -4,7 +4,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	if(isSearchbyCat){
 		
 		$.ajax({										
-		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/1/2",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
