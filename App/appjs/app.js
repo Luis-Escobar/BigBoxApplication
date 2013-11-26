@@ -1,21 +1,36 @@
 var isSearchbyCat;
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	
 	if(isSearchbyCat){
-		/**
-		$.ajax({
+		alert("cid"+currentcid+"subid"+currentcid2);	
+		$.ajax({									
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
-			alert(itemList);
+			//alert(JSON.stringify(itemList));
+			//alert(JSON.stringify(itemList[0].i_name));
+			//alert(itemList.length);
+			//alert(itemList[0].i_name);
+			//list.listview("refresh");
+			var len = itemList.length;
+			var list = $("#items-list");
+			list.empty();
+			var item;
+			for (var i = 0; i < len; ++i) {
+				item = itemList[i];
+
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
 			}
 			list.listview("refresh");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
 			alert("Data not found!");
-		}**/
+		}
+		});
+	
 	}
 	else{
 	$.ajax({
@@ -285,9 +300,9 @@ $(document).on('pagebeforeshow', "#categories", function(event, ui) {
 					//alert(newCategory.numbSub);
 					//list.append('<li><a onclick= GetCategory("' + newCategory.getSubCategory(i).cid + '") >' + newCategory.getSubCategory(i).cname + '</a></li>');
 					if(categoriesList[i].count == 0)
-						list.append('<li><a href="/App/view/results.html"  >' + categoriesList[i].cname + '</a></li>');
+						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + ',false")  >' + categoriesList[i].cname + '</a></li>');
 					else
-						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + '") >' + categoriesList[i].cname + '</a></li>');
+						list.append('<li><a onclick= GetCategory("' + categoriesList[i].cid + ',true") >' + categoriesList[i].cname + '</a></li>');
 				}
 				list.listview("refresh");
 				//alert(newCategory);
@@ -735,9 +750,13 @@ function ConverToJSON(formData) {
 }
 
 var currentcid;
-function GetCategory(cid) {
+function GetCategory(cid, condition) {
+	alert(condition);
 	currentcid = cid;
-	$.mobile.navigate("/App/view/subcategories.html");
+	if(condition)
+		$.mobile.navigate("/App/view/subcategories.html");
+	else
+		$.mobile.navigate("/App/view/result.html");
 }
 
 var currentcid2;
@@ -1194,7 +1213,7 @@ function account() {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/account",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/App/view/account/watching.html");
+			$.mobile.navigate("/App/view/account/buying.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1295,7 +1314,7 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				$(".user_header").empty;
-				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page" \
+				$(".user_header").append('<a href="/App/view/account/buying.html" data-rel="page" \
 				class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! \
 				' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname  + '</h5></a>');
 				
@@ -1369,12 +1388,59 @@ function refreshPage() {
  
 //Selling
  
+$(document).on('pagebeforeshow', "#buying", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/buying",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+		 var list=$("#buying_list").listview();
+		 var purchase_history = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+		 for (var i=0; i < data.rows.length; i++) {
+		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;
+		 }
+		 
+		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
+					<li data-role="list-divider" role="heading">Purchase History</li>'
+					+purchase_history);
+					
+		
+		   list.listview("refresh");
+		   
+		
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+
 $(document).on('pagebeforeshow', "#selling", function(event, ui) {
 $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			console.log(data);				
+		 var list=$("#selling_list").listview();
+		 var selling_history = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+		 for (var i=0; i < data.rows.length; i++) {
+		 	selling_history += '<li>Item: '+ data.rows[i].i_name;
+		 }
+	
+
+		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+selling_history);
+					
+		
+		   list.listview("refresh");
+		   
+		
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
