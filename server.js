@@ -205,7 +205,7 @@ client.connect(function(err) {
 			
 			console.log("cidValue: "+cidValue );
 					
-			client.query("select * from items where cid = " + cidValue + "or subid =" + subidValue, function(err, result) {
+			client.query("select * from items where cid = " + cidValue + "and subid =" + subidValue, function(err, result) {
 				if (err) {
 					return console.error('error running query', err);
 				}

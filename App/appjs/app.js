@@ -756,7 +756,7 @@ function GetCategory(cid, condition) {
 	if(condition)
 		$.mobile.navigate("/App/view/subcategories.html");
 	else
-		$.mobile.navigate("/App/view/result.html");
+		$.mobile.navigate("/App/view/results.html");
 }
 
 var currentcid2;
@@ -767,7 +767,7 @@ function GetSecondCategory(cid,condition) {
 	if(condition)
 		$.mobile.navigate("/App/view/secondSubCategory.html");
 	else
-		$.mobile.navigate("/App/view/result.html");
+		$.mobile.navigate("/App/view/results.html");
 }
 
 //get a item by its id
