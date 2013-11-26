@@ -1213,7 +1213,7 @@ function account() {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/account",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/App/view/account/watching.html");
+			$.mobile.navigate("/App/view/account/buying.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1314,7 +1314,7 @@ function registerChecker(num) {
 			contentType : "application/json",
 			success : function(data, textStatus, jqXHR) {
 				$(".user_header").empty;
-				$(".user_header").append('<a href="/App/view/account/watching.html" data-rel="page" \
+				$(".user_header").append('<a href="/App/view/account/buying.html" data-rel="page" \
 				class="ui-btn-left"style="color: #FFFFFF" ><h5>Welcome! \
 				' + data.rows[0].u_fname + ' ' + data.rows[0].u_lname  + '</h5></a>');
 				
@@ -1393,10 +1393,54 @@ $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/buying",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("purchase_history");
-		 for (var i=0; i < data[0].item.length; i++) {
-		   list.append('<li>Order:'+data[0].item[i].o_number+' Item:'+ data[0].item[i].i_name);
-		 };		
+		 var list=$("#buying_list").listview();
+		 var purchase_history = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+		 for (var i=0; i < data.rows.length; i++) {
+		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;
+		 }
+		 
+		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
+					<li data-role="list-divider" role="heading">Purchase History</li>'
+					+purchase_history);
+					
+		
+		   list.listview("refresh");
+		   
+		
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+
+$(document).on('pagebeforeshow', "#selling", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+		 var list=$("#selling_list").listview();
+		 var selling_history = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+		 for (var i=0; i < data.rows.length; i++) {
+		 	selling_history += '<li>Item: '+ data.rows[i].i_name;
+		 }
+	
+
+		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+selling_history);
+					
+		
+		   list.listview("refresh");
+		   
+		
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
