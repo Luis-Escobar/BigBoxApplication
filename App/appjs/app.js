@@ -753,6 +753,8 @@ var currentcid;
 function GetCategory(cid, condition) {
 	alert(condition);
 	currentcid = cid;
+	currentcid2 = -1;
+	currentcid3 = -1;
 	if(condition)
 		$.mobile.navigate("/App/view/subcategories.html");
 	else
@@ -764,6 +766,7 @@ function GetSecondCategory(cid,condition) {
 	//alert("subid:"+cid);
 	alert(condition);
 	currentcid2 = cid;
+	currentcid3 = -1;
 	if(condition)
 		$.mobile.navigate("/App/view/secondSubCategory.html");
 	else
