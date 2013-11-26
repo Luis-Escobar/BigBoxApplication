@@ -1404,8 +1404,7 @@ $.ajax({
 		 
 		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
 					<li data-role="list-divider" role="heading">Purchase History</li>'
-					+purchase_history+
-					'<li data-role="list-divider" role="heading">Didn\'t Win</li>');
+					+purchase_history);
 					
 		
 		   list.listview("refresh");
@@ -1436,8 +1435,7 @@ $.ajax({
 		 }
 	
 
-		   list.append('<li data-role="list-divider" role="heading">Selling History</li>
-					+purchase_history);
+		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+purchase_history);
 					
 		
 		   list.listview("refresh");
