@@ -445,7 +445,7 @@ $(document).on('pagebeforeshow', "#secondsubcategories", function(event, ui) {
 			for (var i = 0; i < categoriesList.length; i++) {
 
 				//list.append('<li><a onclick= GetSecondCategory("' + newCategory3.getSubCategory(i).cid + '") >' + newCategory3.getSubCategory(i).cname + '</a></li>');									list.append("<li><a onclick= GetSecondCategory(" + categoriesList[i].subid + ",false)  >" + categoriesList[i].scname + "</a></li>");
-				list.append("<li><a onclick= GetThirdCategory(" + categoriesList[i].ssubid + " >" + categoriesList[i].sscname + "</a></li>");
+				list.append('<li><a onclick= GetThirdCategory("' + categoriesList[i].ssubid + '" >' + categoriesList[i].sscname + '</a></li>');
 
 			}
 			//alert("termine");
