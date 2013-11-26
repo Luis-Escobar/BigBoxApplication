@@ -1431,11 +1431,11 @@ $.ajax({
 		 console.log(data);
 		 
 		 for (var i=0; i < data.rows.length; i++) {
-		 	purchase_history += '<li>Item: '+ data.rows[i].i_name;
+		 	selling_history += '<li>Item: '+ data.rows[i].i_name;
 		 }
 	
 
-		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+purchase_history);
+		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+selling_history);
 					
 		
 		   list.listview("refresh");
