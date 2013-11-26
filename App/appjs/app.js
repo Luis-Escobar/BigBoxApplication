@@ -1402,11 +1402,10 @@ $.ajax({
 		 	purchase_history += '<li>Order:'+data.rows[i].o_number+' Item:'+ data.rows[i].i_name;
 		 }
 		 
-		   list.append('<ul data-role="listview" data-theme="d" data-divider-theme="d"  >\
-					<li data-role="list-divider" role="heading">Bidding</li>\
+		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
 					<li data-role="list-divider" role="heading">Purchase History</li>'
 					+purchase_history+
-					'<li data-role="list-divider" role="heading">Didn\'t Win</li></ul>');
+					'<li data-role="list-divider" role="heading">Didn\'t Win</li>');
 					
 		
 		   list.listview("refresh");
