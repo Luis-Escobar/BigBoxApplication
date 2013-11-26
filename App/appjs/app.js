@@ -3,9 +3,9 @@ var isSearchbyCat;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
-		alert("cid"+currentcid+"subid"+currentcid2);	
+		alert("cid"+currentcid+"subid"+currentcid2+"ssubid"+currentcid3);	
 		$.ajax({									
-		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2+"/"+currentcid3,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
@@ -444,8 +444,8 @@ $(document).on('pagebeforeshow', "#secondsubcategories", function(event, ui) {
 			//alert("5");
 			for (var i = 0; i < categoriesList.length; i++) {
 
-				//list.append('<li><a onclick= GetSecondCategory("' + newCategory3.getSubCategory(i).cid + '") >' + newCategory3.getSubCategory(i).cname + '</a></li>');
-				list.append('<li><a href="/App/view/results.html" >' + categoriesList[i].sscname + '</a></li>');
+				//list.append('<li><a onclick= GetSecondCategory("' + newCategory3.getSubCategory(i).cid + '") >' + newCategory3.getSubCategory(i).cname + '</a></li>');									list.append("<li><a onclick= GetSecondCategory(" + categoriesList[i].subid + ",false)  >" + categoriesList[i].scname + "</a></li>");
+				list.append("<li><a onclick= GetThirdCategory(" + categoriesList[i].ssubid + " >" + categoriesList[i].sscname + "</a></li>");
 
 			}
 			//alert("termine");
@@ -768,6 +768,13 @@ function GetSecondCategory(cid,condition) {
 		$.mobile.navigate("/App/view/secondSubCategory.html");
 	else
 		$.mobile.navigate("/App/view/results.html");
+}
+
+var currentcid3;
+function GetThirdCategory(cid) {
+	alert("ssubid:"+cid);
+	currentcid3 = cid;
+	$.mobile.navigate("/App/view/results.html");
 }
 
 //get a item by its id
