@@ -376,9 +376,9 @@ $(document).on('pagebeforeshow', "#subcategories", function(event, ui) {
 				//alert(JSON.stringify(newCategory.getSubCategory(i)));
 				//alert(newCategory.numbSub);
 				if(categoriesList[i].count == 0)
-					list.append('<li><a href="/App/view/results.html"  >' + categoriesList[i].scname + '</a></li>');
+					list.append("<li><a onclick= GetSecondCategory(" + categoriesList[i].subid + ",false)  >" + categoriesList[i].scname + "</a></li>");
 				else
-					list.append('<li><a onclick= GetSecondCategory("' + categoriesList[i].subid + '") >' + categoriesList[i].scname + '</a></li>');
+					list.append("<li><a onclick= GetSecondCategory(" + categoriesList[i].subid + ",true)  >" + categoriesList[i].scname + "</a></li>");
 			}
 			list.listview("refresh");
 			//			}
@@ -760,10 +760,14 @@ function GetCategory(cid, condition) {
 }
 
 var currentcid2;
-function GetSecondCategory(cid) {
+function GetSecondCategory(cid,condition) {
 	//alert("subid:"+cid);
+	alert(condition);
 	currentcid2 = cid;
-	$.mobile.navigate("/App/view/secondSubCategory.html");
+	if(condition)
+		$.mobile.navigate("/App/view/secondSubCategory.html");
+	else
+		$.mobile.navigate("/App/view/result.html");
 }
 
 //get a item by its id
