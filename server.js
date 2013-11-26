@@ -424,6 +424,36 @@ app.get('/BigBoxServer/buying', function(req, res) {
 			
 	});
 	
+	
+		
+app.get('/BigBoxServer/selling', function(req, res) {
+
+
+				var queryString = "select i_name,u_username,i_price\
+								   from items natural join users\
+								   where u_username=$1";
+								   
+					console.log("COOKIE");
+					console.log(cookie);
+					console.log("USER ID");
+					console.log(cookie[0]);
+
+				client.query(queryString,[cookie[0].username],function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"item" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			
+	});
+	
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
