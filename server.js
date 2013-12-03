@@ -403,10 +403,11 @@ app.get('/BigBoxServer/buying', function(req, res) {
 								   join items_orders)as tmp natural join orders) as a\
 								   natural join users where u_username=$1";
 								   
-					console.log("COOKIE");
-					console.log(cookie);
-					console.log("USER ID");
-					console.log(cookie[0]);
+				var queryBid = 'select i_name, i_bid\
+								from(select *\
+								from bids natural join items) as tmp\
+								natural join users\
+								where buyer_id = u_id and u_username=$1';
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
 					if (err) {
@@ -416,11 +417,25 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						var response = {
 							"item" : result.rows
 						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
+
 
 					}
 				});
+				
+						client.query(queryBid,[cookie[0].username],function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = response + "{ 'bids':"+result.rows+"}";
+						
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+						
+
+					}
+				});
+
 			
 	});
 	
