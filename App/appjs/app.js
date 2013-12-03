@@ -1633,7 +1633,7 @@ function removeUser(username){
  =============================================================================================*/
 	var order_total;
 	var shippingTotal;
-	var sAddressID = shipping_address[0].a_id;
+//	var sAddressID = shipping_address[0].a_id;
 	
 	function placeOrder(){
 //		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
