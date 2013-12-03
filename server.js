@@ -429,7 +429,7 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						return console.error('error running query', err);
 					} else {
 						
-						temp = ',"bid" :'+ result.rows+"}"
+						temp = ',"bid" :'+ result.rows+"}";
 						
 						response = response +temp;
 						
