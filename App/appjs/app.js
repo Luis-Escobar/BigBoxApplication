@@ -1697,8 +1697,9 @@ $.ajax({
 		 
 
 
-		 
-		 
+		 if(d.bid.length ==0)
+		 current_bids = "No bids have been placed yet";
+		 else	 
 		 for (var i=0; i < d.bid.length; i++) {
 		 	current_bids += '<li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>\
 		 					 <img src=' + d.bid[i].i_img + '/><p id=\"info\">\
@@ -1707,6 +1708,10 @@ $.ajax({
 							
 			}
 
+
+		 if(d.item.length ==0)
+		 current_bids = "No purchaces have been made yet";
+		else
 		for (var i=0; i < d.item.length; i++) {
 		 	purchase_history += '<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>\
 		 						<img src=' + d.item[i].i_img + '/><p id=\"info\">\
@@ -1747,7 +1752,10 @@ $.ajax({
 		 selling_history = "No Items Sold";
 		 else
 		 for (var i=0; i < data.rows.length; i++) {
-		 	selling_history += '<li>Item: '+ data.rows[i].i_name+"</li>";
+		 	selling_history += '<li><a onclick=GetItem(' + data.rows[i].i_id + ',true)>\
+		 						<img src=' + data.rows[i].i_img + '/><p id=\"info\">\
+		 					 	'+data.rows[i].i_name + '</p><p class=\"ui-li-aside\">\
+		 					  	$' + data.rows[i].i_price + '</p></a></li>';
 		 }
 	
 

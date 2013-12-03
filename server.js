@@ -454,7 +454,7 @@ app.get('/BigBoxServer/buying', function(req, res) {
 app.get('/BigBoxServer/selling', function(req, res) {
 
 
-				var queryString = "select i_name,u_username,i_price\
+				var queryString = "select i_id,i_img,i_name,u_username,i_price\
 								   from items natural join users\
 								   where u_username=$1";
 								   
