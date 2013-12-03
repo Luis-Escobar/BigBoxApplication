@@ -1604,11 +1604,7 @@ function confirmUserRemoval(username,confirmType){
 
 				
 			}
-			
-		
-			
-
-		
+	
 
 
 }
