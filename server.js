@@ -459,6 +459,16 @@ app.get('/BigBoxServer/selling', function(req, res) {
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
 
+	//Add a new order
+	app.post('/BigBoxServer/orders', function(req, res) {
+		console.log("POST ORDER");
+		//Insert into (query)
+		res.json(true);
+	});
+
+
+
+
 	//Add a new address to the saved addresses
 	app.post('/BigBoxServer/addresses', function(req, res) {
 		console.log("POST ADDRESS");
@@ -468,8 +478,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 			return res.send('Error: Missing fields for the item.');
 		}
 
-		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);
-		console.log("New Address: " + JSON.stringify(newAddress));
+		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);		console.log("New Address: " + JSON.stringify(newAddress));
 		newAddress.id = addressNextId++;
 		addressList.push(newAddress);
 		res.json(true);
