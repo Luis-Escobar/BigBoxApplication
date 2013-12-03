@@ -1167,7 +1167,6 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
-	alert("Login started");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1180,10 +1179,8 @@ function login() {
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
-			alert(data.user);
 			currentUser = data.user;
 			clearInfo();
-			alert(currentUser + " Succeed");
 			$.mobile.navigate("/App/view/user.html");
 			
 		},
@@ -1692,28 +1689,37 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
+		 list.empty();
 		 var purchase_history = "";
 		 var current_bids = "";
 		 var d = JSON.parse(data);
 		 console.log(d);
+		/* 
+			for (var i = 0; i < len; ++i) {
+				item = itemList[i];
 
-
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+			}
 
 		for (var i=0; i < d.item.length; i++) {
 		 	purchase_history += '<li><p>Order: '+d.item[i].o_number+'</p><p>     Item: '+ d.item[i].i_name+'</p></li>';
 		 }
+		 
+		 
+		 
 		 for (var i=0; i < d.bid.length; i++) {
 		 	current_bids += '<li><p>Item: '+d.bid[i].i_name+'</p><p>Current Bid: $'+ d.bid[i].i_bid+"</p></li>";
 		 }
 		 
-		   list.append('<li data-role="list-divider" role="heading">Bidding</li>'
+		   list.append('<ul data-role="listview" data-theme="d" data-divider-theme="d" id="buying_list" >
+				<li data-role="list-divider" role="heading">Bidding</li>'
 		   				+current_bids+
 		   				'<li data-role="list-divider" role="heading">Purchase History</li>'
 						+purchase_history);
 					
 		
 		   list.listview("refresh");
-		
+		*/
 		
 		},
         error : function(data, textStatus, jqXHR) {

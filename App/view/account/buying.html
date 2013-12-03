@@ -17,7 +17,9 @@
 		<!-- homepage -->
 		<div data-role="page" id="buying">
 			<div class="user_header" data-role="header" data-nobackbtn="true">
-				<script type="text/javascript"> registerChecker(2);</script>
+				<script type="text/javascript">
+					registerChecker(2);
+				</script>
 				<div data-role="controlgroup" data-type="horizontal" data-inline="true" align="right">
 					<a href="/App/view/user.html" data-role="button" data-icon="home">Home</a>
 					<a data-rel="page" data-role="button" onclick="logout()">Log Out </a>
@@ -41,7 +43,6 @@
 
 					<ul>
 
-
 						<li>
 							<a href="buying.html" data-role="button">Buying</a>
 						</li>
@@ -60,10 +61,19 @@
 			</div>
 			<p class="account"></p>
 
-			<div >
-				<ul data-role="listview" data-theme="d" data-divider-theme="d" id="buying_list" >
-					
-				</ul>
+			<div id="buying_list">
+
+				<div data-role="collapsible-set">
+
+					<div data-role="collapsible" data-collapsed="false">
+						<ul data-role="listview" data-theme="d" data-divider-theme="d" id="buying_list" >
+							<li>
+								TEst
+							</li>
+						</ul>
+					</div>
+
+				</div>
 
 			</div>
 
