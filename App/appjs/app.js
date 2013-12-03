@@ -1412,8 +1412,13 @@ $.ajax({
 		 console.log("DATA");
 		 console.log(data);
 		 var d = JSON.parse(data);
-		 console.log(d.rows);
-		 for (var i=0; i < data.rows.length; i++) {
+		 console.log(d.bid);
+		 console.log(d.item);
+		 console.log(d.rows[0]);
+		 console.log(d.rows[1]);
+
+
+		/* for (var i=0; i < data.rows.length; i++) {
 		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;
 		 }
 		 
@@ -1423,7 +1428,7 @@ $.ajax({
 					
 		
 		   list.listview("refresh");
-		   
+		*/   
 		
 		},
         error : function(data, textStatus, jqXHR) {
