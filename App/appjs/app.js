@@ -1,5 +1,5 @@
 var isSearchbyCat;
-var itemList;
+
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
@@ -8,7 +8,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2+"/"+currentcid3,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			itemList = data.items;
+			var itemList = data.items;
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
 			//alert(itemList.length);
@@ -37,7 +37,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			itemList = data.items;
+			var itemList = data.items;
 
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
@@ -618,7 +618,6 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	if (s_address_selected) {
 		//ya selecciono
 		shipTo.empty();
-		sAddressID = shipping_address[0].a_id;
 		shipTo.append("<h5> Ship to <hr style='padding:0;margin:0' /></h5><a onClick='GetAddresses(true)'>" + "<p style='padding:5px 10px 20px 0;margin:0'> " + shipping_address[0].a_name + "<br />" + shipping_address[0].a_street + "<br />" + 
 		shipping_address[0].a_city + ", " + shipping_address[0].a_state + " " + shipping_address[0].a_zip + " " + shipping_address[0].a_country + "<br />" + shipping_address[0].a_phone + "</p></a><hr style='padding:0;margin:0'/><br />");
 
@@ -1631,7 +1630,7 @@ function removeUser(username){
  =============================================================================================*/
 	var order_total;
 	var shippingTotal;
-	var sAddressID;
+//	var sAddressID = shipping_address[0].a_id;
 	
 	function placeOrder(){
 //		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
@@ -1690,37 +1689,50 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
-		// list.empty();
+		 list.empty();
 		 var purchase_history = "";
 		 var current_bids = "";
 		 var d = JSON.parse(data);
 		 console.log(d);
-		/* 
-			for (var i = 0; i < len; ++i) {
-				item = itemList[i];
-
-				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
-			}
-
-		for (var i=0; i < d.item.length; i++) {
-		 	purchase_history += '<li><p>Order: '+d.item[i].o_number+'</p><p>     Item: '+ d.item[i].i_name+'</p></li>';
-		 }
 		 
+
+
 		 
 		 
 		 for (var i=0; i < d.bid.length; i++) {
-		 	current_bids += '<li><p>Item: '+d.bid[i].i_name+'</p><p>Current Bid: $'+ d.bid[i].i_bid+"</p></li>";
+		 	current_bids += '<ul data-role="listview" data-theme="d" data-divider-theme="d" >\
+		 					 <li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>" + "\
+		 					 <img src=' + d.bid[i].i_img + '/>" + "<p id=\"info\">\
+		 					 ' + d.bid[i].i_name + '</p>" + "<p class=\"ui-li-aside\">\
+		 					  $' + d.bid[i].i_price + '</p></a></li>\
+							</ul>';
+							
+			}
+
+		for (var i=0; i < d.item.length; i++) {
+		 	purchase_history += '<div data-role="collapsible-set"  >\
+								 <div data-role="collapsible" data-collapsed="false">\
+								 <h3>Order: '+d.item.o_number+'</h3>\
+								 <ul data-role="listview" data-theme="d" data-divider-theme="d" >\
+								<li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>" + "\
+		 						<img src=' + d.bid[i].i_img + '/>" + "<p id=\"info\">\
+		 					 	' +d.bid[i].i_name + '</p>" + "<p class=\"ui-li-aside\">\
+		 					  	$' + d.bid[i].i_price + '</p></a></li>\
+								</ul></div></div>';
 		 }
 		 
-		   list.append('<ul data-role="listview" data-theme="d" data-divider-theme="d" id="buying_list" >
-				<li data-role="list-divider" role="heading">Bidding</li>'
-		   				+current_bids+
-		   				'<li data-role="list-divider" role="heading">Purchase History</li>'
-						+purchase_history);
-					
+		 
+
+				list.append('<ul data-role="listview" data-theme="d" data-divider-theme="d" >\
+					<li data-role="list-divider" role="heading">Bidding</li>'
+					+current_bids+
+					'<li data-role="list-divider" role="heading">Purchase History</li>'
+					+purchase_history+
+					'</div>\
+					</ul>');
 		
 		   list.listview("refresh");
-		*/
+		
 		
 		},
         error : function(data, textStatus, jqXHR) {

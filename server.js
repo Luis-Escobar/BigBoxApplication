@@ -402,16 +402,16 @@ client.connect(function(err) {
 app.get('/BigBoxServer/buying', function(req, res) {
 
 
-				var queryString = "select u_username,o_number,i_name,i_id\
-								   from (select o_number,i_id,i_name,u_id\
-								   from (select o_number,i_id,i_name from items natural\
-								   join items_orders)as tmp natural join orders) as a\
-								   natural join users where u_username=$1";
+				var queryString = "select u_username,o_number,i_name,i_id,i_price,i_img\
+				from (select o_number,i_id,i_name,u_id,i_price,i_img\
+				from (select o_number,i_id,i_name,i_price,i_img from items natural\
+				join items_orders)as tmp natural join orders) as a\
+				natural join users where u_username=$1;
 								   
-				var queryBid = 'select i_name,i_bid\
-								from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid\
-								from bids natural join items) as tmp natural join users\
-								where buyer_id = u_id and u_username = $1';
+				var queryBid = 'select i_id,i_img,i_name,i_bid\
+				from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid,i_img\
+				from bids natural join items) as tmp natural join users\
+				where buyer_id = u_id and u_username = $1';
 				var response ="";
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
