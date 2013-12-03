@@ -1723,13 +1723,12 @@ $.ajax({
 		 
 		 
 
-				list.append('<ul data-role="listview" data-theme="d" data-divider-theme="d" >\
-					<li data-role="list-divider" role="heading">Bidding</li>'
+				list.append('<li data-role="list-divider" role="heading">Bidding</li>'
 					+current_bids+
 					'<li data-role="list-divider" role="heading">Purchase History</li>'
 					+purchase_history+
 					'</div>\
-					</ul>');
+					');
 		
 		   list.listview("refresh");
 		
