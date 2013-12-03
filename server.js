@@ -418,6 +418,8 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						var response = {
 							"item" : result.rows
 						};
+						console.log("RESPONSE");
+						console.log(response);
 
 
 					}
@@ -429,6 +431,8 @@ app.get('/BigBoxServer/buying', function(req, res) {
 					} else {
 
 						var response = response + "{ 'bids':"+result.rows+"}";
+						console.log("REPONSE 2");
+						console.log(response);
 						
 						console.log("Response: " + JSON.stringify(response));
 						res.json(result);
