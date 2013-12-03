@@ -1782,17 +1782,34 @@ $.ajax({
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#report_list").listview();
 		 list.empty();
-		 var report = "";
+		 var report_daily = "";
+		  var report_weekly = "";
+
 		 console.log("DATA");
 		 console.log(data);
 		 
-	
 		 for (var i=0; i < data.rows.length; i++) {
-		 	report += '<li>Date:'+data.rows[i].o_date+', Total:'+data.rows[i].total+'</li>';
+		 	report_daily += '<li>Day:'+data.rows[i].o_date.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
 		 }
+
 	
 
-		   list.append('<li data-role="list-divider" role="heading">Dayly</li>'+report);
+		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report+'\
+		   <li data-role="list-divider" role="heading">Weekly</li>\
+		   <li>Week Start:2013-12-02, Total: $30</li>\
+		   <li>Week Start:2013-11-25, Total: $40</li>\
+		   <li>Week Start:2013-08-23, Total: $30</li>\
+		   <li>Week Start:2013-07-27, Total: $10</li>\
+		   <li>Week Start:2013-07-15, Total: $55</li>\
+		   <li>Week Start:2013-05-15, Total: $20</li>\
+		   <li>Week Start:2013-14-15, Total: $25</li>\
+		   <li data-role="list-divider" role="heading">Monthly</li>\
+		   <li>Month:2013-12, Total: $30</li>\
+		   <li>Month:2013-11, Total: $40</li>\
+		   <li>Month:2013-08, Total: $30</li>\
+		   <li>Month:2013-07, Total: $65</li>\
+		   <li>Month:2013-05, Total: $20</li>\
+		   <li>Month:2013-14, Total: $25</li>');
 					
 		
 		   list.listview("refresh");
