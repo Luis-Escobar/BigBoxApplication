@@ -415,9 +415,8 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						return console.error('error running query', err);
 					} else {
 
-						response = {
-							"item" : result.rows
-						};
+						response = '{ "item" : '+result.rows;
+					
 						console.log("RESPONSE");
 						console.log(response);
 
@@ -430,13 +429,13 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						return console.error('error running query', err);
 					} else {
 						
-						temp = {
-							"bid": result.rows
-						};
-						console.log("REPONSE 2");
-						console.log(temp);
+						temp = ',"bid" :'+ result.rows+"}"
 						
-						response = $.extend({}, response, temp);
+						response = response +temp;
+						
+						console.log("REPONSE 2");
+						console.log(response);
+						
 						res.json(response);
 						
 
