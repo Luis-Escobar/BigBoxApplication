@@ -1118,6 +1118,9 @@ function getSubmitValue() {
 	if (userConfirmation == false) {
 		return;
 	}
+	else{
+		alert("Not implemented in this phase");
+	}
 
 	/*
 	 var jsonData={"name":""+currentItem.name, "model":""+currentItem.model, "year":""+currentItem.year,"info":""+currentItem.info,"buyItNow":""+currentItem.buyItNow, "price":""+currentItem.price, "img":""+currentItem.img,
