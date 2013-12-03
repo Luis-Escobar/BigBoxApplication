@@ -1640,22 +1640,22 @@ function removeUser(username){
 	var sAddressID = shipping_address[0].a_id;
 	
 	function placeOrder(){
-		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
-		$.ajax({
-			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
-			method : 'post',
-			data : newOrderSON,
-			contentType : "application/json",
-			dataType : "json",
-			success : function(data, textStatus, jqXHR) {
-				$.mobile.loading("hide");
-			},
-			error : function(data, textStatus, jqXHR) {
-				console.log("textStatus: " + textStatus);
-				$.mobile.loading("hide");
-				alert("Order could not be placed!");
-			}
-		});
+//		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
+//		$.ajax({
+//			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
+//			method : 'post',
+//			data : newOrderSON,
+//			contentType : "application/json",
+//			dataType : "json",
+//			success : function(data, textStatus, jqXHR) {
+//				$.mobile.loading("hide");
+//			},
+//			error : function(data, textStatus, jqXHR) {
+//				console.log("textStatus: " + textStatus);
+//				$.mobile.loading("hide");
+//				alert("Order could not be placed!");
+//			}
+//		});
 	
 		//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
 	//Esto implica que solo se va a utilizar un cart por usuario

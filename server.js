@@ -484,11 +484,11 @@ app.get('/BigBoxServer/selling', function(req, res) {
 	====================================================================================================================================*/
 
 	//Add a new order
-	app.post('/BigBoxServer/orders', function(req, res) {
-		console.log("POST ORDER");
-		//Insert into (query)
-		res.json(true);
-	});
+//	app.post('/BigBoxServer/orders', function(req, res) {
+//		console.log("POST ORDER");
+//		//Insert into (query)
+//		res.json(true);
+//	});
 
 
 
