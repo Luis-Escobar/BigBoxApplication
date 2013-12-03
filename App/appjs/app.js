@@ -1708,9 +1708,9 @@ $.ajax({
 			}
 
 		for (var i=0; i < d.item.length; i++) {
-		 	purchase_history += '<li>Order: '+d.item[i].o_number+'<a onclick=GetItem(' + d.item[i].i_id + ',true)>\
+		 	purchase_history += '<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>\
 		 						<img src=' + d.item[i].i_img + '/><p id=\"info\">\
-		 					 	' +d.item[i].i_name + '</p><p class=\"ui-li-aside\">\
+		 					 	Order: '+d.item[i].o_number+', '+d.item[i].i_name + '</p><p class=\"ui-li-aside\">\
 		 					  	$' + d.item[i].i_price + '</p></a></li>';
 		 }
 		 
