@@ -199,13 +199,14 @@ client.connect(function(err) {
 
 
 
-	app.get('/BigBoxServer/itemsearchbycat/:currentcid/:currentcid2', function(req, res) {
+	app.get('/BigBoxServer/itemsearchbycat/:currentcid/:currentcid2/:currentcid3', function(req, res) {
 			var cidValue = req.params.currentcid;
 			var subidValue = req.params.currentcid2;
+			var ssubidValue = req.params.currentcid3;
 			
 			console.log("cidValue: "+cidValue );
 					
-			client.query("select * from items where cid = " + cidValue + "or subid =" + subidValue, function(err, result) {
+			client.query("select * from items where cid = " + cidValue + "and subid =" + subidValue + "and ssubid ="+ssubidValue, function(err, result) {
 				if (err) {
 					return console.error('error running query', err);
 				}
