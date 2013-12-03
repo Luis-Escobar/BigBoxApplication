@@ -658,9 +658,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 				"Item" : theitem
 			};
 			res.json(response);
-
 		}
-
 	});
 
 	app.put('/BigBoxServer/items/:id', function(req, res) {
