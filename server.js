@@ -485,7 +485,7 @@ app.get('/BigBoxServer/report', function(req, res) {
 
 				var queryString = "select SUM(o_totalprice) as total, o_date\
 								   from orders\
-								   group by  o_date";
+								   group by  o_date order by o_date DESC";
 
 				client.query(queryString,function(err, result) {
 					if (err) {
