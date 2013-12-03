@@ -1781,6 +1781,7 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#report_list").listview();
+		 list.empty();
 		 var report = "";
 		 console.log("DATA");
 		 console.log(data);

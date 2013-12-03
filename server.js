@@ -487,7 +487,7 @@ app.get('/BigBoxServer/report', function(req, res) {
 								   from orders\
 								   group by  o_date";
 
-				client.query(queryString,[cookie[0].username],function(err, result) {
+				client.query(queryString,function(err, result) {
 					if (err) {
 						return console.error('error running query', err);
 					} else {
