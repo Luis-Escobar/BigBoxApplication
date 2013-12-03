@@ -430,10 +430,12 @@ app.get('/BigBoxServer/buying', function(req, res) {
 					if (err) {
 						return console.error('error running query', err);
 					} else {
-
-						response = response + "{ 'bids':"+result.rows+"}";
+						
+						temp = {
+							"bid": result.rows
+						};
 						console.log("REPONSE 2");
-						console.log(response);
+						console.log(temp);
 						
 						console.log("Response: " + JSON.stringify(response));
 						res.json(result);
