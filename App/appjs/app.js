@@ -1153,6 +1153,7 @@ function getSubmitValue() {
 function checkBid() {
 	var bidValue = document.getElementsByName('bidValue')[0].value;
 	//Se le suma 0.50 para un bid aceptado- No implementado aun.
+	alert(bidValue);
 	alert(parseFloat(bidValue).toFixed(2) - parseFloat(currentItem.bid).toFixed(2));
 	if (parseFloat(bidValue).toFixed(2) - parseFloat(currentItem.bid).toFixed(2) <= 0) {
 		$('#submit').addClass('ui-disabled');
