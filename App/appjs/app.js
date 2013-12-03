@@ -1797,7 +1797,15 @@ $.ajax({
 
 	
 
-		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report+'\
+		   list.append('<li data-role="list-divider" role="heading">Daily</li>\
+		   <li>Day:2013-12-02, Total: $30</li>\
+		   <li>Day:2013-11-25, Total: $40</li>\
+		   <li>Day:2013-08-23, Total: $30</li>\
+		   <li>Day:2013-07-27, Total: $10</li>\
+		   <li>Day:2013-07-15, Total: $30</li>\
+		   <li>Day:2013-07-17, Total: $25</li>\
+		   <li>Day:2013-05-15, Total: $20</li>\
+		   <li>Day:2013-14-15, Total: $25</li>\
 		   <li data-role="list-divider" role="heading">Weekly</li>\
 		   <li>Week Start:2013-12-02, Total: $30</li>\
 		   <li>Week Start:2013-11-25, Total: $40</li>\
