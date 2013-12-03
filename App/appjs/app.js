@@ -1700,12 +1700,10 @@ $.ajax({
 		 
 		 
 		 for (var i=0; i < d.bid.length; i++) {
-		 	current_bids += '<ul data-role="listview" data-theme="d" data-divider-theme="d" >\
-		 					 <li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>\
+		 	current_bids += '<li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>\
 		 					 <img src=' + d.bid[i].i_img + '/><p id=\"info\">\
 		 					 ' + d.bid[i].i_name + '</p><p class=\"ui-li-aside\">\
-		 					  $' + d.bid[i].i_price + '</p></a></li>\
-							</ul>';
+		 					  $' + d.bid[i].i_bid + '</p></a></li>';
 							
 			}
 
