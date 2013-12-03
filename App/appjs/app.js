@@ -1354,15 +1354,291 @@ function registerChecker(num) {
 
 }
 
-function searchUser(e) {
+
+function searchUser(e, page) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
-	var searchValue = document.getElementsByName('searchValue')[0].value;
-	// Got the User Search Value;
+	var searchValue = JSON.stringify({
+		'value' : '%' + document.getElementsByName('searchValue')[0].value + '%'
+	});
 
 	//Check if Enter was received.
 	if (unicode == 13) {
-
+		if (page == 1) {
+			displayAdminResult(searchValue);
+		}
+		else if(page==2){
+			displayUsersRemove(searchValue);
+			
+		}
+		else if(page == 3){
+			displayUser(searchValue);
+		}
 	}
+}
+
+
+function displayAdminResult(searchValue) {
+
+	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#adminResultList");
+				document.getElementById("adminResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="updateAdmin(\'' + data.rows[i].u_username + '\',' + data.rows[i].u_admin + ')"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick to change access.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/BigBoxApp/view/account/adminResult.html");
+}
+
+function displayUsersRemove(searchValue){
+	
+	$(document).on('pagebeforeshow', "#removeUserResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#removeUsersResultList");
+				document.getElementById("removeUsersResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="confirmUserRemoval(\''+data.rows[i].u_username+'\',1)"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick to remove user.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/BigBoxApp/view/account/removeUsers.html");
+	
+}
+
+function displayUser(searchValue){
+	
+	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#userResultList");
+				document.getElementById("userResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="recoverPassword(\'' + data.rows[i].u_username + '\')"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick check password.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/BigBoxApp/view/account/userResult.html");
+}
+
+function recoverPassword(username){
+	
+	var json = JSON.stringify({
+		'username':username
+	});
+	
+
+	$.ajax({
+		url : "http://bigboxtest.herokuapp.com/BigBoxServer/recoverPassword",
+		contentType : "application/json",
+		type : "post",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			var username = data.rows[0].u_username + "";
+			username = username.replace(/\s/g, "");
+			
+			$(document).on('pagebeforeshow', "#passwordRecoverd", function(event, ui) {
+				
+				document.getElementById("showPassword").innerHTML="";
+				
+				$("#showPassword").append("<p>The password for user "+username+" is "+data.rows[0].u_password+"</p>");
+				
+			});
+		
+			$.mobile.navigate("/BigBoxApp/view/account/passwordRecoverd.html");
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("Internal server error. Please contact an administrator.");
+		}
+	});
+
+	
+}
+function updateAdmin(username,isAdmin){
+	
+	var json = JSON.stringify({
+		'username':username,
+		'isAdmin': isAdmin
+	});
+	
+
+	$.ajax({
+		url : "http://bigboxtest.herokuapp.com/BigBoxServer/updateAdmin/",
+		contentType : "application/json",
+		type : "put",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			var username = data.rows[0].u_username + "";
+			username = username.replace(/\s/g, "");
+			console.log(username+" testing");
+			if (data.rows[0].u_admin)
+				alert("User " + username + " now has administrator access.");
+			else
+				alert("User " + username + " administrator access has been revoked.");
+
+			$.mobile.navigate("/BigBoxApp/view/account/admin.html");
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("Cannot revoke administrator access from yourself.");
+		}
+	});
+
+}
+
+function confirmUserRemoval(username,confirmType){
+				
+			var user = username.replace(/\s/g, "");
+
+			if(confirmType==1){
+	
+				$(document).on('pagebeforeshow', "#confirmUserRemoval", function(event, ui) {
+					document.getElementById("confirmUserRemovalDiv").innerHTML="";
+					$("#confirmUserRemovalDiv").append('<div align="left">\
+					<p>Are you sure you want to remove '+user+'?</p>\
+					<p>This acction cannot be undone.</p>\
+					<input type="submit" onclick="removeUser(\''+user+'\')" data-inline="true" data-theme="b" value="Yes"/>\
+					<input type="button"  onclick="$.mobile.navigate(\'/BigBoxApp/view/account/admin.html\')"\
+					data-inline="true" data-theme="b" value="No"/>\
+					</div>');
+
+		
+				});
+				
+				$.mobile.navigate("/BigBoxApp/view/account/removeUserConfirm.html");
+			}
+			else if(confirmType==2){
+				console.log("confirm user removel with 2");
+				$(document).on('pagebeforeshow', "#removedUser", function(event, ui) {
+					document.getElementById("userRemoved").innerHTML="";
+					$("#userRemoved").append('<div align="left">\
+					<p>User '+user+' was removed.</p>\
+					<input type="button" onclick="$.mobile.navigate(\'/BigBoxApp/view/account/admin.html\');" \
+					data-inline="true" data-theme="b" value="Ok"/>\
+					</div>');
+		
+				});
+				
+				$.mobile.navigate("/BigBoxApp/view/account/removedUser.html");
+
+				
+			}
+			
+		
+			
+
+		
+
+
+}
+
+function removeUser(username){
+	
+		var json = JSON.stringify({
+		'username':username
+	});
+	
+		$.ajax({
+		url : "http://bigboxtest.herokuapp.com/BigBoxServer/removeUser/",
+		contentType : "application/json",
+		type : "delete",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			
+			console.log("got here");
+			confirmUserRemoval(username,2);
+
+
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("This shouldn't happen.");
+		}
+	});
+	
+	
+	
 }
 
 /*===============================================================================================
@@ -1454,7 +1730,7 @@ $.ajax({
 		 selling_history = "No Items Sold";
 		 else
 		 for (var i=0; i < data.rows.length; i++) {
-		 	selling_history += '<li>Item: '+ data.rows[i].i_name+"'</li>";
+		 	selling_history += '<li>Item: '+ data.rows[i].i_name+"</li>";
 		 }
 	
 
