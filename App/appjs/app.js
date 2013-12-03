@@ -1789,13 +1789,12 @@ $.ajax({
 		 list.empty();
 		 var report_daily = "";
 		  var report_weekly = "";
-
+		  str = "";
 		 console.log("DATA");
 		 console.log(data);
-		 var str = "";
 		 
 		 for (var i=0; i < data.rows.length; i++) {
-		 	str = data.rows[i].o_date+"";
+		 	str =JSON.stringify(data.rows[i].o_date);
 		 	report_daily += '<li>Day:'+str.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
 		 }
 
