@@ -1701,9 +1701,9 @@ $.ajax({
 		 
 		 for (var i=0; i < d.bid.length; i++) {
 		 	current_bids += '<ul data-role="listview" data-theme="d" data-divider-theme="d" >\
-		 					 <li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>" + "\
-		 					 <img src=' + d.bid[i].i_img + '/>" + "<p id=\"info\">\
-		 					 ' + d.bid[i].i_name + '</p>" + "<p class=\"ui-li-aside\">\
+		 					 <li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>\
+		 					 <img src=' + d.bid[i].i_img + '/><p id=\"info\">\
+		 					 ' + d.bid[i].i_name + '</p><p class=\"ui-li-aside\">\
 		 					  $' + d.bid[i].i_price + '</p></a></li>\
 							</ul>';
 							
@@ -1714,9 +1714,9 @@ $.ajax({
 								 <div data-role="collapsible" data-collapsed="false">\
 								 <h3>Order: '+d.item.o_number+'</h3>\
 								 <ul data-role="listview" data-theme="d" data-divider-theme="d" >\
-								<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>" + "\
-		 						<img src=' + d.item[i].i_img + '/>" + "<p id=\"info\">\
-		 					 	' +d.item[i].i_name + '</p>" + "<p class=\"ui-li-aside\">\
+								<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>\
+		 						<img src=' + d.item[i].i_img + '/><p id=\"info\">\
+		 					 	' +d.item[i].i_name + '</p><p class=\"ui-li-aside\">\
 		 					  	$' + d.item[i].i_price + '</p></a></li>\
 								</ul></div></div>';
 		 }
