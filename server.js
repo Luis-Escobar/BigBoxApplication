@@ -406,7 +406,7 @@ app.get('/BigBoxServer/buying', function(req, res) {
 				from (select o_number,i_id,i_name,u_id,i_price,i_img\
 				from (select o_number,i_id,i_name,i_price,i_img from items natural\
 				join items_orders)as tmp natural join orders) as a\
-				natural join users where u_username=$1;
+				natural join users where u_username=$1";
 								   
 				var queryBid = 'select i_id,i_img,i_name,i_bid\
 				from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid,i_img\
