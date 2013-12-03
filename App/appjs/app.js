@@ -1774,3 +1774,35 @@ $.ajax({
 
 });
 
+
+$(document).on('pagebeforeshow', "#report", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+		 var list=$("#report_list").listview();
+		 var report = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+	
+		 for (var i=0; i < data.rows.length; i++) {
+		 	report += '<li>Date:'+data.rows[i].o_date+', Total:'+data.rows[i].total+'</li>';
+		 }
+	
+
+		   list.append('<li data-role="list-divider" role="heading">Dayly</li>'+report);
+					
+		
+		   list.listview("refresh");
+		   
+		
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+

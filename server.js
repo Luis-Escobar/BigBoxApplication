@@ -479,6 +479,31 @@ app.get('/BigBoxServer/selling', function(req, res) {
 			
 	});
 	
+		
+app.get('/BigBoxServer/report', function(req, res) {
+
+
+				var queryString = "select SUM(o_totalprice) as total, o_date\
+								   from orders\
+								   group by  o_date";
+
+				client.query(queryString,[cookie[0].username],function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"total" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			
+	});
+		
+	
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
