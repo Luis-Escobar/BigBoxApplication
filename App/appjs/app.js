@@ -1,5 +1,5 @@
 var isSearchbyCat;
-
+var itemList;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
@@ -8,7 +8,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2+"/"+currentcid3,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			var itemList = data.items;
+			itemList = data.items;
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
 			//alert(itemList.length);
@@ -37,7 +37,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			var itemList = data.items;
+			itemList = data.items;
 
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
@@ -618,6 +618,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	if (s_address_selected) {
 		//ya selecciono
 		shipTo.empty();
+		sAddressID = shipping_address[0].a_id;
 		shipTo.append("<h5> Ship to <hr style='padding:0;margin:0' /></h5><a onClick='GetAddresses(true)'>" + "<p style='padding:5px 10px 20px 0;margin:0'> " + shipping_address[0].a_name + "<br />" + shipping_address[0].a_street + "<br />" + 
 		shipping_address[0].a_city + ", " + shipping_address[0].a_state + " " + shipping_address[0].a_zip + " " + shipping_address[0].a_country + "<br />" + shipping_address[0].a_phone + "</p></a><hr style='padding:0;margin:0'/><br />");
 
@@ -1630,7 +1631,7 @@ function removeUser(username){
  =============================================================================================*/
 	var order_total;
 	var shippingTotal;
-//	var sAddressID = shipping_address[0].a_id;
+	var sAddressID;
 	
 	function placeOrder(){
 //		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
