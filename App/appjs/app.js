@@ -1,5 +1,5 @@
 var isSearchbyCat;
-
+var itemList;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
@@ -8,7 +8,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2+"/"+currentcid3,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			var itemList = data.items;
+			itemList = data.items;
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
 			//alert(itemList.length);
@@ -37,7 +37,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-			var itemList = data.items;
+			itemList = data.items;
 
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
@@ -1168,7 +1168,6 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
-	alert("Login started");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1181,10 +1180,8 @@ function login() {
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
-			alert(data.user);
 			currentUser = data.user;
 			clearInfo();
-			alert(currentUser + " Succeed");
 			$.mobile.navigate("/App/view/user.html");
 			
 		},
