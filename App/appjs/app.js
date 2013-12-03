@@ -1167,6 +1167,7 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
+	alert("Login started");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1179,12 +1180,12 @@ function login() {
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
-			//alert(data.user);
+			alert(data.user);
 			currentUser = data.user;
 			clearInfo();
-			//alert(currentUser);
+			alert(currentUser + " Succeed");
 			$.mobile.navigate("/App/view/user.html");
-			//$.mobile.navigate("/App/view/user.html")
+			
 		},
 		error : function(data, textStatus, jqXHR) {
 
