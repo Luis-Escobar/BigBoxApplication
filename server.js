@@ -82,12 +82,16 @@ client.connect(function(err) {
 
 	var address = require("./address.js");
 	var Address = address.Address;
+	var addressNextId = 0;
+	var addressList = new Array();
 
 	var creditcard = require("./creditcard.js");
 	var CreditCard = creditcard.CreditCard;
 
 	var cartItem = require("./cartItem.js");
 	var CartItem = cartItem.CartItem;
+	
+	
 	/*  Variables to store the data in the server  */
 
 	/*====================================================================================================================================
@@ -398,30 +402,50 @@ client.connect(function(err) {
 app.get('/BigBoxServer/buying', function(req, res) {
 
 
-				var queryString = "select u_username,o_number,i_name,i_id\
-								   from (select o_number,i_id,i_name,u_id\
-								   from (select o_number,i_id,i_name from items natural\
-								   join items_orders)as tmp natural join orders) as a\
-								   natural join users where u_username=$1";
+				var queryString = "select u_username,o_number,i_name,i_id,i_price,i_img\
+				from (select o_number,i_id,i_name,u_id,i_price,i_img\
+				from (select o_number,i_id,i_name,i_price,i_img from items natural\
+				join items_orders)as tmp natural join orders) as a\
+				natural join users where u_username=$1";
 								   
-					console.log("COOKIE");
-					console.log(cookie);
-					console.log("USER ID");
-					console.log(cookie[0]);
+				var queryBid = 'select i_id,i_img,i_name,i_bid\
+				from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid,i_img\
+				from bids natural join items) as tmp natural join users\
+				where buyer_id = u_id and u_username = $1';
+				var response ="";
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
 					if (err) {
 						return console.error('error running query', err);
 					} else {
 
-						var response = {
-							"item" : result.rows
-						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
+						response = '{ "item" : '+JSON.stringify(result.rows);
+					
+						console.log("RESPONSE");
+						console.log(response);
+
 
 					}
 				});
+				
+						client.query(queryBid,[cookie[0].username],function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+						
+						temp = ',"bid" :'+ JSON.stringify(result.rows)+"}";
+						
+						response = JSON.stringify(response +temp);
+						
+						console.log("REPONSE 2");
+						console.log(response);
+						
+						res.json(JSON.parse(response));
+						
+
+					}
+				});
+
 			
 	});
 	
@@ -430,7 +454,7 @@ app.get('/BigBoxServer/buying', function(req, res) {
 app.get('/BigBoxServer/selling', function(req, res) {
 
 
-				var queryString = "select i_name,u_username,i_price\
+				var queryString = "select i_id,i_img,i_name,u_username,i_price\
 								   from items natural join users\
 								   where u_username=$1";
 								   
@@ -455,9 +479,44 @@ app.get('/BigBoxServer/selling', function(req, res) {
 			
 	});
 	
+		
+app.get('/BigBoxServer/report', function(req, res) {
+
+
+				var queryString = "select SUM(o_totalprice) as total, o_date\
+								   from orders\
+								   group by  o_date";
+
+				client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						var response = {
+							"total" : result.rows
+						};
+						console.log("Response: " + JSON.stringify(response));
+						res.json(result);
+
+					}
+				});
+			
+	});
+		
+	
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
+
+	//Add a new order
+//	app.post('/BigBoxServer/orders', function(req, res) {
+//		console.log("POST ORDER");
+//		//Insert into (query)
+//		res.json(true);
+//	});
+
+
+
 
 	//Add a new address to the saved addresses
 	app.post('/BigBoxServer/addresses', function(req, res) {
@@ -468,8 +527,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 			return res.send('Error: Missing fields for the item.');
 		}
 
-		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);
-		console.log("New Address: " + JSON.stringify(newAddress));
+		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);		console.log("New Address: " + JSON.stringify(newAddress));
 		newAddress.id = addressNextId++;
 		addressList.push(newAddress);
 		res.json(true);
@@ -511,6 +569,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 				var response = {
 					"user" : result.rows
 				};
+				user_id = result.rows[0].u_id;
 				req.session.username = req.body.username;
 				cookie.pop();
 				cookie.push(req.session);
@@ -521,21 +580,21 @@ app.get('/BigBoxServer/selling', function(req, res) {
 	});
 
 	//Login
-	app.post('/BigBoxServer/user', function(req, res) {
+//	app.post('/BigBoxServer/user', function(req, res) {
 		// if the username is not submitted, give it a default of "Anonymous"
 
-		user = findByUsername(req.body.username);
+//		user = findByUsername(req.body.username);
 		// store the username as a session variable
 
-		if (req.body.username == user.username && req.body.password == user.password) {
-			req.session.username = req.body.username;
-			cookie.push(req.session);
-			res.send(200);
-		} else {
-
-			res.send(401, "Incorect username or password.");
-		}
-	});
+//		if (req.body.username == user.username && req.body.password == user.password) {
+//			req.session.username = req.body.username;
+//			cookie.push(req.session);
+//			res.send(200);
+//		} else {
+//
+//			res.send(401, "Incorect username or password.");
+//		}
+//	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
 		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);
@@ -550,6 +609,50 @@ app.get('/BigBoxServer/selling', function(req, res) {
 		}
 
 	});
+	
+	app.post('/BigBoxServer/searchUser', function(req, res) {
+		console.log("req.body:");
+		console.log(req.body);
+
+		var queryString = "select u_fname, u_lname,u_username, u_admin from users where u_username like $1";
+		if (req.body.value == '%%')
+			req.body.value = "";
+
+		client.query(queryString, [req.body.value], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				var response = {
+					"user" : result.rows
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
+
+			}
+		});
+
+	});
+	app.post('/BigBoxServer/recoverPassword', function(req, res) {
+
+		var queryString = "select u_username, u_password from users where u_username = $1";
+
+		client.query(queryString, [req.body.username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var response = {
+					"user" : result.rows
+
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
+
+			}
+
+		});
+	});
+
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
@@ -580,9 +683,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 				"Item" : theitem
 			};
 			res.json(response);
-
 		}
-
 	});
 
 	app.put('/BigBoxServer/items/:id', function(req, res) {
@@ -635,6 +736,35 @@ app.get('/BigBoxServer/selling', function(req, res) {
 		}
 	});
 
+
+	app.put('/BigBoxServer/updateAdmin', function(req, res) {
+		console.log("req.body:");
+		console.log(req.body);
+
+		var updateQuery = "update users set u_admin=$1 where u_username=$2";
+		var verifyQuery = "select u_username, u_admin from users where u_username=$1";
+		var username = req.body.username + "";
+		username = username.replace(/\s/g, "");
+		if (username == cookie[0].username)
+			res.send(401);
+		else {
+			client.query(updateQuery, [!req.body.isAdmin, req.body.username], function(err, result) {
+				if (err) {
+					return console.error('error running query', err);
+				} else {
+					client.query(verifyQuery, [req.body.username], function(err, result) {
+						var response = {
+							"user" : result.rows
+						};
+						res.json(result);
+
+					});
+
+				}
+			});
+		}
+
+	});
 	/*====================================================================================================================================
 	REST Opertaion : HTTP DELETE
 	====================================================================================================================================*/

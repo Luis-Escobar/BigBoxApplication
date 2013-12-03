@@ -572,10 +572,10 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	var shipTo = $("#shipTo");
 	var payment = $("#payment");
 	var items_ship_head = $("#items-shipping-header");
-	var items_ship = $("#items-shipping");
-	var shippingTotal = 0.00;
+	var items_ship = $("#items-shipping");	
 	var subTotal = 0.00;
-	var total;
+	shippingTotal = 0.00;
+	
 
 	if (is_from_cart) {
 		var item;
@@ -612,7 +612,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		}
 		items_ship.append("<li>" + "<img src='" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 	}
-	total = shippingTotal + subTotal;
+	order_total = shippingTotal + subTotal;
 
 	//Shipping address
 	if (s_address_selected) {
@@ -629,7 +629,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	//Payment
 	if (payment_selected) {
-		//codigo cuando ya puso trajeta
+		//codigo cuando ya puso tarjeta
 		payment.empty();
 		var cardNumberDisplay = new Array(currentCreditCard[0].cc_number.length - 4 + 1).join('x') + currentCreditCard[0].cc_number.slice(-4);
 		cardNumberDisplay = cardNumberDisplay.substring(cardNumberDisplay.length - 7);
@@ -642,19 +642,19 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 			payment.append("<hr style='margin:0'><a onClick='GetAddresses(false)'><p style='padding:5px 10px 20px 0;margin:0'><strong>Billing Address:</strong> <br>" + billing_address[0].a_name + "<br />" + 
 			billing_address[0].a_street + "<br />" + billing_address[0].a_city + ", " + billing_address[0].a_state + " " + billing_address[0].a_zip + " " + 
 			billing_address[0].a_country + "<br />" + billing_address[0].a_phone + "</p></a>");  
-			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>");
+			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>");
 
 		} else {
 			//todavia no ha seleccionado una tajeta
 			payment.append("<hr style='margin:0'><a onClick='GetAddresses(false)'><p style='padding:10px 10px 10px 0; margin:0'><strong>Select Billing Address</strong></p></a>");  
-			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>"); 
+			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>"); 
 		}
 
 	} else {
 		//no ha puesto tarjeta
 		payment.empty();
 		payment.append("<h5> Payment <hr style='padding:0;margin:0'/></h5><a onClick='GetCreditCards()'><p style='padding:0px 10px 10px 0; margin:0'><strong>Select Credit Card</strong></p></a>");
-		payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>");
+		payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>");
 
 	}
 
@@ -675,7 +675,6 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 //Shipping and Payment selection
 $(document).on('pagebeforeshow', "#ShippingOrPaymentSel", function(event, ui) {
-
 	var head = $("#SoPheader");
 	var newSoP = $("#newSoP");
 	var savedSoP = $("#savedSoP");
@@ -1099,15 +1098,6 @@ function CheckoutFromCart(isFromCart) {
 	$.mobile.navigate("/App/view/checkout.html");
 }
 
-function prepareOrder(is_from_cart) {
-	currentOrder = new Order();
-	address_selected = false;
-	payment_selected = false;
-	this.is_from_cart = is_from_cart;
-
-	$.mobile.navigate("/App/view/checkout.html");
-}
-
 var searchValue;
 function displayunicode(e) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
@@ -1189,12 +1179,10 @@ function login() {
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
-			//alert(data.user);
 			currentUser = data.user;
 			clearInfo();
-			//alert(currentUser);
 			$.mobile.navigate("/App/view/user.html");
-			//$.mobile.navigate("/App/view/user.html")
+			
 		},
 		error : function(data, textStatus, jqXHR) {
 
@@ -1354,34 +1342,327 @@ function registerChecker(num) {
 
 }
 
-function searchUser(e) {
+
+function searchUser(e, page) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
-	var searchValue = document.getElementsByName('searchValue')[0].value;
-	// Got the User Search Value;
+	var searchValue = JSON.stringify({
+		'value' : '%' + document.getElementsByName('searchValue')[0].value + '%'
+	});
 
 	//Check if Enter was received.
 	if (unicode == 13) {
-
+		if (page == 1) {
+			displayAdminResult(searchValue);
+		}
+		else if(page==2){
+			displayUsersRemove(searchValue);
+			
+		}
+		else if(page == 3){
+			displayUser(searchValue);
+		}
 	}
+}
+
+
+function displayAdminResult(searchValue) {
+
+	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#adminResultList");
+				document.getElementById("adminResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="updateAdmin(\'' + data.rows[i].u_username + '\',' + data.rows[i].u_admin + ')"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick to change access.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/App/view/account/adminResult.html");
+}
+
+function displayUsersRemove(searchValue){
+	
+	$(document).on('pagebeforeshow', "#removeUserResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#removeUsersResultList");
+				document.getElementById("removeUsersResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="confirmUserRemoval(\''+data.rows[i].u_username+'\',1)"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick to remove user.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/App/view/account/removeUsers.html");
+	
+}
+
+function displayUser(searchValue){
+	
+	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
+
+		$.ajax({
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
+			type : "post",
+			contentType : "application/json",
+			data : searchValue,
+			success : function(data, textStatus, jqXHR) {
+
+				var list = $("#userResultList");
+				document.getElementById("userResultList").innerHTML = "";
+				console.log("Empty");
+				console.log(data);
+
+				if (data.rows.length == 0)
+					list.append('<p>No Matches, please try again.</p>');
+				else
+					for (var i = 0; i < data.rows.length; i++) {
+						var isAdmin = "No";
+						if (data.rows[i].u_admin)
+							isAdmin = "Yes";
+						var username = 'onclick="recoverPassword(\'' + data.rows[i].u_username + '\')"';
+						console.log(username);
+						list.append('<li><a href="" ' + username + '>Name: ' + data.rows[i].u_fname + ' ' + data.rows[i].u_lname + ', Username: ' + data.rows[i].u_username + ', Administrator Access: ' + isAdmin + ' \tClick check password.</a></li>');
+
+					}
+
+				list.listview().listview("refresh");
+			},
+			error : function(data, textStatus, jqXHR) {
+
+			}
+		});
+
+	});
+
+	$.mobile.navigate("/App/view/account/userResult.html");
+}
+
+function recoverPassword(username){
+	
+	var json = JSON.stringify({
+		'username':username
+	});
+	
+
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/recoverPassword",
+		contentType : "application/json",
+		type : "post",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			var username = data.rows[0].u_username + "";
+			username = username.replace(/\s/g, "");
+			
+			$(document).on('pagebeforeshow', "#passwordRecoverd", function(event, ui) {
+				
+				document.getElementById("showPassword").innerHTML="";
+				
+				$("#showPassword").append("<p>The password for user "+username+" is "+data.rows[0].u_password+"</p>");
+				
+			});
+		
+			$.mobile.navigate("/App/view/accoun1t/passwordRecoverd.html");
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("Internal server error. Please contact an administrator.");
+		}
+	});
+
+	
+}
+function updateAdmin(username,isAdmin){
+	
+	var json = JSON.stringify({
+		'username':username,
+		'isAdmin': isAdmin
+	});
+	
+
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/updateAdmin/",
+		contentType : "application/json",
+		type : "put",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			var username = data.rows[0].u_username + "";
+			username = username.replace(/\s/g, "");
+			console.log(username+" testing");
+			if (data.rows[0].u_admin)
+				alert("User " + username + " now has administrator access.");
+			else
+				alert("User " + username + " administrator access has been revoked.");
+
+			$.mobile.navigate("/App/view/account/admin.html");
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("Cannot revoke administrator access from yourself.");
+		}
+	});
+
+}
+
+function confirmUserRemoval(username,confirmType){
+				
+			var user = username.replace(/\s/g, "");
+
+			if(confirmType==1){
+	
+				$(document).on('pagebeforeshow', "#confirmUserRemoval", function(event, ui) {
+					document.getElementById("confirmUserRemovalDiv").innerHTML="";
+					$("#confirmUserRemovalDiv").append('<div align="left">\
+					<p>Are you sure you want to remove '+user+'?</p>\
+					<p>This acction cannot be undone.</p>\
+					<input type="submit" onclick="removeUser(\''+user+'\')" data-inline="true" data-theme="b" value="Yes"/>\
+					<input type="button"  onclick="$.mobile.navigate(\'/App/view/account/admin.html\')"\
+					data-inline="true" data-theme="b" value="No"/>\
+					</div>');
+
+		
+				});
+				
+				$.mobile.navigate("/App/view/account/removeUserConfirm.html");
+			}
+			else if(confirmType==2){
+				console.log("confirm user removel with 2");
+				$(document).on('pagebeforeshow', "#removedUser", function(event, ui) {
+					document.getElementById("userRemoved").innerHTML="";
+					$("#userRemoved").append('<div align="left">\
+					<p>User '+user+' was removed.</p>\
+					<input type="button" onclick="$.mobile.navigate(\'/App/view/account/admin.html\');" \
+					data-inline="true" data-theme="b" value="Ok"/>\
+					</div>');
+		
+				});
+				
+				$.mobile.navigate("/App/view/account/removedUser.html");
+
+				
+			}
+	
+
+
+}
+
+function removeUser(username){
+	
+		var json = JSON.stringify({
+		'username':username
+	});
+	
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/removeUser/",
+		contentType : "application/json",
+		type : "delete",
+		data : json,
+		success : function(data, textStatus, jqXHR) {
+			
+			console.log("got here");
+			confirmUserRemoval(username,2);
+
+
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			alert("This shouldn't happen.");
+		}
+	});
+	
+	
+	
 }
 
 /*===============================================================================================
  Order Functions
  =============================================================================================*/
-function placeOrder(){
+	var order_total;
+	var shippingTotal;
+//	var sAddressID = shipping_address[0].a_id;
 	
-	//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
+	function placeOrder(){
+//		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
+//		$.ajax({
+//			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
+//			method : 'post',
+//			data : newOrderSON,
+//			contentType : "application/json",
+//			dataType : "json",
+//			success : function(data, textStatus, jqXHR) {
+//				$.mobile.loading("hide");
+//			},
+//			error : function(data, textStatus, jqXHR) {
+//				console.log("textStatus: " + textStatus);
+//				$.mobile.loading("hide");
+//				alert("Order could not be placed!");
+//			}
+//		});
+	
+		//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
 	//Esto implica que solo se va a utilizar un cart por usuario
 	if(is_from_cart){
-		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--;
-		//y luego eliminar el cart de la tabla cart, cart_items y donde aparezca delete from table where cart_id = id.
-		
+		var len = itemList.length;
+		for(i=0;i<len;i++){
+			//Ajax call para a-adir la conexion de items en la orden 
+		}
 	}
 	else{
 		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--; sin usar el cart
 	}
-	
-	$.mobile.navigate("/App/view/orderSubmitted.html");
+	clearInfo();
+	$.mobile.navigate("/App/view/orderSubmitted.html"); 
 }
 /*===============================================================================================
  Helper Function
@@ -1408,21 +1689,44 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
+		 list.empty();
 		 var purchase_history = "";
-		 console.log("DATA");
-		 console.log(data);
+		 var current_bids = "";
+		 var d = JSON.parse(data);
+		 console.log(d);
 		 
-		 for (var i=0; i < data.rows.length; i++) {
-		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;
+
+
+		 if(d.bid.length ==0)
+		 current_bids = "No bids have been placed yet";
+		 else	 
+		 for (var i=0; i < d.bid.length; i++) {
+		 	current_bids += '<li><a onclick=GetItem(' + d.bid[i].i_id + ',true)>\
+		 					 <img src=' + d.bid[i].i_img + '/><p id=\"info\">\
+		 					 ' + d.bid[i].i_name + '</p><p class=\"ui-li-aside\">\
+		 					  $' + d.bid[i].i_bid + '</p></a></li>';
+							
+			}
+
+
+		 if(d.item.length ==0)
+		 current_bids = "No purchaces have been made yet";
+		else
+		for (var i=0; i < d.item.length; i++) {
+		 	purchase_history += '<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>\
+		 						<img src=' + d.item[i].i_img + '/><p id=\"info\">\
+		 					 	Order: '+d.item[i].o_number+', '+d.item[i].i_name + '</p><p class=\"ui-li-aside\">\
+		 					  	$' + d.item[i].i_price + '</p></a></li>';
 		 }
 		 
-		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
-					<li data-role="list-divider" role="heading">Purchase History</li>'
-					+purchase_history);
+		    list.append('<li data-role="list-divider" role="heading">Purchase History</li>'
+		    +purchase_history+'<li data-role="list-divider" role="heading">Bidding</li>'+current_bids);
+					
+				
 					
 		
 		   list.listview("refresh");
-		   
+		
 		
 		},
         error : function(data, textStatus, jqXHR) {
@@ -1439,17 +1743,56 @@ $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("#selling_list").listview();
+		 var list=$("#selling_history").listview();
 		 var selling_history = "";
 		 console.log("DATA");
 		 console.log(data);
 		 
+		 if(data.rows.length == 0)
+		 selling_history = "No Items Sold";
+		 else
 		 for (var i=0; i < data.rows.length; i++) {
-		 	selling_history += '<li>Item: '+ data.rows[i].i_name;
+		 	selling_history += '<li><a onclick=GetItem(' + data.rows[i].i_id + ',true)>\
+		 						<img src=' + data.rows[i].i_img + '/><p id=\"info\">\
+		 					 	'+data.rows[i].i_name + '</p><p class=\"ui-li-aside\">\
+		 					  	$' + data.rows[i].i_price + '</p></a></li>';
 		 }
 	
 
 		   list.append('<li data-role="list-divider" role="heading">Selling History</li>'+selling_history);
+					
+		
+		   list.listview("refresh");
+		   
+		
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+
+$(document).on('pagebeforeshow', "#report", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+		 var list=$("#report_list").listview();
+		 list.empty();
+		 var report = "";
+		 console.log("DATA");
+		 console.log(data);
+		 
+	
+		 for (var i=0; i < data.rows.length; i++) {
+		 	report += '<li>Date:'+data.rows[i].o_date+', Total:'+data.rows[i].total+'</li>';
+		 }
+	
+
+		   list.append('<li data-role="list-divider" role="heading">Dayly</li>'+report);
 					
 		
 		   list.listview("refresh");
