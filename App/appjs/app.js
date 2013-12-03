@@ -1690,7 +1690,7 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
-		 list.empty();
+		// list.empty();
 		 var purchase_history = "";
 		 var current_bids = "";
 		 var d = JSON.parse(data);
