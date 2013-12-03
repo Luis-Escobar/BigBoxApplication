@@ -1410,18 +1410,15 @@ $.ajax({
 		 var list=$("#buying_list").listview();
 		 var purchase_history = "";
 		 var current_bids = "";
-		 console.log("DATA");
-		 console.log(data);
 		 var d = JSON.parse(data);
-		 console.log(d.bid);
-		 console.log(d.item);
 
 
-		for (var i=0; i < data.item.length; i++) {
-		 	purchase_history += '<li>Order: '+data.item[i].o_number+' Item: '+ data.rows[i].i_name;
+
+		for (var i=0; i < d.item.length; i++) {
+		 	purchase_history += '<li>Order: '+d.item[i].o_number+' Item: '+ d.rows[i].i_name;
 		 }
-		 for (var i=0; i < data.bid.length; i++) {
-		 	purchase_history += '<li>Item: '+data.bid[i].i_name+' Current Bid: '+ data.rows[i].i_bid;
+		 for (var i=0; i < d.bid.length; i++) {
+		 	purchase_history += '<li>Item: '+d.bid[i].i_name+' Current Bid: '+ d.rows[i].i_bid;
 		 }
 		 
 		   list.append('<li data-role="list-divider" role="heading">Bidding</li>'
