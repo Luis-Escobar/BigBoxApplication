@@ -409,13 +409,14 @@ app.get('/BigBoxServer/buying', function(req, res) {
 								from bids natural join items) as tmp\
 								natural join users\
 								where buyer_id = u_id and u_username=$1';
+				var response ="";
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
 					if (err) {
 						return console.error('error running query', err);
 					} else {
 
-						var response = {
+						response = {
 							"item" : result.rows
 						};
 						console.log("RESPONSE");
@@ -430,7 +431,7 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						return console.error('error running query', err);
 					} else {
 
-						var response = response + "{ 'bids':"+result.rows+"}";
+						response = response + "{ 'bids':"+result.rows+"}";
 						console.log("REPONSE 2");
 						console.log(response);
 						
