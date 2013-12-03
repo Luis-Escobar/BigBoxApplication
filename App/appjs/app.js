@@ -1154,10 +1154,10 @@ function checkBid() {
 	var bidValue = document.getElementsByName('bidValue')[0].value;
 	//Se le suma 0.50 para un bid aceptado- No implementado aun.
 	alert(bidValue);
-	alert(parseFloat(bidValue).toFixed(2) - parseFloat(currentItem.bid).toFixed(2));
-	if (parseFloat(bidValue).toFixed(2) - parseFloat(currentItem.bid).toFixed(2) <= 0) {
+	alert(parseFloat(bidValue).toFixed(2) - parseFloat(currentItem[0].i_bid).toFixed(2));
+	if (parseFloat(bidValue).toFixed(2) - parseFloat(currentItem[0].i_bid).toFixed(2) <= 0) {
 		$('#submit').addClass('ui-disabled');
-	} else if (parseFloat(bidValue).toFixed(2) - parseFloat(currentItem.bid).toFixed(2) > 0) {
+	} else if (parseFloat(bidValue).toFixed(2) - parseFloat(currentItem[0].i_bid).toFixed(2) > 0) {
 		$('#submit').removeClass('ui-disabled');
 	} else {
 		$('#submit').addClass('ui-disabled');
