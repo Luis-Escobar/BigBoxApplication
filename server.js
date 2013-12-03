@@ -483,6 +483,16 @@ app.get('/BigBoxServer/selling', function(req, res) {
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
 
+	//Add a new order
+//	app.post('/BigBoxServer/orders', function(req, res) {
+//		console.log("POST ORDER");
+//		//Insert into (query)
+//		res.json(true);
+//	});
+
+
+
+
 	//Add a new address to the saved addresses
 	app.post('/BigBoxServer/addresses', function(req, res) {
 		console.log("POST ADDRESS");
@@ -492,8 +502,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 			return res.send('Error: Missing fields for the item.');
 		}
 
-		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);
-		console.log("New Address: " + JSON.stringify(newAddress));
+		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);		console.log("New Address: " + JSON.stringify(newAddress));
 		newAddress.id = addressNextId++;
 		addressList.push(newAddress);
 		res.json(true);
@@ -535,6 +544,7 @@ app.get('/BigBoxServer/selling', function(req, res) {
 				var response = {
 					"user" : result.rows
 				};
+				user_id = result.rows[0].u_id;
 				req.session.username = req.body.username;
 				cookie.pop();
 				cookie.push(req.session);
@@ -545,21 +555,21 @@ app.get('/BigBoxServer/selling', function(req, res) {
 	});
 
 	//Login
-	app.post('/BigBoxServer/user', function(req, res) {
+//	app.post('/BigBoxServer/user', function(req, res) {
 		// if the username is not submitted, give it a default of "Anonymous"
 
-		user = findByUsername(req.body.username);
+//		user = findByUsername(req.body.username);
 		// store the username as a session variable
 
-		if (req.body.username == user.username && req.body.password == user.password) {
-			req.session.username = req.body.username;
-			cookie.push(req.session);
-			res.send(200);
-		} else {
-
-			res.send(401, "Incorect username or password.");
-		}
-	});
+//		if (req.body.username == user.username && req.body.password == user.password) {
+//			req.session.username = req.body.username;
+//			cookie.push(req.session);
+//			res.send(200);
+//		} else {
+//
+//			res.send(401, "Incorect username or password.");
+//		}
+//	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
 		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);

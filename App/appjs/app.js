@@ -572,10 +572,10 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	var shipTo = $("#shipTo");
 	var payment = $("#payment");
 	var items_ship_head = $("#items-shipping-header");
-	var items_ship = $("#items-shipping");
-	var shippingTotal = 0.00;
+	var items_ship = $("#items-shipping");	
 	var subTotal = 0.00;
-	var total;
+	shippingTotal = 0.00;
+	
 
 	if (is_from_cart) {
 		var item;
@@ -612,7 +612,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		}
 		items_ship.append("<li>" + "<img src='" + item[0].i_img + "'/>" + "<p id='infoCart'>" + item[0].i_name + "</p>" + "<p> $" + item[0].i_price + "</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
 	}
-	total = shippingTotal + subTotal;
+	order_total = shippingTotal + subTotal;
 
 	//Shipping address
 	if (s_address_selected) {
@@ -629,7 +629,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	//Payment
 	if (payment_selected) {
-		//codigo cuando ya puso trajeta
+		//codigo cuando ya puso tarjeta
 		payment.empty();
 		var cardNumberDisplay = new Array(currentCreditCard[0].cc_number.length - 4 + 1).join('x') + currentCreditCard[0].cc_number.slice(-4);
 		cardNumberDisplay = cardNumberDisplay.substring(cardNumberDisplay.length - 7);
@@ -642,19 +642,19 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 			payment.append("<hr style='margin:0'><a onClick='GetAddresses(false)'><p style='padding:5px 10px 20px 0;margin:0'><strong>Billing Address:</strong> <br>" + billing_address[0].a_name + "<br />" + 
 			billing_address[0].a_street + "<br />" + billing_address[0].a_city + ", " + billing_address[0].a_state + " " + billing_address[0].a_zip + " " + 
 			billing_address[0].a_country + "<br />" + billing_address[0].a_phone + "</p></a>");  
-			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>");
+			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>");
 
 		} else {
 			//todavia no ha seleccionado una tajeta
 			payment.append("<hr style='margin:0'><a onClick='GetAddresses(false)'><p style='padding:10px 10px 10px 0; margin:0'><strong>Select Billing Address</strong></p></a>");  
-			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>"); 
+			payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>"); 
 		}
 
 	} else {
 		//no ha puesto tarjeta
 		payment.empty();
 		payment.append("<h5> Payment <hr style='padding:0;margin:0'/></h5><a onClick='GetCreditCards()'><p style='padding:0px 10px 10px 0; margin:0'><strong>Select Credit Card</strong></p></a>");
-		payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + total.toFixed(2) + "</p><hr>");
+		payment.append("<hr style='padding:0;margin:0;border-top:dashed 1px'/><br /><p style='margin-bottom:0;padding-bottom:5px'>Price: $" + subTotal.toFixed(2) + "<br>Shipping: $" + shippingTotal.toFixed(2) + "<hr style='padding:0;margin:0;width:100px'/>Total: $" + order_total.toFixed(2) + "</p><hr>");
 
 	}
 
@@ -675,7 +675,6 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 //Shipping and Payment selection
 $(document).on('pagebeforeshow', "#ShippingOrPaymentSel", function(event, ui) {
-
 	var head = $("#SoPheader");
 	var newSoP = $("#newSoP");
 	var savedSoP = $("#savedSoP");
@@ -1099,15 +1098,6 @@ function CheckoutFromCart(isFromCart) {
 	$.mobile.navigate("/App/view/checkout.html");
 }
 
-function prepareOrder(is_from_cart) {
-	currentOrder = new Order();
-	address_selected = false;
-	payment_selected = false;
-	this.is_from_cart = is_from_cart;
-
-	$.mobile.navigate("/App/view/checkout.html");
-}
-
 var searchValue;
 function displayunicode(e) {
 	var unicode = e.keyCode ? e.keyCode : e.charCode;
@@ -1177,6 +1167,7 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
+	alert("Login started");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1189,12 +1180,12 @@ function login() {
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
-			//alert(data.user);
+			alert(data.user);
 			currentUser = data.user;
 			clearInfo();
-			//alert(currentUser);
+			alert(currentUser + " Succeed");
 			$.mobile.navigate("/App/view/user.html");
-			//$.mobile.navigate("/App/view/user.html")
+			
 		},
 		error : function(data, textStatus, jqXHR) {
 
@@ -1640,20 +1631,41 @@ function removeUser(username){
 /*===============================================================================================
  Order Functions
  =============================================================================================*/
-function placeOrder(){
+	var order_total;
+	var shippingTotal;
+	var sAddressID = shipping_address[0].a_id;
 	
-	//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
+	function placeOrder(){
+//		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
+//		$.ajax({
+//			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
+//			method : 'post',
+//			data : newOrderSON,
+//			contentType : "application/json",
+//			dataType : "json",
+//			success : function(data, textStatus, jqXHR) {
+//				$.mobile.loading("hide");
+//			},
+//			error : function(data, textStatus, jqXHR) {
+//				console.log("textStatus: " + textStatus);
+//				$.mobile.loading("hide");
+//				alert("Order could not be placed!");
+//			}
+//		});
+	
+		//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
 	//Esto implica que solo se va a utilizar un cart por usuario
 	if(is_from_cart){
-		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--;
-		//y luego eliminar el cart de la tabla cart, cart_items y donde aparezca delete from table where cart_id = id.
-		
+		var len = itemList.length;
+		for(i=0;i<len;i++){
+			//Ajax call para a-adir la conexion de items en la orden 
+		}
 	}
 	else{
 		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--; sin usar el cart
 	}
-	
-	$.mobile.navigate("/App/view/orderSubmitted.html");
+	clearInfo();
+	$.mobile.navigate("/App/view/orderSubmitted.html"); 
 }
 /*===============================================================================================
  Helper Function
