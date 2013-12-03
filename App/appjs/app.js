@@ -1409,26 +1409,29 @@ $.ajax({
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
 		 var purchase_history = "";
+		 var current_bids = "";
 		 console.log("DATA");
 		 console.log(data);
 		 var d = JSON.parse(data);
 		 console.log(d.bid);
 		 console.log(d.item);
-		 console.log(d.rows[0]);
-		 console.log(d.rows[1]);
 
 
-		/* for (var i=0; i < data.rows.length; i++) {
-		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;
+		for (var i=0; i < data.item.length; i++) {
+		 	purchase_history += '<li>Order: '+data.item[i].o_number+' Item: '+ data.rows[i].i_name;
+		 }
+		 for (var i=0; i < data.bid.length; i++) {
+		 	purchase_history += '<li>Item: '+data.bid[i].i_name+' Current Bid: '+ data.rows[i].i_bid;
 		 }
 		 
-		   list.append('<li data-role="list-divider" role="heading">Bidding</li>\
-					<li data-role="list-divider" role="heading">Purchase History</li>'
-					+purchase_history);
+		   list.append('<li data-role="list-divider" role="heading">Bidding</li>'
+		   				+current_bids+
+		   				'<li data-role="list-divider" role="heading">Purchase History</li>'
+						+purchase_history);
 					
 		
 		   list.listview("refresh");
-		*/   
+		
 		
 		},
         error : function(data, textStatus, jqXHR) {
