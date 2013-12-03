@@ -82,6 +82,8 @@ client.connect(function(err) {
 
 	var address = require("./address.js");
 	var Address = address.Address;
+	var addressNextId = 0;
+	var addressList = new Array();
 
 	var creditcard = require("./creditcard.js");
 	var CreditCard = creditcard.CreditCard;
@@ -89,7 +91,7 @@ client.connect(function(err) {
 	var cartItem = require("./cartItem.js");
 	var CartItem = cartItem.CartItem;
 	
-	var addressNextId = 0;
+	
 	/*  Variables to store the data in the server  */
 
 	/*====================================================================================================================================
