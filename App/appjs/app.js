@@ -1445,7 +1445,7 @@ $.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/selling",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("#selling_list").listview();
+		 var list=$("#selling_history").listview();
 		 var selling_history = "";
 		 console.log("DATA");
 		 console.log(data);
