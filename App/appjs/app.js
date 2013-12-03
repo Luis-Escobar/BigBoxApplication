@@ -1411,6 +1411,7 @@ $.ajax({
 		 var purchase_history = "";
 		 console.log("DATA");
 		 console.log(data);
+		 console.log(JSON.parse(data));
 		 /*
 		 for (var i=0; i < data.rows.length; i++) {
 		 	purchase_history += '<li>Order: '+data.rows[i].o_number+' Item: '+ data.rows[i].i_name;

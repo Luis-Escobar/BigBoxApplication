@@ -437,8 +437,6 @@ app.get('/BigBoxServer/buying', function(req, res) {
 						console.log(temp);
 						
 						response = JSON.stringify(response) +JSON.stringify(temp);
-						
-						console.log("Response: " + jQuery.parseJSON(response));
 						res.json(response);
 						
 
