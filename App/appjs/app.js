@@ -3,7 +3,7 @@ var isSearchbyCat;
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	if(isSearchbyCat){
-		alert("cid"+currentcid+"subid"+currentcid2+"ssubid"+currentcid3);	
+		//alert("cid"+currentcid+"subid"+currentcid2+"ssubid"+currentcid3);	
 		$.ajax({									
 		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearchbycat/"+currentcid+"/"+currentcid2+"/"+currentcid3,
 		contentType : "application/json",
@@ -183,7 +183,7 @@ $.ajax({
 			/*
 			alert(JSON.stringify(categoriesList));
 			alert(categoriesList.length);
-			alert(categoriesList[0].cid);
+	GetCategory		alert(categoriesList[0].cid);
 			alert(categoriesList[0].cname);
 			
 			
@@ -751,7 +751,7 @@ function ConverToJSON(formData) {
 
 var currentcid;
 function GetCategory(cid, condition) {
-	alert(condition);
+	//alert(condition);
 	currentcid = cid;
 	currentcid2 = -1;
 	currentcid3 = -1;
@@ -764,7 +764,7 @@ function GetCategory(cid, condition) {
 var currentcid2;
 function GetSecondCategory(cid,condition) {
 	//alert("subid:"+cid);
-	alert(condition);
+	//alert(condition);
 	currentcid2 = cid;
 	currentcid3 = -1;
 	if(condition)
@@ -775,7 +775,7 @@ function GetSecondCategory(cid,condition) {
 
 var currentcid3;
 function GetThirdCategory(cid) {
-	alert("ssubid:"+cid);
+	//alert("ssubid:"+cid);
 	currentcid3 = cid;
 	$.mobile.navigate("/App/view/results.html");
 }
