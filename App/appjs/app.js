@@ -1415,10 +1415,10 @@ $.ajax({
 
 
 		for (var i=0; i < d.item.length; i++) {
-		 	purchase_history += '<li>Order: '+d.item[i].o_number+' Item: '+ d.rows[i].i_name;
+		 	purchase_history += '<li>Order: '+d.item[i].o_number+' Item: '+ d.item[i].i_name;
 		 }
 		 for (var i=0; i < d.bid.length; i++) {
-		 	purchase_history += '<li>Item: '+d.bid[i].i_name+' Current Bid: '+ d.rows[i].i_bid;
+		 	purchase_history += '<li>Item: '+d.bid[i].i_name+' Current Bid: '+ d.bid[i].i_bid;
 		 }
 		 
 		   list.append('<li data-role="list-divider" role="heading">Bidding</li>'
