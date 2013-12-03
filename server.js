@@ -88,6 +88,8 @@ client.connect(function(err) {
 
 	var cartItem = require("./cartItem.js");
 	var CartItem = cartItem.CartItem;
+	
+	var addressNextId = 0;
 	/*  Variables to store the data in the server  */
 
 	/*====================================================================================================================================
