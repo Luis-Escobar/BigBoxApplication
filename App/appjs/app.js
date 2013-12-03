@@ -1382,7 +1382,7 @@ function displayAdminResult(searchValue) {
 	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
 
 		$.ajax({
-			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
 			type : "post",
 			contentType : "application/json",
 			data : searchValue,
@@ -1423,7 +1423,7 @@ function displayUsersRemove(searchValue){
 	$(document).on('pagebeforeshow', "#removeUserResult", function(event, ui) {
 
 		$.ajax({
-			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
 			type : "post",
 			contentType : "application/json",
 			data : searchValue,
@@ -1465,7 +1465,7 @@ function displayUser(searchValue){
 	$(document).on('pagebeforeshow', "#adminResult", function(event, ui) {
 
 		$.ajax({
-			url : "http://bigboxtest.herokuapp.com/BigBoxServer/searchUser/",
+			url : "http://bigbox.herokuapp.com/BigBoxServer/searchUser/",
 			type : "post",
 			contentType : "application/json",
 			data : searchValue,
@@ -1509,7 +1509,7 @@ function recoverPassword(username){
 	
 
 	$.ajax({
-		url : "http://bigboxtest.herokuapp.com/BigBoxServer/recoverPassword",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/recoverPassword",
 		contentType : "application/json",
 		type : "post",
 		data : json,
@@ -1544,7 +1544,7 @@ function updateAdmin(username,isAdmin){
 	
 
 	$.ajax({
-		url : "http://bigboxtest.herokuapp.com/BigBoxServer/updateAdmin/",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/updateAdmin/",
 		contentType : "application/json",
 		type : "put",
 		data : json,
@@ -1620,7 +1620,7 @@ function removeUser(username){
 	});
 	
 		$.ajax({
-		url : "http://bigboxtest.herokuapp.com/BigBoxServer/removeUser/",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/removeUser/",
 		contentType : "application/json",
 		type : "delete",
 		data : json,
