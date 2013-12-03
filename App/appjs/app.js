@@ -1788,9 +1788,11 @@ $.ajax({
 
 		 console.log("DATA");
 		 console.log(data);
+		 var str = "";
 		 
 		 for (var i=0; i < data.rows.length; i++) {
-		 	report_daily += '<li>Day:'+data.rows[i].o_date.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
+		 	str = data.rows[i].o_date+"";
+		 	report_daily += '<li>Day:'+str.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
 		 }
 
 	
