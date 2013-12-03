@@ -574,6 +574,50 @@ app.get('/BigBoxServer/selling', function(req, res) {
 		}
 
 	});
+	
+	app.post('/BigBoxServer/searchUser', function(req, res) {
+		console.log("req.body:");
+		console.log(req.body);
+
+		var queryString = "select u_fname, u_lname,u_username, u_admin from users where u_username like $1";
+		if (req.body.value == '%%')
+			req.body.value = "";
+
+		client.query(queryString, [req.body.value], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				var response = {
+					"user" : result.rows
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
+
+			}
+		});
+
+	});
+	app.post('/BigBoxServer/recoverPassword', function(req, res) {
+
+		var queryString = "select u_username, u_password from users where u_username = $1";
+
+		client.query(queryString, [req.body.username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var response = {
+					"user" : result.rows
+
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
+
+			}
+
+		});
+	});
+
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
@@ -659,6 +703,35 @@ app.get('/BigBoxServer/selling', function(req, res) {
 		}
 	});
 
+
+	app.put('/BigBoxServer/updateAdmin', function(req, res) {
+		console.log("req.body:");
+		console.log(req.body);
+
+		var updateQuery = "update users set u_admin=$1 where u_username=$2";
+		var verifyQuery = "select u_username, u_admin from users where u_username=$1";
+		var username = req.body.username + "";
+		username = username.replace(/\s/g, "");
+		if (username == cookie[0].username)
+			res.send(401);
+		else {
+			client.query(updateQuery, [!req.body.isAdmin, req.body.username], function(err, result) {
+				if (err) {
+					return console.error('error running query', err);
+				} else {
+					client.query(verifyQuery, [req.body.username], function(err, result) {
+						var response = {
+							"user" : result.rows
+						};
+						res.json(result);
+
+					});
+
+				}
+			});
+		}
+
+	});
 	/*====================================================================================================================================
 	REST Opertaion : HTTP DELETE
 	====================================================================================================================================*/
