@@ -1125,9 +1125,9 @@ function getSubmitValue() {
 	 "hasBid":""+currentItem.hasBid, "bid":""+currentItem.bid, "seller":""+currentItem.seller, "shippingPrice":""+currentItem.shippingPrice){
 
 	 var j = JSON.stringify(jsonData);*/
-	currentItem.bid = bidValue;
-	var newProdJSON = JSON.stringify(currentItem);
-	$.ajax({
+	//currentItem.bid = bidValue;
+	//var newProdJSON = JSON.stringify(currentItem);
+	/**$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem.id,
 		method : 'put',
 		data : newProdJSON,
@@ -1146,7 +1146,7 @@ function getSubmitValue() {
 				alert("Internal Server Error.");
 			}
 		}
-	});
+	});*/
 
 }
 
