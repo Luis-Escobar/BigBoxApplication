@@ -1415,7 +1415,7 @@ function displayAdminResult(searchValue) {
 
 	});
 
-	$.mobile.navigate("/BigBoxApp/view/account/adminResult.html");
+	$.mobile.navigate("/App/view/account/adminResult.html");
 }
 
 function displayUsersRemove(searchValue){
@@ -1456,7 +1456,7 @@ function displayUsersRemove(searchValue){
 
 	});
 
-	$.mobile.navigate("/BigBoxApp/view/account/removeUsers.html");
+	$.mobile.navigate("/App/view/account/removeUsers.html");
 	
 }
 
@@ -1498,7 +1498,7 @@ function displayUser(searchValue){
 
 	});
 
-	$.mobile.navigate("/BigBoxApp/view/account/userResult.html");
+	$.mobile.navigate("/App/view/account/userResult.html");
 }
 
 function recoverPassword(username){
@@ -1525,7 +1525,7 @@ function recoverPassword(username){
 				
 			});
 		
-			$.mobile.navigate("/BigBoxApp/view/account/passwordRecoverd.html");
+			$.mobile.navigate("/App/view/accoun1t/passwordRecoverd.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1557,7 +1557,7 @@ function updateAdmin(username,isAdmin){
 			else
 				alert("User " + username + " administrator access has been revoked.");
 
-			$.mobile.navigate("/BigBoxApp/view/account/admin.html");
+			$.mobile.navigate("/App/view/account/admin.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1579,14 +1579,14 @@ function confirmUserRemoval(username,confirmType){
 					<p>Are you sure you want to remove '+user+'?</p>\
 					<p>This acction cannot be undone.</p>\
 					<input type="submit" onclick="removeUser(\''+user+'\')" data-inline="true" data-theme="b" value="Yes"/>\
-					<input type="button"  onclick="$.mobile.navigate(\'/BigBoxApp/view/account/admin.html\')"\
+					<input type="button"  onclick="$.mobile.navigate(\'/App/view/account/admin.html\')"\
 					data-inline="true" data-theme="b" value="No"/>\
 					</div>');
 
 		
 				});
 				
-				$.mobile.navigate("/BigBoxApp/view/account/removeUserConfirm.html");
+				$.mobile.navigate("/App/view/account/removeUserConfirm.html");
 			}
 			else if(confirmType==2){
 				console.log("confirm user removel with 2");
@@ -1594,13 +1594,13 @@ function confirmUserRemoval(username,confirmType){
 					document.getElementById("userRemoved").innerHTML="";
 					$("#userRemoved").append('<div align="left">\
 					<p>User '+user+' was removed.</p>\
-					<input type="button" onclick="$.mobile.navigate(\'/BigBoxApp/view/account/admin.html\');" \
+					<input type="button" onclick="$.mobile.navigate(\'/App/view/account/admin.html\');" \
 					data-inline="true" data-theme="b" value="Ok"/>\
 					</div>');
 		
 				});
 				
-				$.mobile.navigate("/BigBoxApp/view/account/removedUser.html");
+				$.mobile.navigate("/App/view/account/removedUser.html");
 
 				
 			}
