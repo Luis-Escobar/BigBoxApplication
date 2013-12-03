@@ -1695,6 +1695,7 @@ $.ajax({
 		 var purchase_history = "";
 		 var current_bids = "";
 		 var d = JSON.parse(data);
+		 console.log(d);
 
 
 
