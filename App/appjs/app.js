@@ -1689,6 +1689,8 @@ $.ajax({
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 		 var list=$("#buying_list").listview();
+		 var collap = $("#purchase_history");
+		 collap.empty();
 		 list.empty();
 		 var purchase_history = "";
 		 var current_bids = "";
@@ -1708,25 +1710,22 @@ $.ajax({
 			}
 
 		for (var i=0; i < d.item.length; i++) {
-		 	purchase_history += '<div data-role="collapsible-set"  >\
-								 <div data-role="collapsible" data-collapsed="false">\
-								 <h3>Order: '+d.item.o_number+'</h3>\
+		 	purchase_history += '<div data-role="collapsible" data-collapsed="true">\
+								 <h3>Order: '+d.item[i].o_number+'</h3>\
 								 <ul data-role="listview" data-theme="d" data-divider-theme="d" >\
 								<li><a onclick=GetItem(' + d.item[i].i_id + ',true)>\
 		 						<img src=' + d.item[i].i_img + '/><p id=\"info\">\
 		 					 	' +d.item[i].i_name + '</p><p class=\"ui-li-aside\">\
 		 					  	$' + d.item[i].i_price + '</p></a></li>\
-								</ul></div></div>';
+								</ul></div>';
 		 }
 		 
-		 
-
-				list.append('<li data-role="list-divider" role="heading">Bidding</li>'
-					+current_bids+
-					'<li data-role="list-divider" role="heading">Purchase History</li>'
-					+purchase_history+
-					'</div>\
-					');
+		    list.append('<li data-role="list-divider" role="heading">Purchase History</li>');
+		 	collap.append(purchase_history);
+			list.append('<li data-role="list-divider" role="heading">Bidding</li>'+current_bids);
+					
+				
+					
 		
 		   list.listview("refresh");
 		
