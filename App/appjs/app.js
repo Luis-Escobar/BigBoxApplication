@@ -1450,8 +1450,11 @@ $.ajax({
 		 console.log("DATA");
 		 console.log(data);
 		 
+		 if(data.rows.length == 0)
+		 selling_history = "No Items Sold";
+		 else
 		 for (var i=0; i < data.rows.length; i++) {
-		 	selling_history += '<li>Item: '+ data.rows[i].i_name;
+		 	selling_history += '<li>Item: '+ data.rows[i].i_name+"'</li>";
 		 }
 	
 
