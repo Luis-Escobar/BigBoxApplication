@@ -13,31 +13,6 @@ client.connect(function(err) {
 		return console.error('could not connect to postgres', err);
 	}
 
-	/*================================================================
-	 * For testing queries
-	 * ===============================================================
-
-	 client.connect(function(err) {
-	 if (err) {
-	 return console.error('could not connect to postgres', err);
-	 }
-
-	 client.query("SELECT * from category", function(err, result) {
-	 if (err) {
-	 return console.error('error running query', err);
-	 }
-
-	 //console.log(result.rows);
-	 //console.log(result.rows[0].cname);
-	 //Here goes the code
-
-	 client.end();
-	 });
-	 });*/
-	/*================================================================
-	 * For testing queries
-	 * ===============================================================
-	 */
 
 	var allowCrossDomain = function(req, res, next) {
 		res.header('Access-Control-Allow-Origin', '*');
@@ -399,7 +374,7 @@ client.connect(function(err) {
 	});
 	
 	
-app.get('/BigBoxServer/buying', function(req, res) {
+	app.get('/BigBoxServer/buying', function(req, res) {
 
 
 				var queryString = "select u_username,o_number,i_name,i_id,i_price,i_img\
@@ -445,13 +420,11 @@ app.get('/BigBoxServer/buying', function(req, res) {
 
 					}
 				});
-
-			
-	});
+		});
 	
 	
 		
-app.get('/BigBoxServer/selling', function(req, res) {
+	app.get('/BigBoxServer/selling', function(req, res) {
 
 
 				var queryString = "select i_id,i_img,i_name,u_username,i_price\
@@ -477,10 +450,10 @@ app.get('/BigBoxServer/selling', function(req, res) {
 					}
 				});
 			
-	});
+		});
 	
 		
-app.get('/BigBoxServer/report', function(req, res) {
+	app.get('/BigBoxServer/report', function(req, res) {
 
 
 				var queryString = "select SUM(o_totalprice) as total, o_date\
@@ -509,11 +482,11 @@ app.get('/BigBoxServer/report', function(req, res) {
 	====================================================================================================================================*/
 
 	//Add a new order
-//	app.post('/BigBoxServer/orders', function(req, res) {
-//		console.log("POST ORDER");
-//		//Insert into (query)
-//		res.json(true);
-//	});
+	app.post('/BigBoxServer/orders', function(req, res) {
+		console.log("POST ORDER");
+		//Insert into (query)
+		res.json(true);
+	});
 
 
 
