@@ -1640,7 +1640,7 @@ function removeUser(username){
 	var sAddressID;
 	var bAddressID;
 	function placeOrder(){
-		var newOrderJSON = "[{'o_totalprice':order_total, 'o_shippingprice':shippingTotal,'a_id','cc_number':currentCreditCard[0].cc_number}]"
+		var newOrderJSON = { "totalPrice": order_total ,"shippingTotal": shippingTotal  ,"shippingAddress": sAddressID , "billingAddress" : bAddressID  ,"cc_number" : currentCreditCard[0].cc_number };
 		alert(newOrderJSON);		
 //		$.ajax({
 //			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
