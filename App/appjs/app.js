@@ -869,10 +869,12 @@ function GetAddress(id) {
 			if (is_ship) {
 				shipping_address = data.address;
 				s_address_selected = true;
+				sAddressID = shipping_address[0].a_id;
 			} else {
 				
 				billing_address = data.address;
 				b_address_selected = true;
+				bAddressID = billing_address;
 			}
 			$.mobile.navigate("/App/view/checkout.html");
 		},
@@ -1180,7 +1182,7 @@ function login() {
 	});
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/user",
-		method : "post",
+		method : 'post',
 		contentType : "application/json",
 		data : logInfo,
 		success : function(data, textStatus, jqXHR) {
@@ -1635,10 +1637,11 @@ function removeUser(username){
  =============================================================================================*/
 	var order_total;
 	var shippingTotal;
-//	var sAddressID = shipping_address[0].a_id;
-	
+	var sAddressID;
+	var bAddressID;
 	function placeOrder(){
-//		var newOrderJSON = [{"o_totalprice":order_total, "o_shippingprice":shippingTotal,"a_id","cc_number":currentCreditCard[0].cc_number}]
+		var newOrderJSON = "[{'o_totalprice':order_total, 'o_shippingprice':shippingTotal,'a_id','cc_number':currentCreditCard[0].cc_number}]"
+		alert(newOrderJSON);		
 //		$.ajax({
 //			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 //			method : 'post',
