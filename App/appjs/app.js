@@ -869,25 +869,25 @@ function GetAddress(id) {
 			if (is_ship) {
 				shipping_address = data.address;
 				s_address_selected = true;
-				sAddressID = shipping_address[0].a_id;
+			 	sAddressID = shipping_address[0].a_id;
 			} else {
 				
-				billing_address = data.address;
-				b_address_selected = true;
-				bAddressID = billing_address;
+			   	billing_address = data.address;
+			 	b_address_selected = true;
+			 	bAddressID = billing_address[0].a_id;
 			}
 			$.mobile.navigate("/App/view/checkout.html");
 		},
 		error : function(data, textStatus, jqXHR) {
-			console.log("textStatus: " + textStatus);
-			$.mobile.loading("hide");
-			if (data.status == 404) {
-				alert("Address not found.");
-			} else {
-				alert("Internal Server Error.");
-			}
-		}
-	});
+		 	console.log("textStatus: " + textStatus);
+		  	$.mobile.loading("hide");
+		 	if (data.status == 404) {
+ 		 		alert("Address not found.");
+ 			} else {
+ 				alert("Internal Server Error.");
+ 			}
+ 		}
+ 	});
 }
 
 //Get all addresses
@@ -1642,33 +1642,31 @@ function removeUser(username){
 	
 	function placeOrder(){
 		var newOrder = {};
-		alert("entro");
 		newOrder.totalPrice = order_total;
-		alert("paso total price");
 		newOrder.shippingTotal = shippingTotal;
 		newOrder.shippingAddress = sAddressID;
 		newOrder.billingAddress = bAddressID;
 		newOrder.cc_number = currentCreditCard[0].cc_number;
 		
-		alert(newOrder);
-		alert(JSON.stringify(newOrder));
-		alert("Shipping adddress = " + newOrder.shippingAddress);	
-		alert("CC number = " + newOrder.cc_number);	
-//		$.ajax({
-//			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
-//			method : 'post',
-//			data : newOrderSON,
-//			contentType : "application/json",
-//			dataType : "json",
-//			success : function(data, textStatus, jqXHR) {
-//				$.mobile.loading("hide");
-//			},
-//			error : function(data, textStatus, jqXHR) {
-//				console.log("textStatus: " + textStatus);
-//				$.mobile.loading("hide");
-//				alert("Order could not be placed!");
-//			}
-//		});
+		var newOrderJSON = JSON.stringify(newOrder));
+		alert("Billing adddress = " + newOrder.billingAddress);	
+		
+		$.ajax({
+			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
+			method : 'post',
+			data : newOrderJSON,
+			contentType : "application/json",
+			dataType : "json",
+			success : function(data, textStatus, jqXHR) {
+				$.mobile.loading("hide");
+				alert("success");
+			},
+			error : function(data, textStatus, jqXHR) {
+				console.log("textStatus: " + textStatus);
+				$.mobile.loading("hide");
+				alert("Order could not be placed!");
+			}
+		});
 	
 		//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
 	//Esto implica que solo se va a utilizar un cart por usuario

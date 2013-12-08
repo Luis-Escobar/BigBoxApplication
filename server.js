@@ -484,6 +484,8 @@ client.connect(function(err) {
 	//Add a new order
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
+		console.log(req.body);
+		console.log("Total price = " + req.body.totalPrice);
 		//Insert into (query)
 		res.json(true);
 	});
