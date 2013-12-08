@@ -1650,10 +1650,10 @@ function removeUser(username){
 		newOrder.billingAddress = bAddressID;
 		newOrder.cc_number = currentCreditCard[0].cc_number;
 		
-		alert(newOrderJSON);
-		alert(JSON.stringify(newOrderJSON));
-		alert("Shipping adddress = " + newOrderJSON.shippingAddress);	
-		alert("CC number = " + newOrderJSON.cc_number);	
+		alert(newOrder);
+		alert(JSON.stringify(newOrder));
+		alert("Shipping adddress = " + newOrder.shippingAddress);	
+		alert("CC number = " + newOrder.cc_number);	
 //		$.ajax({
 //			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 //			method : 'post',
