@@ -1648,7 +1648,7 @@ function removeUser(username){
 		newOrder.billingAddress = bAddressID;
 		newOrder.cc_number = currentCreditCard[0].cc_number;
 		
-		var newOrderJSON = JSON.stringify(newOrder));
+		var newOrderJSON = JSON.stringify(newOrder);
 		alert("Billing adddress = " + newOrder.billingAddress);	
 		
 		$.ajax({
