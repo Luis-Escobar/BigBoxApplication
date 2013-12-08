@@ -376,12 +376,12 @@ client.connect(function(err) {
 	
 	app.get('/BigBoxServer/buying', function(req, res) {
 
-
-				var queryString = "select u_username,o_number,i_name,i_id,i_price,i_img\
-				from (select o_number,i_id,i_name,u_id,i_price,i_img\
-				from (select o_number,i_id,i_name,i_price,i_img from items natural\
-				join items_orders)as tmp natural join orders) as a\
-				natural join users where u_username=$1";
+				var queryString = " select u_username,o_number,i_name,i_id,i_price,i_img " +
+				"from ( select o_number,i_id,i_name,u_id,i_price,i_img " +
+				       "from (select o_number,i_id,i_name,i_price,i_img from items natural " +
+				       		 "join items_orders)as tmp natural join orders) as a " +
+					         "natural join users where u_username=$1 ";
+				
 								   
 				var queryBid = 'select i_id,i_img,i_name,i_bid\
 				from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid,i_img\
@@ -408,7 +408,7 @@ client.connect(function(err) {
 						return console.error('error running query', err);
 					} else {
 						
-						temp = ',"bid" :'+ JSON.stringify(result.rows)+"}";
+						temp = ',"bid" :'+ JSON.stringify(result.rows) + "}";
 						
 						response = JSON.stringify(response +temp);
 						
@@ -424,7 +424,7 @@ client.connect(function(err) {
 	
 	
 		
-	app.get('/BigBoxServer/selling', function(req, res) {
+	app.get('/BigBoxServer/buying', function(req, res) {
 
 
 				var queryString = "select i_id,i_img,i_name,u_username,i_price\
@@ -484,10 +484,21 @@ client.connect(function(err) {
 	//Add a new order
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
-		console.log(req.body);
-		console.log("Total price = " + req.body.totalPrice);
+		console.log("ORDER =" + req.body);
+		
 		//Insert into (query)
-		res.json(true);
+		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
+						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
+						   
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+
+						res.json(true);
+					}
+		});
+
 	});
 
 
