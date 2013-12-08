@@ -1639,15 +1639,16 @@ function removeUser(username){
 	var shippingTotal;
 	var sAddressID;
 	var bAddressID;
-	var newOrder = {};
+	
 	function placeOrder(){
+		var newOrder = {};
 		alert("entro");
-		newOrder[totalPrice] = order_total;
+		newOrder.totalPrice = order_total;
 		alert("paso total price");
-		newOrder[shippingTotal] = shippingTotal;
-		newOrder[shippingAddress] = sAddressID;
-		newOrder[billingAddress] = bAddressID;
-		newOrder[cc_number] = currentCreditCard[0].cc_number;
+		newOrder.shippingTotal = shippingTotal;
+		newOrder.shippingAddress = sAddressID;
+		newOrder.billingAddress = bAddressID;
+		newOrder.cc_number = currentCreditCard[0].cc_number;
 		
 		alert(newOrderJSON);
 		alert(JSON.stringify(newOrderJSON));
