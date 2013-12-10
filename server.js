@@ -421,59 +421,62 @@ client.connect(function(err) {
 					}
 				});
 		});
-	
-	
 		
-	app.get('/BigBoxServer/buying', function(req, res) {
-
-
-				var queryString = "select i_id,i_img,i_name,u_username,i_price\
-								   from items natural join users\
-								   where u_username=$1";
-								   
-					console.log("COOKIE");
-					console.log(cookie);
-					console.log("USER ID");
-					console.log(cookie[0]);
-
-				client.query(queryString,[cookie[0].username],function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
-
-						var response = {
-							"item" : result.rows
-						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
-
-					}
-				});
-			
-		});
-	
 		
-	app.get('/BigBoxServer/report', function(req, res) {
+		app.get('/BigBoxServer/report', function(req, res) {
 
 
-				var queryString = "select SUM(o_totalprice) as total, o_date\
+				var byDay = "select SUM(o_totalprice) as total, o_date\
 								   from orders\
 								   group by  o_date order by o_date DESC";
+				var byWeek = "select extract(week from o_date) as w, SUM(o_totalprice)\
+				from orders\
+				group by w order by w";
+				
+				var byMonth = "select extract(month from o_date) as mon, SUM(o_totalprice)\
+				from orders\
+				group by mon order by mon";
+				
+				var response = "";
 
-				client.query(queryString,function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
+		client.query(byDay, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
 
-						var response = {
-							"total" : result.rows
-						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
+				response = '{ "day" : ' + JSON.stringify(result.rows);
+				
 
-					}
-				});
-			
+			}
+		}); 
+		
+				client.query(byWeek, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				response = ',"week" : ' + JSON.stringify(result.rows);
+				
+			}
+		}); 
+		
+						client.query(byMonth, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				response = ',"month" : ' + JSON.stringify(result.rows)+'}';
+				
+			}
+		}); 
+		
+		console.log("Day Query: "+byDay);
+		console.log("Week Query: "+byWeek);
+		console.log("Month Query: "+byMonth);
+		console.log("Response: "+response);
+		
+		res.json(JSON.parse(response));
+					
 	});
 		
 	
