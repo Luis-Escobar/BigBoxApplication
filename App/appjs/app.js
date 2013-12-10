@@ -950,13 +950,11 @@ function GetCart(show) {
 
 //A-adir un item al carro
 function AddToCart() {
-	//Comentado por fase 2.
 	GetCart(false);
-	
-	
+		
 	var index = -1;
 //	$.mobile.loading("show");
-//	var newProdJSON = JSON.stringify(currentItem);
+	var newProdJSON;
 	alert("Length: " + cartList.length);
 	for(i=0; i< cartList.length; i++){
 		if(cartList[i].i_id == currentItem[0].i_id){
@@ -965,25 +963,24 @@ function AddToCart() {
 		} 
 	}
 	
-	alert("Index = " + index);
-	
-	var method;
+	var RESTmethod;
 	if(index==-1){
-		method = "'post'";		
+		RESTmethod = "'post'";		
 		alert("Method: " + method);
 		currentItem[0].qtyToPurchase = 1;
-		alert("Qty to puchase = " + currentItem[0].qtyToPurchase);
+		newItemToCartJSON = JSON.stringify(currentItem);
 		
-//		$.ajax({
-//		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
-//		method : 'post',
-//		data : newProdJSON,
-//		contentType : "application/json",
-//		dataType : "json",
-//		success : function(data, textStatus, jqXHR) {
-//			$.mobile.loading("hide");
-//			GetCart(true);
-//	},
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+		method : RESTmethod,
+		data : newItemToCartJSON,
+		contentType : "application/json",
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			alert("Success");
+			GetCart(true);
+	},
 	
 //		error : function(data, textStatus, jqXHR) {
 //			console.log("textStatus: " + textStatus);
@@ -998,7 +995,7 @@ function AddToCart() {
 	}
  
 	else{
-		method = "'put'";
+		RESTmethod = "'put'";
 		alert("method: " + method);
 		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
 		
@@ -1006,8 +1003,6 @@ function AddToCart() {
 	}
 	
 	
-	
-	GetCart(true);
 }
 
 function deleteCartItem(ItemId) {
