@@ -573,7 +573,6 @@ client.connect(function(err) {
 						return console.error('error running query', err);
 					} else {
 						console.log("Query Done!");
-						res.json(true);
 					}
 		});
 		
@@ -581,7 +580,7 @@ client.connect(function(err) {
 		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
 						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
 		console.log("Query 2: " + userAddressesQuery);						   
-	   	client.query(itemsOrderQuery,function(err, result) {
+	   	client.query(userAddressesQuery,function(err, result) {
 					if (err) {
 						return console.error('error running query 2', err);
 					} else {
