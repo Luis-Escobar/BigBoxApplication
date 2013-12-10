@@ -994,8 +994,10 @@ function AddToCart() {
 	else{
 		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
 		cartList[index].qtyToPurchase++;
-		alert("New qty to purchase: ");
+		alert("New qty to purchase: " + cartList[index].qtyToPurchase);
+		
 		newItemToCartJSON = JSON.stringify(cartList[index]);
+		
 		$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
 		method : 'put',
