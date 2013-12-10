@@ -897,6 +897,7 @@ function GetAddress(id) {
 
 //Get all addresses
 var addressList = new Array();
+function GetAddresses(isShipping) {
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/addresses",
 		method : 'get',
