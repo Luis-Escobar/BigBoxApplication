@@ -596,16 +596,13 @@ client.connect(function(err) {
 	//Add a credit card to the saved list
 	app.post('/BigBoxServer/creditcards', function(req, res) {
 		console.log("POST CREDIT CARD");
-
+		console.log("CreditCard: " + JSON.stringify(req.body));
+		
 		if (!req.body.hasOwnProperty('cardnumber') || !req.body.hasOwnProperty('exp_month') || !req.body.hasOwnProperty('exp_year') || !req.body.hasOwnProperty('holder_name')) {
 			res.statusCode = 400;
 			return res.send('Error: Missing fields for the item.');
 		}
 
-		var newCreditCard = new CreditCard(req.body.cardnumber, req.body.exp_month, req.body.exp_year, req.body.holder_name);
-		console.log("New Address: " + JSON.stringify(newCreditCard));
-		newCreditCard.id = creditcardNextId++;
-		creditcardList.push(newCreditCard);
 		res.json(true);
 	});
 	
