@@ -953,9 +953,8 @@ function AddToCart() {
 	GetCart(false);
 		
 	var index = -1;
-//	$.mobile.loading("show");
-	var newProdJSON;
-	alert("Length: " + cartList.length);
+	var newItemToCartJSON;
+	$.mobile.loading("show");
 	for(i=0; i< cartList.length; i++){
 		if(cartList[i].i_id == currentItem[0].i_id){
 			index = i;
@@ -992,8 +991,6 @@ function AddToCart() {
 	}
  
 	else{
-		RESTmethod = "'put'";
-		alert("method: " + method);
 		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
 		
 	// Se encontro,cambiar qty to purchase

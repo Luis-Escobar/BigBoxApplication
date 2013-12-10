@@ -532,7 +532,7 @@ client.connect(function(err) {
 		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtyToPurchase);
 		
 		
-		var queryString = "INSERT INTO items_cart VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtyToPurchase + ");";
+		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtyToPurchase + ");";
 		client.query(queryString,function(err, result) {
 					if (err) {
 						return console.error('error running query 2', err);
