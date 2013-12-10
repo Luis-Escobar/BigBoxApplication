@@ -577,37 +577,37 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	shippingTotal = 0.00;
 	
 
-	if (is_from_cart) {
-		var item;
-		var len = cartList.length;
-		var options = "";
+ 	if (is_from_cart) {
+ 		var item;
+ 		var len = cartList.length;
+ 		var options = "";
 
-		for ( i = 0; i < len; ++i) {
-			item = cartList[i];
-			
-			options = "";
-			for ( j = 1; j <= item.i_qtyavailable; j++) {
-				if (j == item.qtyToPurchase) {
+ 		for ( i = 0; i < len; ++i) {
+ 			item = cartList[i];
+ 			
+ 			options = "";
+ 			for ( j = 1; j <= item.i_qtyavailable; j++) {
+ 				if (j == item.qtyToPurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
-				} else {
-					options += "<option value=' " + j + "'>  " + j + "  </option>";
+  				} else {
+	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
 				}
 			}
-			shippingTotal += parseFloat(item.i_shippingprice);
-			subTotal += parseFloat(item.i_price);
-			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
-			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
-
+ 			shippingTotal += parseFloat(item.i_shippingprice);
+ 			subTotal += parseFloat(item.i_price);
+ 			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
+ 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
+ 
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
 			//			"<li><a href='#shipSelect'><p style='padding-top:10px'>Shpping type <br> Estimated shipping time</p></li><hr style='padding:0; margin:0'>");
-		}
+ 		}
 
 	} else {
-		var item = currentItem;
+		
 		if(currentItem[0].qtyToPurchase == null){
 			currentItem[0].qtyToPurchase = 1;
 		}
-		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
+		var item = currentItem;
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
@@ -951,15 +951,18 @@ function GetCart(show) {
 //A-adir un item al carro
 function AddToCart() {
 	//Comentado por fase 2.
+	GetCart(false);
 	var index = -1;
-	$.mobile.loading("show");
-	var newProdJSON = JSON.stringify(currentItem);
+//	$.mobile.loading("show");
+//	var newProdJSON = JSON.stringify(currentItem);
+	alert("Length: " + cartList.length);
 	for(i=0; i< cartList.length; i++){
 		if(cartList[i].i_id == currentItem[0].i_id){
 			index = i;
 			break;
 		} 
 	}
+	
 	alert("Index = " + index);
 	alert("Qty to puchase = " + currentItem[0].qtyToPurchase);
 	var method;
@@ -1683,7 +1686,6 @@ function removeUser(username){
 	}
 	else{
 		newOrder.items = currentItem;
-		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
