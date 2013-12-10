@@ -1648,9 +1648,18 @@ function removeUser(username){
 		newOrder.billingAddress = bAddressID;
 		newOrder.cc_number = currentCreditCard[0].cc_number;
 		
-		var newOrderJSON = JSON.stringify(newOrder);
-		alert("Billing adddress = " + newOrder.billingAddress);	
 		
+	
+	//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
+	//Esto implica que solo se va a utilizar un cart por usuario
+	if(is_from_cart){
+		newOrder.items = cartList;
+	}
+	else{
+		newOrder.items = currentItem;
+	}
+	
+	var newOrderJSON = JSON.stringify(newOrder);
 		$.ajax({
 			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 			method : 'post',
@@ -1667,18 +1676,6 @@ function removeUser(username){
 				alert("Order could not be placed!");
 			}
 		});
-	
-		//Implementacion usando una tabla de la relacion item_order y qtyavailable != 0
-	//Esto implica que solo se va a utilizar un cart por usuario
-	if(is_from_cart){
-		var len = itemList.length;
-		for(i=0;i<len;i++){
-			//Ajax call para a-adir la conexion de items en la orden 
-		}
-	}
-	else{
-		//codigo insertar en la tabla item_order y update la tabla de item qtyavailable--; sin usar el cart
-	}
 	clearInfo();
 	$.mobile.navigate("/App/view/orderSubmitted.html"); 
 }
