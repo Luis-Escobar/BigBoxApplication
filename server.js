@@ -499,13 +499,14 @@ client.connect(function(err) {
 		});
 		var value = "";
 		console.log("Length: " + req.body.items.length);
-//		for (i=0; i<req.body.items.length; i++){
-//			value+="(" + items[i].i_id + ", lastvalue(), "+ items[i].i_qtyToPurchase+ ")";
-//			if(i<req.body.items.length-1)
-//				value+=",";		
-//		}
-//		console.log("Value: " + value);
-//			
+		console.log("Item 0: " + req.body.items[0].i_name);
+		for (i=0; i<req.body.items.length; i++){
+			value+="(" + items[i].i_id + ", lastvalue(), "+ items[i].i_qtyToPurchase+ ")";
+			if(i<req.body.items.length-1)
+				value+=",";		
+		}
+		console.log("Value: " + value);
+			
 //		var itemsOrderQuery = "INSERT INTO items_order (i_id, o_number, quantity) " +
 //						" VALUES " + value ;
 //						   
