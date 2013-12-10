@@ -484,7 +484,7 @@ client.connect(function(err) {
 	//Add a new order
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
-		console.log("ORDER = " + req.body);
+		console.log("ORDER = " + JSON.stringify(req.body));
 		
 		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
 						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
@@ -529,7 +529,18 @@ client.connect(function(err) {
 	app.post('/BigBoxServer/cart', function(req, res) {
 		console.log("POST: ADD TO CART");
 		console.log("ITEM: " + JSON.stringify(req.body));
-		res.json(true);
+		console.log("ID: " +req.body.i_id + "U ID: " + user_id + "Qty: " + "req.body.qtyToPurchase");
+		
+		
+		var queryString = "INSERT INTO items_cart VALUES (" + user_id + "," + req.body.i_id + "," + req.body.qtyToPurchase + ");";
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query 2', err);
+					} else {
+						console.log("Query Done!");
+						res.json(true);
+					}
+		});
 	});
 	
 	

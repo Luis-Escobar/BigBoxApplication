@@ -963,10 +963,7 @@ function AddToCart() {
 		} 
 	}
 	
-	var RESTmethod;
-	if(index==-1){
-		RESTmethod = "'post'";		
-		alert("Method: " + RESTmethod);
+	if(index==-1){		
 		currentItem[0].qtyToPurchase = 1;
 		newItemToCartJSON = JSON.stringify(currentItem);
 		
