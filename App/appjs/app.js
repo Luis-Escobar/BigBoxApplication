@@ -1852,27 +1852,21 @@ $.ajax({
 		 list.empty();
 		 var report_daily = "";
 		  var report_weekly = "";
+		  var report_monthly ="";
 		  str = "";
+		  var result = JSON.parse(data);
 		 console.log("DATA");
-		 console.log(data);
-/*	
-			for (var i = 0; i < data.rows.length; i++) {
-				str = JSON.stringify(data.rows[i].o_date);
-				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + data.rows[i].total + '</li>';
+		 console.log(result);
+
+			for (var i = 0; i < result.day.length; i++) {
+				str = JSON.stringify(result.day[i].o_date);
+				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + result.day[i].total + '</li>';
 			}
 
-	*/
+	
 
-		   list.append('<li data-role="list-divider" role="heading">Daily</li>\
-		   <li>Day:2013-12-02, Total: $30</li>\
-		   <li>Day:2013-11-25, Total: $40</li>\
-		   <li>Day:2013-08-23, Total: $30</li>\
-		   <li>Day:2013-07-27, Total: $10</li>\
-		   <li>Day:2013-07-15, Total: $30</li>\
-		   <li>Day:2013-07-17, Total: $25</li>\
-		   <li>Day:2013-05-15, Total: $20</li>\
-		   <li>Day:2013-14-15, Total: $25</li>\
-		   <li data-role="list-divider" role="heading">Weekly</li>\
+		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report_daily+
+		   '<li data-role="list-divider" role="heading">Weekly</li>\
 		   <li>Week Start:2013-12-02, Total: $30</li>\
 		   <li>Week Start:2013-11-25, Total: $40</li>\
 		   <li>Week Start:2013-08-23, Total: $30</li>\
