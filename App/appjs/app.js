@@ -1660,6 +1660,7 @@ function removeUser(username){
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
+	alert(newOrderJSON);	
 		$.ajax({
 			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 			method : 'post',
@@ -1673,7 +1674,7 @@ function removeUser(username){
 			error : function(data, textStatus, jqXHR) {
 				console.log("textStatus: " + textStatus);
 				$.mobile.loading("hide");
-				alert("Order could not be placed!");
+				alert("Order could not be placed! Error");
 			}
 		});
 	clearInfo();
