@@ -679,7 +679,7 @@ client.connect(function(err) {
  	app.put('/BigBoxServer/cart', function(req, res) {
  		console.log("REQ: " + JSON.stringify(req.body));
  		console.log("PUT  ITEM: " + req.body.i_id);
-		var queryString = " UPDATE cart_items SET qtyToPurchase="+ req.body.qtyToPuerchase + "WHERE cart_id=" + user_id + " AND " +  i_id=" + req.body.i_id +";"
+		var queryString = " UPDATE cart_items SET qtyToPurchase="+ req.body.qtyToPuerchase + "WHERE cart_id=" + user_id + " AND " +  i_id=" + req.body.i_id +";";
 		
  		console.log("Query: " + queryString);
 		
