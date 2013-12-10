@@ -101,23 +101,27 @@
             	if($(this).parent().attr("id").charAt(5)=="C")
             	{
             		
-          			 for(var i = 1; i<= 50 ;i++){
-          			 	for(var j = 1; j<= 50 ;j++){
+          			 for(var i = 1; i<= 10 ;i++){
+          			 	for(var j = 1; j<= 10 ;j++){
             				if(document.getElementById("fieldSS"+$(this).parent().attr("id").charAt(6)+""+i+""+j) != null){
             					$('#fieldSS'+$(this).parent().attr("id").charAt(6)+""+i+""+j).remove();
             					intId3 = 0;
             				}
             				//else{break;}
             		  	}
+            		  	
             		  if(document.getElementById("fieldS"+$(this).parent().attr("id").charAt(6)+""+i) != null){
             				$('#fieldS'+$(this).parent().attr("id").charAt(6)+""+i).remove();
             				intId2 = 0;
             			}
             		 	//else{break;}
+            		 	
             		}	
             		intId--;
+            	
             		 $("#subcategory").removeAttr('disabled');
           			 $("#2subcategory").attr("disabled","disabled");
+          			 
             	}
             	else if($(this).parent().attr("id").charAt(5)=="S")
             	{
@@ -138,10 +142,10 @@
             	
             	 //alert($(this).parent().attr("id"));
             	if(intId==1){
-            	//alert("true");
+            	
             	//$("#category").selected=true;
             	//refresh and force rebuild
-				
+				//$( "#category option:selected" );
             	$("#subcategory").attr("disabled","disabled");
           		$("#2subcategory").attr("disabled","disabled");
           		//$("#select").selectmenu("refresh");
@@ -223,7 +227,7 @@ var categoryFormArray;
 			alert(categoryFormArray[i]);
 			*/
 		document.getElementById("demo").innerHTML=txt;
-		
+		AddCategoriesForm();
 		
 }		
 		
@@ -264,7 +268,7 @@ function AddCategoriesForm() {
 						<H2>Dynamically add new category.</H2>
 						<SELECT id="select" name="element" >
 							<OPTION id="category" value="category">Category</OPTION>
-							<OPTION id="subcategory" value="subcategory"disabled>Subcategory</OPTION>
+							<OPTION id="subcategory" value="subcategory"disabled >Subcategory</OPTION>
 							<OPTION id="2subcategory" value="2nd subcategory"disabled>Second Subcategory</OPTION>
 						</SELECT>
 
