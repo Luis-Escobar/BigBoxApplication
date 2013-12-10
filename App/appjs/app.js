@@ -849,6 +849,7 @@ function AddAddress() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
+			alert("Success");
 			GetAddresses(is_ship);
 		},
 		error : function(data, textStatus, jqXHR) {
