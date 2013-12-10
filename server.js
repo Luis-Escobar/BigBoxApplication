@@ -675,35 +675,22 @@ client.connect(function(err) {
 	//Add an item that already there, to the cart
 	//Author: Luis
 	app.put('/BigBoxServer/cart', function(req, res) {
-		console.log(JSON.stringify(req.body));
+		console.log("REQ: " + JSON.stringify(req.body));
 		console.log("PUT  ITEM: " + req.body.i_id);
-		res.json(true);
-//		var id = req.params.id;
-//		console.log("PUT");
-//		console.log(req.body);
-//		var itemToAdd = new CartItem(req.body.name, req.body.buyItNow, req.body.price, req.body.img, req.body.condition, req.body.hasBid, 1, req.body.shippingPrice);
-//		console.log("PUT after creating object");
-//		itemToAdd.id = id;
-//		console.log("PUT:" + itemToAdd);
-//		var target = -1;
-//		for (var i = 0; i < cartList.length; ++i) {
-//			if (cartList[i].id == id) {
-//				target = i;
-//				break;
-//			}
-//		}
-//		console.log("Item to add: " + JSON.stringify(itemToAdd));
-//		if (target == -1) {
-//			cartList.push(itemToAdd);
-//			res.json(true);
-//		} else {
-//			var theitem = cartList[target];
-//			theitem.qtyToPurchase++;
-//			var response = {
-//				"Item" : theitem
-//			};
-//			res.json(response);
-//		}
+		var queryString = " UPDATE cart_items SET qtyToPurchase="+ req.body.qtyToPuerchase + "WHERE cart_id=" + user_id + " AND " +  i_id=" + req.body.i_id +";"
+		
+		console.log("Query: " + queryString);
+		
+		client.query(queryString, [req.body.username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				console.log("Query Done");
+				res.json(true);
+			}
+
+		});
+		
 	});
 
 	app.put('/BigBoxServer/items/:id', function(req, res) {
