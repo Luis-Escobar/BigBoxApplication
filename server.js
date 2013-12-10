@@ -225,7 +225,7 @@ client.connect(function(err) {
 	app.get('/BigBoxServer/cart', function(req, res) {
 		console.log("GET-CART for user" + user_id);
 
-		client.query("SELECT * FROM (cart_items natural join users natural join cart) as thecarts, items  WHERE thecarts.i_id = items.i_id AND thecarts.u_id =" + user_id + "and cart_id%2!=0", function(err, result) {
+		client.query("SELECT * FROM (cart_items natural join users natural join cart) as thecarts, items  WHERE thecarts.i_id = items.i_id AND thecarts.u_id =" + user_id , function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			}
@@ -484,7 +484,7 @@ client.connect(function(err) {
 	//Add a new order
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
-		console.log("ORDER =" + req.body);
+		console.log("ORDER = " + req.body);
 		
 		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
 						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
@@ -525,7 +525,12 @@ client.connect(function(err) {
 
 
 
-
+	//Add an item to the cart
+	app.post('/BigBoxServer/cart', function(req, res) {
+	
+	}
+	
+	
 	//Add a new address to the saved addresses
 	app.post('/BigBoxServer/addresses', function(req, res) {
 		console.log("POST ADDRESS");
@@ -586,23 +591,6 @@ client.connect(function(err) {
 
 		});
 	});
-
-	//Login
-//	app.post('/BigBoxServer/user', function(req, res) {
-		// if the username is not submitted, give it a default of "Anonymous"
-
-//		user = findByUsername(req.body.username);
-		// store the username as a session variable
-
-//		if (req.body.username == user.username && req.body.password == user.password) {
-//			req.session.username = req.body.username;
-//			cookie.push(req.session);
-//			res.send(200);
-//		} else {
-//
-//			res.send(401, "Incorect username or password.");
-//		}
-//	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
 		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);

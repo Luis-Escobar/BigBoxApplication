@@ -951,29 +951,43 @@ function GetCart(show) {
 //A-adir un item al carro
 function AddToCart() {
 	//Comentado por fase 2.
-	/*var id = currentItem.id;
+	var index = -1;
 	$.mobile.loading("show");
 	var newProdJSON = JSON.stringify(currentItem);
-	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/" + id,
-		method : 'put',
-		data : newProdJSON,
-		contentType : "application/json",
-		dataType : "json",
-		success : function(data, textStatus, jqXHR) {
-			$.mobile.loading("hide");
-			GetCart(true);
-		},
-		error : function(data, textStatus, jqXHR) {
-			console.log("textStatus: " + textStatus);
-			$.mobile.loading("hide");
-			if (data.status == 404) {
-				alert("Cart not found.");
-			} else {
-				alert("Internal Server Error.");
-			}
-		}
-	});
+	for(i=0; i<cartList.length;i++){
+		if(cartList[i].i_id == currentItem[0].i_id){
+			index = i;
+			break;
+		} 
+	}
+	if(index==-1){
+//		$.ajax({
+//		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+//		method : 'post',
+//		data : newProdJSON,
+//		contentType : "application/json",
+//		dataType : "json",
+//		success : function(data, textStatus, jqXHR) {
+//			$.mobile.loading("hide");
+//			GetCart(true);
+//	},
+	
+//		error : function(data, textStatus, jqXHR) {
+//			console.log("textStatus: " + textStatus);
+//		$.mobile.loading("hide");
+//			if (data.status == 404) {
+//				alert("Cart not found.");
+//			} else {
+//				alert("Internal Server Error.");
+//			}
+//		}
+//		});
+//	}
+	else{
+	// Se encontro,cambiar qty to purchase
+	}
+	
+	
 	*/
 	GetCart(true);
 }
