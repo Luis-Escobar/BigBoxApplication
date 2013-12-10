@@ -468,8 +468,6 @@ client.connect(function(err) {
 
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
 			    response += JSON.stringify(response +temp);
-			    console.log(response);
-
 				
 			}
 		}); 
@@ -479,7 +477,7 @@ client.connect(function(err) {
 		console.log("Month Query: "+byMonth);
 		console.log("Response: "+response);
 		
-		res.json(200);
+		res.json(JSON.parse(response));
 					
 	});
 		
