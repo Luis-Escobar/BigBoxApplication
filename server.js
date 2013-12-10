@@ -530,7 +530,7 @@ client.connect(function(err) {
 		console.log("POST: ADD TO CART");
 		console.log("ITEM: " + JSON.stringify(req.body));
 		res.json(true);
-	}
+	});
 	
 	
 	//Add a new address to the saved addresses
