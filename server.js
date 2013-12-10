@@ -454,8 +454,9 @@ client.connect(function(err) {
 			if (err) {
 				return console.error('error running query', err);
 			} else {
-
-				response = ',"week" : ' + JSON.stringify(result.rows);
+				
+				var temp = ',"week" : ' + JSON.stringify(result.rows);
+				response = JSON.stringify(response +temp);
 				
 			}
 		}); 
@@ -465,7 +466,9 @@ client.connect(function(err) {
 				return console.error('error running query', err);
 			} else {
 
-				response = ',"month" : ' + JSON.stringify(result.rows)+'}';
+				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
+			    response = JSON.stringify(response +temp);
+
 				
 			}
 		}); 
