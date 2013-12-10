@@ -529,7 +529,7 @@ client.connect(function(err) {
 	app.post('/BigBoxServer/cart', function(req, res) {
 		console.log("POST: ADD TO CART");
 		console.log("ITEM: " + JSON.stringify(req.body));
-		console.log("ID: " +req.body.i_id + "U ID: " + user_id + "Qty: " + "req.body.qtyToPurchase");
+		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body.qtyToPurchase[0];
 		
 		
 		var queryString = "INSERT INTO items_cart VALUES (" + user_id + "," + req.body.i_id + "," + req.body.qtyToPurchase + ");";
