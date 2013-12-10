@@ -482,18 +482,19 @@ client.connect(function(err) {
 	====================================================================================================================================*/
 
 	//Add a new order
-//	app.post('/BigBoxServer/orders', function(req, res) {
-//		console.log("POST ORDER");
-//		console.log("ORDER =" + req.body);
+	app.post('/BigBoxServer/orders', function(req, res) {
+		console.log("POST ORDER");
+		console.log("ORDER =" + req.body);
 		
-//		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
-//						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
+		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
+						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
 						   
-//		client.query(queryString,function(err, result) {
-//					if (err) {
-//						return console.error('error running query', err);
-//					}
-//		});
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					}else{
+					res.json(true);
+		});
 //		var value = "";
 //		for (i=0; i<req.body.items.length; i++){
 //			value+="(" + items[i].i_id + ", lastvalue(), "+ items[i].i_qtyToPurchase+ ")";
@@ -511,8 +512,9 @@ client.connect(function(err) {
 //					} else {
 //						res.json(true);
 //					}
+//		});
  
-//	});
+	});
 
 
 
