@@ -607,6 +607,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		if(currentItem.qtyToPurchase == null){
 			currentItem.qtyToPurchase = 1;
 		}
+		alert("Qty To Purchase: " + currentItem.qtyToPurchase);
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
