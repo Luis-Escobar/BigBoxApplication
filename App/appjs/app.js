@@ -1661,7 +1661,7 @@ function removeUser(username){
 	}
 	else{
 		newOrder.items = currentItem;
-		alert("Qty To Purchase: " + currentItem.qtyToPurchase);
+		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
