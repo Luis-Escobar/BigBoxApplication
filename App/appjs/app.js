@@ -834,22 +834,21 @@ function SetAddress(is_address) {
 
 //Add an address to the saved list
 function AddAddress() {
-	$.mobile.loading("show");
-	var form = $("#address-form");
-	var formData = form.serializeArray();
-	console.log("form Data: " + formData);
-	var newAddress = ConverToJSON(formData);
-	console.log("New Address: " + JSON.stringify(newAddress));
+ 	$.mobile.loading("show");
+ 	var form = $("#address-form");
+ 	var formData = form.serializeArray();
+ 	console.log("form Data: " + formData);
+ 	var newAddress = ConverToJSON(formData);
+ 	console.log("New Address: " + JSON.stringify(newAddress));
 	var newAddressJSON = JSON.stringify(newAddress);
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/addresses",
-		method : 'post',
-		data : newAddressJSON,
-		contentType : "application/json",
-		dataType : "json",
-		success : function(data, textStatus, jqXHR) {
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/addresses",
+ 		method : 'post',
+ 		data : newAddressJSON,
+ 		contentType : "application/json",
+ 		dataType : "json",
+ 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			alert("Success");
 			GetAddresses(is_ship);
 		},
 		error : function(data, textStatus, jqXHR) {
