@@ -996,7 +996,7 @@ function AddToCart() {
 	}
 	
 	
-	*/
+	
 	GetCart(true);
 }
 
