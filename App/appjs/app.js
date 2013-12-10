@@ -995,7 +995,6 @@ function AddToCart() {
 		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
 		cartList[index].qtyToPurchase++;
 		alert("New qty to purchase: " + cartList[index].qtyToPurchase);
-		
 		newItemToCartJSON = JSON.stringify(cartList[index]);
 		
 		$.ajax({
