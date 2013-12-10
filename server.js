@@ -500,8 +500,9 @@ client.connect(function(err) {
 		var value = "";
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
+		
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + req.body.items[i].i_id + ", lastvalue(), "+ req.body.items[i].qtyToPurchase+ ")";
+			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtyToPurchase+ ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
