@@ -616,6 +616,7 @@ client.connect(function(err) {
 		console.log("req"+req);
 		for(var i = 0 ; i< categoryFormArray.length ; i++)
 			console.log(categoryFormArray[i]);
+		res.json(true);
 	});
 
 	//Login
