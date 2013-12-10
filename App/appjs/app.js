@@ -1660,7 +1660,8 @@ function removeUser(username){
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
-	alert(newOrderJSON);	
+	alert("CLIST" + cartList);
+	alert("NEW ORDER" + newOrderJSON);	
 		$.ajax({
 			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 			method : 'post',

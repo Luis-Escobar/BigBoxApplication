@@ -493,10 +493,12 @@ client.connect(function(err) {
 					if (err) {
 						return console.error('error running query', err);
 					}else{
+					console.log("Query 1 done")
 					res.json(true);
 					}
 		});
-//		var value = "";
+		var value = "";
+		console.log("Length: " + req.body.items.length);
 //		for (i=0; i<req.body.items.length; i++){
 //			value+="(" + items[i].i_id + ", lastvalue(), "+ items[i].i_qtyToPurchase+ ")";
 //			if(i<req.body.items.length-1)
