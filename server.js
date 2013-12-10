@@ -684,7 +684,7 @@ client.connect(function(err) {
 		
  		console.log("Query: " + queryString);
 		
- 		client.query(queryString, [req.body.username], function(err, result) {
+ 		client.query(queryString, function(err, result) {
  			if (err) {
  				return console.error('error running query', err);
  			} else {
