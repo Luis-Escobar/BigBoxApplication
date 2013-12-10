@@ -227,20 +227,22 @@ var categoryFormArray;
  		//var formData = categoryFormArray.serializeArray();
  		//alert("form Data: " + formData);
  		//var newAddress = ConverToJSON(categoryFormArray);
- 		alert("New categories: " + JSON.stringify(categoryFormArray));
-		var newCategoriesJSON = JSON.stringify(newAddress);
+ 		//alert("New categories: " + JSON.stringify(categoryFormArray));
+		var newCategoriesJSON = JSON.stringify(categoryFormArray);
   		/*for(var i = 0 ; i< categoryFormArray.length ; i++)
 			alert(categoryFormArray[i]);
 			*/
-		document.getElementById("demo").innerHTML=txt;
+			
 		AddCategoriesForm();
+		document.getElementById("demo").innerHTML=txt;
+		
 		
 }		
 		
 		
 function AddCategoriesForm() {
 	$.mobile.loading("show");
-	añert("HERE");
+	alert("HERE");
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/categoryForm",
 		method : 'post',
