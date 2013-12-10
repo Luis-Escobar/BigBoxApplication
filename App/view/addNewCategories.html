@@ -193,7 +193,7 @@ var categoryFormArray;
   						if(x.elements[i-2].placeholder == "subcategory")
   							txt = txt+" ), ";
   						else if(x.elements[i-2].placeholder == "2nd subcategory")
-  							txt = txt +"),},";
+  							txt = txt +"},),";
   					}
   					txt = txt+ x.elements[i].value +"," ;
   				}
@@ -219,15 +219,21 @@ var categoryFormArray;
   			if(x.elements[i-2].placeholder == "subcategory")
   				txt = txt+" ), ";
   			else if(x.elements[i-2].placeholder == "2nd subcategory")
-  				txt = txt +"),},";
+  				txt = txt +"},),";
   		}
   		
 		categoryFormArray=txt.split(",");
+		//var form = $("#address-form");
+ 		//var formData = categoryFormArray.serializeArray();
+ 		//alert("form Data: " + formData);
+ 		//var newAddress = ConverToJSON(categoryFormArray);
+ 		alert("New categories: " + JSON.stringify(categoryFormArray));
+		var newCategoriesJSON = JSON.stringify(newAddress);
   		/*for(var i = 0 ; i< categoryFormArray.length ; i++)
 			alert(categoryFormArray[i]);
 			*/
 		document.getElementById("demo").innerHTML=txt;
-		AddCategoriesForm();
+		//AddCategoriesForm();
 		
 }		
 		
@@ -238,9 +244,9 @@ function AddCategoriesForm() {
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/categoryForm",
 		method : 'post',
-		data : categoryFormArray,
+		data : newCategoriesJSON,
 		contentType : "application/json",
-		dataType : "text",
+		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Sucess");

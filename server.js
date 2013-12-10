@@ -611,6 +611,7 @@ client.connect(function(err) {
 	
 	//Add a categories to the saved list
 	app.post('/BigBoxServer/categoryForm', function(req, res) {
+		console.log("BLHAAAAAA");
 		console.log("POST categoriesForm");
 		var txt = req;
 		console.log("req"+req);
