@@ -1826,13 +1826,13 @@ $.ajax({
 		  str = "";
 		 console.log("DATA");
 		 console.log(data);
-		 
-		 for (var i=0; i < data.rows.length; i++) {
-		 	str =JSON.stringify(data.rows[i].o_date);
-		 	report_daily += '<li>Day:'+str.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
-		 }
+/*	
+			for (var i = 0; i < data.rows.length; i++) {
+				str = JSON.stringify(data.rows[i].o_date);
+				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + data.rows[i].total + '</li>';
+			}
 
-	
+	*/
 
 		   list.append('<li data-role="list-divider" role="heading">Daily</li>\
 		   <li>Day:2013-12-02, Total: $30</li>\
