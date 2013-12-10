@@ -475,7 +475,7 @@ client.connect(function(err) {
 		console.log("Month Query: "+byMonth);
 		console.log("Response: "+response);
 		
-		res.json(JSON.parse(response));
+		res.json(200);
 					
 	});
 		
