@@ -526,9 +526,9 @@ client.connect(function(err) {
 
 
 	//Add an item to the cart
-	app.post('/BigBoxServer/cart', function(req, res) {
+//	app.post('/BigBoxServer/cart', function(req, res) {
 	
-	}
+//	}
 	
 	
 	//Add a new address to the saved addresses
