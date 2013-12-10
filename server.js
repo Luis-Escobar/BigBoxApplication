@@ -582,6 +582,15 @@ client.connect(function(err) {
 		creditcardList.push(newCreditCard);
 		res.json(true);
 	});
+	
+	//Add a categories to the saved list
+	app.post('/BigBoxServer/categoryForm', function(req, res) {
+		console.log("POST categoriesForm");
+		var txt = req;
+		console.log("req"+req);
+		for(var i = 0 ; i< categoryFormArray.length ; i++)
+			console.log(categoryFormArray[i]);
+	});
 
 	//Login
 

@@ -94,7 +94,7 @@
           		++intId3;
           		var fieldWrapper = $("<div align= 'right' class='fieldwrapper' id='fieldSS" + intId+""+intId2 +""+intId3 + "'/>");
           	}
-            var inputBar = $("<input placeholder='"+type+"' type='text' name='inputTag[]' class='required' />");
+            var inputBar = $("<input placeholder='"+type+"' type='text' name='"+type+"' class='required' />");
             var removeButton = $("<input type='radio' class='remove'  />");
             removeButton.click(function() {
             
@@ -166,9 +166,92 @@
             
             
            
-            $("#DynamicForm").append(fieldWrapper);
+            $("#config").append(fieldWrapper);
         };
-    
+
+var categoryFormArray;
+   function myFunction()
+{
+		var x = document.getElementById("config");
+		var txt = "";
+		
+		
+		
+		
+		for (var i=0;i<x.length;i++)
+  		{
+  			if(x.elements[i].value!="on"){
+  				//txt = txt + x.elements[i].value +" "+ x.elements[i].placeholder+"<br>";
+  				if(x.elements[i].placeholder == "category"){
+  					
+  					if(i>0){
+  						
+  						if(x.elements[i-2].placeholder == "subcategory")
+  							txt = txt+" ), ";
+  						else if(x.elements[i-2].placeholder == "2nd subcategory")
+  							txt = txt +"),},";
+  					}
+  					txt = txt+ x.elements[i].value +"," ;
+  				}
+  				else if(x.elements[i].placeholder == "subcategory"){
+  					if(x.elements[i-2].placeholder == "category")
+  						txt = txt+" (, ";
+  					if(x.elements[i-2].placeholder == "2nd subcategory")
+  						txt = txt+" }, ";
+  					txt = txt+ x.elements[i].value +"," ;
+  				}
+  				else if(x.elements[i].placeholder == "2nd subcategory"){
+  					if(x.elements[i-2].placeholder == "subcategory")
+  						txt = txt+" {, ";
+  					txt = txt+ x.elements[i].value +"," ;
+  					
+  				}
+  				
+  			}
+ 		 
+ 		 }
+ 		 if(x.length>2){
+  						
+  			if(x.elements[i-2].placeholder == "subcategory")
+  				txt = txt+" ), ";
+  			else if(x.elements[i-2].placeholder == "2nd subcategory")
+  				txt = txt +"),},";
+  		}
+  		
+		categoryFormArray=txt.split(",");
+  		/*for(var i = 0 ; i< categoryFormArray.length ; i++)
+			alert(categoryFormArray[i]);
+			*/
+		document.getElementById("demo").innerHTML=txt;
+		
+		
+}		
+		
+		
+function AddCategoriesForm() {
+	$.mobile.loading("show");
+	
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/categoryForm",
+		method : 'post',
+		data : categoryFormArray,
+		contentType : "application/json",
+		dataType : "text",
+		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			alert("Sucess");
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Credit Card could not be added!");
+		}
+	});
+
+}
+		
+		
+
     
 
 						
@@ -189,16 +272,14 @@
 					
 					</FORM>	
 						<div id="inputBar" align="center"></div>
-						
-						
-					<form id="config" method="post" action="config.php" >
 						<input type="button" value="Add a field" onclick="add(document.forms[0].element.value)">
-    					<fieldset id="DynamicForm">
-   						</fieldset>
+
+						
+					<form id="config" method="post" action="config.php" >    					
   						
-  						<INPUT type="button" value="Save">
 					</form>
-					
+					  	<input type="button" onclick="myFunction()" value="Submit form">
+						<p id="demo"></p>
 					
 			
 	</body>
