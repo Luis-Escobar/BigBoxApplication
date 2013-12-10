@@ -22,8 +22,9 @@
 			
 
 					<SCRIPT language="javascript">
+					var nextId = 0;
 					//No va a estar aqui es por testing
-						function add(type) {
+	/*					function add(type) {
 								
 							//Create an input type dynamically.
 							//var element = document.createElement("input");
@@ -41,28 +42,136 @@
 							//var inputBar = document.getElementById("inputBar");
 							$('subCategory').selectmenu('disable');
 							if(type == "category"){
-								$("<div id='' class='' style='' align = 'left'>\
+								$("<div id='"+nextId+"' align = 'left'>\
 									<input  placeholder='Category'/>\
 									<input type='checkbox' name='' id='' class='' data-role=''>\
 									</div>").appendTo("#inputBar");
 									}					
 							else if(type == "subcategory"){
-								$("<div id='' class='' style='' align = 'center'>\
+								$("<div id='"+nextId+"' align = 'center'>\
 									<input  placeholder='Subcategory'/>\
 									<input type='checkbox' name='' id='' class='' data-role=''>\
 									</div>").appendTo("#inputBar");
 									}
 									else{
-								$("<div id='' class='' style='' align = 'right'>\
+								$("<div id='"+nextId+"' align = 'right'>\
 									<input  placeholder='2 subcategory'/>\
 									<input type='checkbox' name='' id='' class='' data-role=''>\
 									</div>").appendTo("#inputBar");
 									}
-								
+								nextId++;
 							//Append the element in page (in div).
 							//inputBar.appendChild(element);
 							//inputBar.appendChild(element2);
-						}
+						
+						}*/
+	 var intId = 0;
+	 var intId2 = 0;
+	 var intId3 = 0;
+	 
+        function add(type) {
+           
+          
+          	if(type == "category"){
+          		 ///intId = $("#DynamicForm div").length + 1;
+          		 ++intId;
+          		 intId2= 0;
+          		 intId3 = 0;
+          		 var fieldWrapper = $("<div align= 'left' class='fieldwrapper' id='fieldC" + intId + "'/>");
+          		 $("#subcategory").removeAttr('disabled');
+          		 $("#2subcategory").attr("disabled","disabled");
+          		 //$("#subcategory").attr("disabled","disabled");
+             	 //$("#2subcategory").removeAttr('disabled');
+          	}
+          	else if(type == "subcategory"){
+          		
+          		 ++intId2;
+          		 intId3 = 0;
+          		 var fieldWrapper = $("<div align= 'center' class='fieldwrapper' id='fieldS" + intId+""+intId2 + "'/>");
+          		 $("#2subcategory").removeAttr('disabled');
+          	}
+          	else{
+          		++intId3;
+          		var fieldWrapper = $("<div align= 'right' class='fieldwrapper' id='fieldSS" + intId+""+intId2 +""+intId3 + "'/>");
+          	}
+            var inputBar = $("<input placeholder='"+type+"' type='text' name='inputTag[]' class='required' />");
+            var removeButton = $("<input type='radio' class='remove'  />");
+            removeButton.click(function() {
+            
+            	if($(this).parent().attr("id").charAt(5)=="C")
+            	{
+            		
+          			 for(var i = 1; i<= 50 ;i++){
+          			 	for(var j = 1; j<= 50 ;j++){
+            				if(document.getElementById("fieldSS"+$(this).parent().attr("id").charAt(6)+""+i+""+j) != null){
+            					$('#fieldSS'+$(this).parent().attr("id").charAt(6)+""+i+""+j).remove();
+            					intId3 = 0;
+            				}
+            				//else{break;}
+            		  	}
+            		  if(document.getElementById("fieldS"+$(this).parent().attr("id").charAt(6)+""+i) != null){
+            				$('#fieldS'+$(this).parent().attr("id").charAt(6)+""+i).remove();
+            				intId2 = 0;
+            			}
+            		 	//else{break;}
+            		}	
+            		intId--;
+            		 $("#subcategory").removeAttr('disabled');
+          			 $("#2subcategory").attr("disabled","disabled");
+            	}
+            	else if($(this).parent().attr("id").charAt(5)=="S")
+            	{
+            		
+          			 
+          			 	for(var j = 1; j<= 50 ;j++){
+            				if(document.getElementById("fieldSS"+$(this).parent().attr("id").charAt(6)+""+$(this).parent().attr("id").charAt(7)+""+j) != null){
+            					$('#fieldSS'+$(this).parent().attr("id").charAt(6)+""+$(this).parent().attr("id").charAt(7)+""+j).remove();
+            					intId3 = 0;
+            				}
+            				//else{break;}
+            		  	
+            		}	
+            		
+            		 $("#subcategory").removeAttr('disabled');
+          			 $("#2subcategory").attr("disabled","disabled");
+            	}
+            	
+            	 //alert($(this).parent().attr("id"));
+            	if(intId==1){
+            	//alert("true");
+            	//$("#category").selected=true;
+            	//refresh and force rebuild
+				
+            	$("#subcategory").attr("disabled","disabled");
+          		$("#2subcategory").attr("disabled","disabled");
+          		//$("#select").selectmenu("refresh");
+          		
+          		}
+            	//alert($(this).parent().attr("id").charAt(5));
+            	//alert($(this).parent().attr("id"));
+            	//alert(document.getElementById("fieldS1"));
+            	/*if(document.getElementById("fieldS1")!=null)
+            	{
+            		$('#fieldS1').remove();
+            		//document.getElementById("fieldS1").remove();
+            	}
+            	else{alert(false);}
+            	*/
+            	//document.getElementById("fieldS1").remove();
+            	
+                $(this).parent().remove();
+            }); 
+            fieldWrapper.append(inputBar);
+            fieldWrapper.append(removeButton);
+            
+            
+           
+            $("#DynamicForm").append(fieldWrapper);
+        };
+    
+    
+
+						
 					</SCRIPT>
 					
 				
@@ -70,18 +179,25 @@
 					<FORM>
 						
 						<H2>Dynamically add new category.</H2>
-						<SELECT name="element">
-							<OPTION value="category">Category</OPTION>
-							<OPTION value="subcategory">Subcategory</OPTION>
-							<OPTION value="2nd subcategory">Second Subcategory</OPTION>
+						<SELECT id="select" name="element" >
+							<OPTION id="category" value="category">Category</OPTION>
+							<OPTION id="subcategory" value="subcategory"disabled>Subcategory</OPTION>
+							<OPTION id="2subcategory" value="2nd subcategory"disabled>Second Subcategory</OPTION>
 						</SELECT>
 
-						<INPUT type="button" value="Add" onclick="add(document.forms[0].element.value)">
-						<INPUT type="button" value="Remove checked" onclick="remove(document.forms[0].element.value)">
+						
 					
 					</FORM>	
 						<div id="inputBar" align="center"></div>
 						
+						
+					<form id="config" method="post" action="config.php" >
+						<input type="button" value="Add a field" onclick="add(document.forms[0].element.value)">
+    					<fieldset id="DynamicForm">
+   						</fieldset>
+  						
+  						<INPUT type="button" value="Save">
+					</form>
 					
 					
 			
