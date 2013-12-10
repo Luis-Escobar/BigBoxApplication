@@ -553,11 +553,11 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 	
 	for (var i = 0; i < len; ++i) {
 		item = cartList[i];
-		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
+		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtytopurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
 		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
-		sTotal += parseFloat(item.i_price) * item.qtyToPurchase;
-		itemsQty += item.qtyToPurchase;
+		sTotal += parseFloat(item.i_price) * item.qtytopurchase;
+		itemsQty += item.qtytopurchase;
 	
 	}
 
@@ -587,7 +587,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			
  			options = "";
  			for ( j = 1; j <= item.i_qtyavailable; j++) {
- 				if (j == item.qtyToPurchase) {
+ 				if (j == item.qtytopurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
   				} else {
 	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
@@ -604,8 +604,8 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	} else {
 		
-		if(currentItem[0].qtyToPurchase == null){
-			currentItem[0].qtyToPurchase = 1;
+		if(currentItem[0].qtytopurchase == null){
+			currentItem[0].qtytopurchase = 1;
 		}
 		var item = currentItem;
 		var options = "";
@@ -964,7 +964,7 @@ function AddToCart() {
 	}
 	
 	if(index==-1){		
-		currentItem[0].qtyToPurchase = 1;
+		currentItem[0].qtytopurchase = 1;
 		newItemToCartJSON = JSON.stringify(currentItem);
 		
 		$.ajax({
@@ -992,9 +992,9 @@ function AddToCart() {
 	}
  
 	else{
-		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
-		cartList[index].qtyToPurchase++;
-		alert("New qty to purchase: " + cartList[index].qtyToPurchase);
+		alert("Old qty to purchase: " + cartList[index].qtytopurchase);
+		cartList[index].qtytopurchase++;
+		alert("New qty to purchase: " + cartList[index].qtytopurchase);
 		newItemToCartJSON = JSON.stringify(cartList[index]);
 		
 		$.ajax({

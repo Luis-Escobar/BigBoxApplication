@@ -509,10 +509,10 @@ client.connect(function(err) {
 		var value = "";
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
-		console.log("Qty: " + req.body.items[0].qtyToPurchase);
+		console.log("Qty: " + req.body.items[0].qtytopurchase);
 		
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtyToPurchase + ")";
+			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtytopurchase + ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
@@ -538,10 +538,10 @@ client.connect(function(err) {
 	app.post('/BigBoxServer/cart', function(req, res) {
 		console.log("POST: ADD TO CART");
 		console.log("ITEM: " + JSON.stringify(req.body));
-		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtyToPurchase);
+		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtytopurchase);
 		
 		
-		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtyToPurchase + ");";
+		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtytopurchase + ");";
 		client.query(queryString,function(err, result) {
 					if (err) {
 						return console.error('error running query 2', err);
@@ -680,7 +680,7 @@ client.connect(function(err) {
  		console.log("REQ: " + JSON.stringify(req.body));
  		console.log("PUT  ITEM: " + req.body.i_id);
  		
-		var queryString = "UPDATE cart_items SET qtytopurchase= " + req.body.qtyToPurchase + " WHERE cart_id=" + user_id + " AND " +  "i_id=" + req.body.i_id +";";
+		var queryString = "UPDATE cart_items SET qtytopurchase= " + req.body.qtytopurchase + " WHERE cart_id=" + user_id + " AND " +  "i_id=" + req.body.i_id +";";
 		
  		console.log("Query: " + queryString);
 		
