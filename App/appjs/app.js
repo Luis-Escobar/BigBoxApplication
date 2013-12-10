@@ -982,16 +982,16 @@ function AddToCart() {
 			GetCart(true);
 	},
 	
-//		error : function(data, textStatus, jqXHR) {
-//			console.log("textStatus: " + textStatus);
-//		$.mobile.loading("hide");
-//			if (data.status == 404) {
-//				alert("Cart not found.");
-//			} else {
-//				alert("Internal Server Error.");
-//			}
-//		}
-//		});
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+		$.mobile.loading("hide");
+			if (data.status == 404) {
+				alert("Cart not found.");
+			} else {
+				alert("Internal Server Error.");
+			}
+		}
+		});
 	}
  
 	else{
