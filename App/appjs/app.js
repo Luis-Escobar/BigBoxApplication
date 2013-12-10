@@ -954,13 +954,18 @@ function AddToCart() {
 	var index = -1;
 	$.mobile.loading("show");
 	var newProdJSON = JSON.stringify(currentItem);
-	for(i=0; i<cartList.length;i++){
+	for(i=0; i< cartList.length; i++){
 		if(cartList[i].i_id == currentItem[0].i_id){
 			index = i;
 			break;
 		} 
 	}
+	alert("Index = " + index);
+	alert("Qty to puchase = " + currentItem[0].qtyToPurchase);
+	var method;
 	if(index==-1){
+		method = "'post'";		
+		alert("Method: " + method);
 //		$.ajax({
 //		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
 //		method : 'post',
@@ -985,6 +990,8 @@ function AddToCart() {
 	}
  
 	else{
+		method = "'put'";
+		alert("method: " + method);
 	// Se encontro,cambiar qty to purchase
 	}
 	
@@ -1193,7 +1200,6 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
-	alert("Enter");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
