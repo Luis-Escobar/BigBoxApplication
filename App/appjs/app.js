@@ -983,6 +983,7 @@ function AddToCart() {
 //		}
 //		});
 //	}
+/*
 	else{
 	// Se encontro,cambiar qty to purchase
 	}
@@ -991,7 +992,7 @@ function AddToCart() {
 	*/
 	GetCart(true);
 }
-
+}
 function deleteCartItem(ItemId) {
 	//Comentado por fase 2
 	/*
