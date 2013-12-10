@@ -563,11 +563,20 @@ client.connect(function(err) {
 			res.statusCode = 400;
 			return res.send('Error: Missing fields for the item.');
 		}
-
-//		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);		console.log("New Address: " + JSON.stringify(newAddress));
-//		newAddress.id = addressNextId++;
-//		addressList.push(newAddress);
-		res.json(true);
+		
+		var queryString("INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
+		"VALUES (" + req.body.street + ", " + req.body.city + "," + req.body.state + ", " + req.body.country + ", " + req.body.zip + ", " + req.body.phone + ", " + req.body.name + ");";
+		console.log("Query: " + queryString);
+		
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+						console.log("Query Done!");
+						res.json(true);
+					}
+		});
+		
 	});
 
 	//Add a credit card to the saved list
