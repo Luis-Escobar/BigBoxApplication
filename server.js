@@ -507,7 +507,7 @@ client.connect(function(err) {
 		}
 		console.log("Value: " + value);
 			
-		var itemsOrderQuery = "INSERT INTO items_order (i_id, o_number, quantity) " +
+		var itemsOrderQuery = "INSERT INTO items_orders (i_id, o_number, quantity) " +
 						" VALUES " + value ;
 		console.log("Query 2: " + itemsOrderQuery);						   
 	   	client.query(itemsOrderQuery,function(err, result) {
