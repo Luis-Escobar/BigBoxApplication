@@ -469,7 +469,7 @@ client.connect(function(err) {
 
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
 			    response  = response + temp;
-			    console.log(response);
+			    console.log("RES:"+response);
 				
 			}
 		}); 
