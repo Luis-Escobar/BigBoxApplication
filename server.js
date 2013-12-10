@@ -468,6 +468,7 @@ client.connect(function(err) {
 
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
 			    response = JSON.stringify(response +temp);
+			    console.log(response);
 
 				
 			}
