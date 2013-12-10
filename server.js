@@ -559,7 +559,7 @@ client.connect(function(err) {
 		console.log("POST ADDRESS");
 		console.log("REQ: " + JSON.stringify(req.body));
 		
-		if (!req.body.hasOwnProperty('a_name') || !req.body.hasOwnProperty('a_street') || !req.body.hasOwnProperty('a_city') || !req.body.hasOwnProperty('a_state') || !req.body.hasOwnProperty('a_zip') || !req.body.hasOwnProperty('a_country') || !req.body.hasOwnProperty('a_phone')) {
+		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
 			res.statusCode = 400;
 			return res.send('Error: Missing fields for the item.');
 		}
