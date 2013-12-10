@@ -494,6 +494,7 @@ client.connect(function(err) {
 						return console.error('error running query', err);
 					}else{
 					res.json(true);
+					}
 		});
 //		var value = "";
 //		for (i=0; i<req.body.items.length; i++){
