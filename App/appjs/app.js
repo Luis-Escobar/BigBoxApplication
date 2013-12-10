@@ -975,7 +975,6 @@ function AddToCart() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			alert("Success");
 			GetCart(true);
 		},
 	
