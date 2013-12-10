@@ -445,7 +445,7 @@ client.connect(function(err) {
 			} else {
 
 				response = '{ "day" : ' + JSON.stringify(result.rows);
-				console.log(response);
+				
 				
 
 			}
@@ -457,8 +457,7 @@ client.connect(function(err) {
 			} else {
 				
 				var temp = ',"week" : ' + JSON.stringify(result.rows);
-				response = JSON.stringify(response +temp);
-				console.log(response);
+				response = response +temp;
 
 			}
 		}); 
@@ -469,18 +468,20 @@ client.connect(function(err) {
 			} else {
 
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
-			    response += JSON.stringify(response +temp);
-			    console.log(response);
+			    response  = response + temp;
+			    
+				console.log("Day Query: "+byDay);
+				console.log("Week Query: "+byWeek);
+				console.log("Month Query: "+byMonth);
+				console.log("Response: "+response);
+
+			    res.json(JSON.parse(response));
 				
 			}
 		}); 
 		
-		console.log("Day Query: "+byDay);
-		console.log("Week Query: "+byWeek);
-		console.log("Month Query: "+byMonth);
-		console.log("Response: "+response);
 		
-		res.json(200);
+		
 					
 	});
 		
@@ -490,6 +491,7 @@ client.connect(function(err) {
 	====================================================================================================================================*/
 
 	//Add a new order
+	//Author: Luis
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
 		console.log("ORDER = " + JSON.stringify(req.body));
@@ -508,10 +510,9 @@ client.connect(function(err) {
 		var value = "";
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
-		console.log("Qty: " + req.body.items[0].qtyToPurchase);
 		
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtyToPurchase + ")";
+			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtytopurchase + ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
@@ -532,15 +533,15 @@ client.connect(function(err) {
 	});
 
 
-
+	//Author: Luis
 	//Add an item to the cart
 	app.post('/BigBoxServer/cart', function(req, res) {
 		console.log("POST: ADD TO CART");
 		console.log("ITEM: " + JSON.stringify(req.body));
-		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtyToPurchase);
+		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtytopurchase);
 		
 		
-		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtyToPurchase + ");";
+		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtytopurchase + ");";
 		client.query(queryString,function(err, result) {
 					if (err) {
 						return console.error('error running query 2', err);
@@ -553,18 +554,43 @@ client.connect(function(err) {
 	
 	
 	//Add a new address to the saved addresses
+	//Author: Luis
 	app.post('/BigBoxServer/addresses', function(req, res) {
 		console.log("POST ADDRESS");
-
+		console.log("REQ: " + JSON.stringify(req.body));
+		
 		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
 			res.statusCode = 400;
 			return res.send('Error: Missing fields for the item.');
 		}
-
-		var newAddress = new Address(req.body.name, req.body.street, req.body.city, req.body.state, req.body.zip, req.body.country, req.body.phone);		console.log("New Address: " + JSON.stringify(newAddress));
-		newAddress.id = addressNextId++;
-		addressList.push(newAddress);
-		res.json(true);
+		
+		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
+		"VALUES ( '" + req.body.street + "', '" + req.body.city + "', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
+		console.log("Query: " + queryString);
+		
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query', err);
+					} else {
+						console.log("Query Done!");
+					}
+		});
+		
+		
+		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
+						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
+		console.log("Query 2: " + userAddressesQuery);						   
+	   	client.query(userAddressesQuery,function(err, result) {
+					if (err) {
+						return console.error('error running query 2', err);
+					} else {
+						console.log("Query 2 Done!");
+						res.json(true);
+					}
+		});
+		
+		
+		
 	});
 
 	//Add a credit card to the saved list
@@ -682,38 +708,30 @@ client.connect(function(err) {
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
-	//Add an item to the cart
-	app.put('/BigBoxServer/cart/:id', function(req, res) {
-		var id = req.params.id;
-		console.log("PUT");
-		console.log(req.body);
-		var itemToAdd = new CartItem(req.body.name, req.body.buyItNow, req.body.price, req.body.img, req.body.condition, req.body.hasBid, 1, req.body.shippingPrice);
-		console.log("PUT after creating object");
-		itemToAdd.id = id;
-		console.log("PUT:" + itemToAdd);
-		var target = -1;
-		for (var i = 0; i < cartList.length; ++i) {
-			if (cartList[i].id == id) {
-				target = i;
-				break;
+	//Add an item that already there, to the cart
+	//Author: Luis
+ 	app.put('/BigBoxServer/cart', function(req, res) {
+ 		console.log("REQ: " + JSON.stringify(req.body));
+ 		console.log("PUT  ITEM: " + req.body.i_id);
+ 		
+		var queryString = "UPDATE cart_items SET qtytopurchase= " + req.body.qtytopurchase + " WHERE cart_id=" + user_id + " AND " +  "i_id=" + req.body.i_id +";";
+		
+ 		console.log("Query: " + queryString);
+		
+ 		client.query(queryString, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+				res.json(true);
 			}
-		}
-		console.log("Item to add: " + JSON.stringify(itemToAdd));
-		if (target == -1) {
-			cartList.push(itemToAdd);
-			res.json(true);
-		} else {
-			var theitem = cartList[target];
-			theitem.qtyToPurchase++;
-			var response = {
-				"Item" : theitem
-			};
-			res.json(response);
-		}
+ 
+ 		});
+		
 	});
 
-	app.put('/BigBoxServer/items/:id', function(req, res) {
-		var id = req.params.id;
+ 	app.put('/BigBoxServer/items/:id', function(req, res) {
+ 		var id = req.params.id;
 
 		console.log("PUT item: " + id);
 		console.log(req.body);

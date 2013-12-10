@@ -553,11 +553,11 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 	
 	for (var i = 0; i < len; ++i) {
 		item = cartList[i];
-		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtyToPurchase + "</p>" +
+		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtytopurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
 		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
-		sTotal += parseFloat(item.i_price) * item.qtyToPurchase;
-		itemsQty += item.qtyToPurchase;
+		sTotal += parseFloat(item.i_price) * item.qtytopurchase;
+		itemsQty += item.qtytopurchase;
 	
 	}
 
@@ -587,7 +587,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			
  			options = "";
  			for ( j = 1; j <= item.i_qtyavailable; j++) {
- 				if (j == item.qtyToPurchase) {
+ 				if (j == item.qtytopurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
   				} else {
 	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
@@ -604,8 +604,8 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	} else {
 		
-		if(currentItem[0].qtyToPurchase == null){
-			currentItem[0].qtyToPurchase = 1;
+		if(currentItem[0].qtytopurchase == null){
+			currentItem[0].qtytopurchase = 1;
 		}
 		var item = currentItem;
 		var options = "";
@@ -849,6 +849,7 @@ function AddAddress() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
+			alert("Success");
 			GetAddresses(is_ship);
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -917,7 +918,8 @@ function GetAddresses(isShipping) {
 /*===============================================================================================
 Functions related Cart
 =============================================================================================*/
-//arreglar la funcion para que detecte que es el cart de cierto usuario
+
+//Author: Luis
 var cartList = {};
 function GetCart(show) {
 	console.log("cartList");
@@ -963,7 +965,7 @@ function AddToCart() {
 	}
 	
 	if(index==-1){		
-		currentItem[0].qtyToPurchase = 1;
+		currentItem[0].qtytopurchase = 1;
 		newItemToCartJSON = JSON.stringify(currentItem);
 		
 		$.ajax({
@@ -974,9 +976,8 @@ function AddToCart() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			alert("Success");
 			GetCart(true);
-	},
+		},
 	
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
@@ -991,7 +992,31 @@ function AddToCart() {
 	}
  
 	else{
-		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
+		cartList[index].qtytopurchase++;
+		newItemToCartJSON = JSON.stringify(cartList[index]);
+		
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+		method : 'put',
+		data : newItemToCartJSON,
+		contentType : "application/json",
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			GetCart(true);
+		},
+	
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+		$.mobile.loading("hide");
+			if (data.status == 404) {
+				alert("Cart not found.");
+			} else {
+				alert("Internal Server Error.");
+			}
+		}
+		});
+		
 		
 	// Se encontro,cambiar qty to purchase
 	}
@@ -1199,7 +1224,6 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
-
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1824,27 +1848,21 @@ $.ajax({
 		 list.empty();
 		 var report_daily = "";
 		  var report_weekly = "";
+		  var report_monthly ="";
 		  str = "";
+		  var result = JSON.parse(data);
 		 console.log("DATA");
-		 console.log(data);
-/*	
-			for (var i = 0; i < data.rows.length; i++) {
-				str = JSON.stringify(data.rows[i].o_date);
-				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + data.rows[i].total + '</li>';
+		 console.log(result);
+
+			for (var i = 0; i < result.day.length; i++) {
+				str = JSON.stringify(result.day[i].o_date);
+				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + result.day[i].total + '</li>';
 			}
 
-	*/
+	
 
-		   list.append('<li data-role="list-divider" role="heading">Daily</li>\
-		   <li>Day:2013-12-02, Total: $30</li>\
-		   <li>Day:2013-11-25, Total: $40</li>\
-		   <li>Day:2013-08-23, Total: $30</li>\
-		   <li>Day:2013-07-27, Total: $10</li>\
-		   <li>Day:2013-07-15, Total: $30</li>\
-		   <li>Day:2013-07-17, Total: $25</li>\
-		   <li>Day:2013-05-15, Total: $20</li>\
-		   <li>Day:2013-14-15, Total: $25</li>\
-		   <li data-role="list-divider" role="heading">Weekly</li>\
+		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report_daily+
+		   '<li data-role="list-divider" role="heading">Weekly</li>\
 		   <li>Week Start:2013-12-02, Total: $30</li>\
 		   <li>Week Start:2013-11-25, Total: $40</li>\
 		   <li>Week Start:2013-08-23, Total: $30</li>\
