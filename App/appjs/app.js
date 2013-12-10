@@ -972,7 +972,7 @@ function AddToCart() {
 		
 		$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
-		method : 'post';
+		method : 'post',
 		data : newItemToCartJSON,
 		contentType : "application/json",
 		dataType : "json",
