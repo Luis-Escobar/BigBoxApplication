@@ -1199,10 +1199,7 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
-<<<<<<< HEAD
-	
-=======
->>>>>>> 12e763f0e09b4e7d928cc31cbc74ef917a24c7f1
+
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
