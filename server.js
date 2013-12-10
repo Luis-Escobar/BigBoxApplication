@@ -444,7 +444,7 @@ client.connect(function(err) {
 				return console.error('error running query', err);
 			} else {
 
-				response = '{ "day" : ' + JSON.stringify(result.rows);
+				response += '{ "day" : ' + JSON.stringify(result.rows);
 				
 
 			}
@@ -456,7 +456,7 @@ client.connect(function(err) {
 			} else {
 				
 				var temp = ',"week" : ' + JSON.stringify(result.rows);
-				response = JSON.stringify(response +temp);
+				response += JSON.stringify(response +temp);
 				
 			}
 		}); 
@@ -467,7 +467,7 @@ client.connect(function(err) {
 			} else {
 
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
-			    response = JSON.stringify(response +temp);
+			    response += JSON.stringify(response +temp);
 			    console.log(response);
 
 				
