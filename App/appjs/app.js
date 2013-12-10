@@ -992,9 +992,7 @@ function AddToCart() {
 	}
  
 	else{
-		alert("Old qty to purchase: " + cartList[index].qtytopurchase);
 		cartList[index].qtytopurchase++;
-		alert("New qty to purchase: " + cartList[index].qtytopurchase);
 		newItemToCartJSON = JSON.stringify(cartList[index]);
 		
 		$.ajax({
@@ -1005,7 +1003,6 @@ function AddToCart() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			alert("Success");
 			GetCart(true);
 		},
 	
