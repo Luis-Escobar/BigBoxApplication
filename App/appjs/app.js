@@ -917,7 +917,8 @@ function GetAddresses(isShipping) {
 /*===============================================================================================
 Functions related Cart
 =============================================================================================*/
-//arreglar la funcion para que detecte que es el cart de cierto usuario
+
+//Author: Luis
 var cartList = {};
 function GetCart(show) {
 	console.log("cartList");
@@ -976,7 +977,7 @@ function AddToCart() {
 			$.mobile.loading("hide");
 			alert("Success");
 			GetCart(true);
-	},
+		},
 	
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
@@ -992,6 +993,32 @@ function AddToCart() {
  
 	else{
 		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
+		cartList[index].qtyToPurchase++;
+		alert("New qty to purchase: ");
+		newItemToCartJSON = JSON.stringify(cartList[index]);
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+		method : 'put',
+		data : newItemToCartJSON,
+		contentType : "application/json",
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			alert("Success");
+			GetCart(true);
+		},
+	
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+		$.mobile.loading("hide");
+			if (data.status == 404) {
+				alert("Cart not found.");
+			} else {
+				alert("Internal Server Error.");
+			}
+		}
+		});
+		
 		
 	// Se encontro,cambiar qty to purchase
 	}

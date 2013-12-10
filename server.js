@@ -673,34 +673,36 @@ client.connect(function(err) {
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
-	//Add an item to the cart
-	app.put('/BigBoxServer/cart/:id', function(req, res) {
-		var id = req.params.id;
-		console.log("PUT");
-		console.log(req.body);
-		var itemToAdd = new CartItem(req.body.name, req.body.buyItNow, req.body.price, req.body.img, req.body.condition, req.body.hasBid, 1, req.body.shippingPrice);
-		console.log("PUT after creating object");
-		itemToAdd.id = id;
-		console.log("PUT:" + itemToAdd);
-		var target = -1;
-		for (var i = 0; i < cartList.length; ++i) {
-			if (cartList[i].id == id) {
-				target = i;
-				break;
-			}
-		}
-		console.log("Item to add: " + JSON.stringify(itemToAdd));
-		if (target == -1) {
-			cartList.push(itemToAdd);
-			res.json(true);
-		} else {
-			var theitem = cartList[target];
-			theitem.qtyToPurchase++;
-			var response = {
-				"Item" : theitem
-			};
-			res.json(response);
-		}
+	//Add an item that already there, to the cart
+	//Author: Luis
+	app.put('/BigBoxServer/cart', function(req, res) {
+		console.log("PUT  ITEM: ")
+//		var id = req.params.id;
+//		console.log("PUT");
+//		console.log(req.body);
+//		var itemToAdd = new CartItem(req.body.name, req.body.buyItNow, req.body.price, req.body.img, req.body.condition, req.body.hasBid, 1, req.body.shippingPrice);
+//		console.log("PUT after creating object");
+//		itemToAdd.id = id;
+//		console.log("PUT:" + itemToAdd);
+//		var target = -1;
+//		for (var i = 0; i < cartList.length; ++i) {
+//			if (cartList[i].id == id) {
+//				target = i;
+//				break;
+//			}
+//		}
+//		console.log("Item to add: " + JSON.stringify(itemToAdd));
+//		if (target == -1) {
+//			cartList.push(itemToAdd);
+//			res.json(true);
+//		} else {
+//			var theitem = cartList[target];
+//			theitem.qtyToPurchase++;
+//			var response = {
+//				"Item" : theitem
+//			};
+//			res.json(response);
+//		}
 	});
 
 	app.put('/BigBoxServer/items/:id', function(req, res) {
