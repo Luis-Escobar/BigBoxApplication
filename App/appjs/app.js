@@ -607,6 +607,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 		if(currentItem.qtyToPurchase == null){
 			currentItem.qtyToPurchase = 1;
 		}
+		alert("QTY CHEKCOUT: " + currentItem.qtyToPurchase);
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
@@ -1661,7 +1662,7 @@ function removeUser(username){
 	else{
 		newOrder.items = currentItem;
 	}
-	
+	alert("Item Qty: "  + currentItem.qtyToPurchase;)
 	var newOrderJSON = JSON.stringify(newOrder);
 			$.ajax({
 			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
