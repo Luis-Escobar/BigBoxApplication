@@ -952,9 +952,7 @@ function GetCart(show) {
 function AddToCart() {
 	//Comentado por fase 2.
 	GetCart(false);
-	if(currentItem[0].qtyToPurchase == null){
-		currentItem[0].qtyToPurchase = 1;
-	}
+	
 	
 	var index = -1;
 //	$.mobile.loading("show");
@@ -968,11 +966,14 @@ function AddToCart() {
 	}
 	
 	alert("Index = " + index);
-	alert("Qty to puchase = " + currentItem[0].qtyToPurchase);
+	
 	var method;
 	if(index==-1){
 		method = "'post'";		
 		alert("Method: " + method);
+		currentItem[0].qtyToPurchase = 1;
+		alert("Qty to puchase = " + currentItem[0].qtyToPurchase);
+		
 //		$.ajax({
 //		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
 //		method : 'post',
@@ -999,6 +1000,8 @@ function AddToCart() {
 	else{
 		method = "'put'";
 		alert("method: " + method);
+		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
+		
 	// Se encontro,cambiar qty to purchase
 	}
 	
