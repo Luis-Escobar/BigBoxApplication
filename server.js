@@ -501,22 +501,23 @@ client.connect(function(err) {
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + req.body.items[i].i_id + ", lastvalue(), "+ req.body.items[i].i_qtyToPurchase+ ")";
+			value+="(" + req.body.items[i].i_id + ", lastvalue(), "+ req.body.items[i].qtyToPurchase+ ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
 		console.log("Value: " + value);
 			
-//		var itemsOrderQuery = "INSERT INTO items_order (i_id, o_number, quantity) " +
-//						" VALUES " + value ;
-//						   
-//	   	client.query(itemsOrdersQuery,function(err, result) {
-//					if (err) {
-//						return console.error('error running query 2', err);
-//					} else {
-//						res.json(true);
-//					}
-//		});
+		var itemsOrderQuery = "INSERT INTO items_order (i_id, o_number, quantity) " +
+						" VALUES " + value ;
+		console.log("Query 2: " + itemsOrderQuery);						   
+	   	client.query(itemsOrdersQuery,function(err, result) {
+					if (err) {
+						return console.error('error running query 2', err);
+					} else {
+						console.log("Query 2 Done!")
+						res.json(true);
+					}
+		});
  
 	});
 
