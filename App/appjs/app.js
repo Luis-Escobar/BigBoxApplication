@@ -604,10 +604,10 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	} else {
 		var item = currentItem;
-		if(currentItem.qtyToPurchase == null){
-			currentItem.qtyToPurchase = 1;
+		if(currentItem[0].qtyToPurchase == null){
+			currentItem[0].qtyToPurchase = 1;
 		}
-		alert("Qty To Purchase: " + currentItem.qtyToPurchase);
+		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
