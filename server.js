@@ -421,59 +421,65 @@ client.connect(function(err) {
 					}
 				});
 		});
-	
-	
 		
-	app.get('/BigBoxServer/buying', function(req, res) {
-
-
-				var queryString = "select i_id,i_img,i_name,u_username,i_price\
-								   from items natural join users\
-								   where u_username=$1";
-								   
-					console.log("COOKIE");
-					console.log(cookie);
-					console.log("USER ID");
-					console.log(cookie[0]);
-
-				client.query(queryString,[cookie[0].username],function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
-
-						var response = {
-							"item" : result.rows
-						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
-
-					}
-				});
-			
-		});
-	
 		
-	app.get('/BigBoxServer/report', function(req, res) {
+		app.get('/BigBoxServer/report', function(req, res) {
 
 
-				var queryString = "select SUM(o_totalprice) as total, o_date\
+				var byDay = "select SUM(o_totalprice) as total, o_date\
 								   from orders\
 								   group by  o_date order by o_date DESC";
+				var byWeek = "select extract(week from o_date) as w, SUM(o_totalprice)\
+				from orders\
+				group by w order by w";
+				
+				var byMonth = "select extract(month from o_date) as mon, SUM(o_totalprice)\
+				from orders\
+				group by mon order by mon";
+				
+				var response = "";
 
-				client.query(queryString,function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
+		client.query(byDay, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
 
-						var response = {
-							"total" : result.rows
-						};
-						console.log("Response: " + JSON.stringify(response));
-						res.json(result);
+				response += '{ "day" : ' + JSON.stringify(result.rows);
+				
 
-					}
-				});
-			
+			}
+		}); 
+		
+				client.query(byWeek, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				
+				var temp = ',"week" : ' + JSON.stringify(result.rows);
+				response += JSON.stringify(response +temp);
+				
+			}
+		}); 
+		
+						client.query(byMonth, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
+			    response += JSON.stringify(response +temp);
+			    console.log(response);
+				
+			}
+		}); 
+		
+		console.log("Day Query: "+byDay);
+		console.log("Week Query: "+byWeek);
+		console.log("Month Query: "+byMonth);
+		console.log("Response: "+response);
+		
+		res.json(200);
+					
 	});
 		
 	
@@ -484,7 +490,7 @@ client.connect(function(err) {
 	//Add a new order
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
-		console.log("ORDER = " + req.body);
+		console.log("ORDER = " + JSON.stringify(req.body));
 		
 		var queryString = "INSERT INTO orders( o_totalprice, o_shippingprice, o_date, u_id, s_address_id, b_address_id) " +
 						  "VALUES(" + req.body.totalPrice + "," + req.body.shippingTotal + ", NOW()," + user_id + "," + req.body.shippingAddress + "," + req.body.billingAddress + ")";
@@ -526,9 +532,22 @@ client.connect(function(err) {
 
 
 	//Add an item to the cart
-//	app.post('/BigBoxServer/cart', function(req, res) {
-	
-//	}
+	app.post('/BigBoxServer/cart', function(req, res) {
+		console.log("POST: ADD TO CART");
+		console.log("ITEM: " + JSON.stringify(req.body));
+		console.log("ID: " + req.body[0].i_id + " U ID: " + user_id + " Qty: " + req.body[0].qtyToPurchase);
+		
+		
+		var queryString = "INSERT INTO cart_items VALUES (" + user_id + "," + req.body[0].i_id + "," + req.body[0].qtyToPurchase + ");";
+		client.query(queryString,function(err, result) {
+					if (err) {
+						return console.error('error running query 2', err);
+					} else {
+						console.log("Query Done!");
+						res.json(true);
+					}
+		});
+	});
 	
 	
 	//Add a new address to the saved addresses

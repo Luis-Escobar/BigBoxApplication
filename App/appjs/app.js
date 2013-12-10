@@ -577,37 +577,37 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 	shippingTotal = 0.00;
 	
 
-	if (is_from_cart) {
-		var item;
-		var len = cartList.length;
-		var options = "";
+ 	if (is_from_cart) {
+ 		var item;
+ 		var len = cartList.length;
+ 		var options = "";
 
-		for ( i = 0; i < len; ++i) {
-			item = cartList[i];
-			
-			options = "";
-			for ( j = 1; j <= item.i_qtyavailable; j++) {
-				if (j == item.qtyToPurchase) {
+ 		for ( i = 0; i < len; ++i) {
+ 			item = cartList[i];
+ 			
+ 			options = "";
+ 			for ( j = 1; j <= item.i_qtyavailable; j++) {
+ 				if (j == item.qtyToPurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
-				} else {
-					options += "<option value=' " + j + "'>  " + j + "  </option>";
+  				} else {
+	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
 				}
 			}
-			shippingTotal += parseFloat(item.i_shippingprice);
-			subTotal += parseFloat(item.i_price);
-			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
-			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
-
+ 			shippingTotal += parseFloat(item.i_shippingprice);
+ 			subTotal += parseFloat(item.i_price);
+ 			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
+ 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
+ 
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
 			//			"<li><a href='#shipSelect'><p style='padding-top:10px'>Shpping type <br> Estimated shipping time</p></li><hr style='padding:0; margin:0'>");
-		}
+ 		}
 
 	} else {
-		var item = currentItem;
+		
 		if(currentItem[0].qtyToPurchase == null){
 			currentItem[0].qtyToPurchase = 1;
 		}
-		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
+		var item = currentItem;
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
@@ -950,49 +950,55 @@ function GetCart(show) {
 
 //A-adir un item al carro
 function AddToCart() {
-	//Comentado por fase 2.
+	GetCart(false);
+		
 	var index = -1;
+	var newItemToCartJSON;
 	$.mobile.loading("show");
-	var newProdJSON = JSON.stringify(currentItem);
-	for(i=0; i<cartList.length;i++){
+	for(i=0; i< cartList.length; i++){
 		if(cartList[i].i_id == currentItem[0].i_id){
 			index = i;
 			break;
 		} 
 	}
-	if(index==-1){
-//		$.ajax({
-//		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
-//		method : 'post',
-//		data : newProdJSON,
-//		contentType : "application/json",
-//		dataType : "json",
-//		success : function(data, textStatus, jqXHR) {
-//			$.mobile.loading("hide");
-//			GetCart(true);
-//	},
 	
-//		error : function(data, textStatus, jqXHR) {
-//			console.log("textStatus: " + textStatus);
-//		$.mobile.loading("hide");
-//			if (data.status == 404) {
-//				alert("Cart not found.");
-//			} else {
-//				alert("Internal Server Error.");
-//			}
-//		}
-//		});
-//	}
-/*
+	if(index==-1){		
+		currentItem[0].qtyToPurchase = 1;
+		newItemToCartJSON = JSON.stringify(currentItem);
+		
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+		method : 'post',
+		data : newItemToCartJSON,
+		contentType : "application/json",
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			alert("Success");
+			GetCart(true);
+	},
+	
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+		$.mobile.loading("hide");
+			if (data.status == 404) {
+				alert("Cart not found.");
+			} else {
+				alert("Internal Server Error.");
+			}
+		}
+		});
+	}
+ 
 	else{
+		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
+		
 	// Se encontro,cambiar qty to purchase
 	}
 	
 	
-	*/
-	GetCart(true);
 }
-}
+
 function deleteCartItem(ItemId) {
 	//Comentado por fase 2
 	/*
@@ -1193,7 +1199,10 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 12e763f0e09b4e7d928cc31cbc74ef917a24c7f1
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
@@ -1677,7 +1686,6 @@ function removeUser(username){
 	}
 	else{
 		newOrder.items = currentItem;
-		alert("Qty To Purchase: " + currentItem[0].qtyToPurchase);
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
@@ -1822,13 +1830,13 @@ $.ajax({
 		  str = "";
 		 console.log("DATA");
 		 console.log(data);
-		 
-		 for (var i=0; i < data.rows.length; i++) {
-		 	str =JSON.stringify(data.rows[i].o_date);
-		 	report_daily += '<li>Day:'+str.substring(0,10)+', Total: $'+data.rows[i].total+'</li>';
-		 }
+/*	
+			for (var i = 0; i < data.rows.length; i++) {
+				str = JSON.stringify(data.rows[i].o_date);
+				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + data.rows[i].total + '</li>';
+			}
 
-	
+	*/
 
 		   list.append('<li data-role="list-divider" role="heading">Daily</li>\
 		   <li>Day:2013-12-02, Total: $30</li>\
