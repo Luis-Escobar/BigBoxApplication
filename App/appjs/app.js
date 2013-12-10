@@ -952,6 +952,10 @@ function GetCart(show) {
 function AddToCart() {
 	//Comentado por fase 2.
 	GetCart(false);
+	if(currentItem[0].qtyToPurchase == null){
+		currentItem[0].qtyToPurchase = 1;
+	}
+	
 	var index = -1;
 //	$.mobile.loading("show");
 //	var newProdJSON = JSON.stringify(currentItem);
