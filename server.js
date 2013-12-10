@@ -501,7 +501,7 @@ client.connect(function(err) {
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + items[i].i_id + ", lastvalue(), "+ items[i].i_qtyToPurchase+ ")";
+			value+="(" + req.body.items[i].i_id + ", lastvalue(), "+ req.body.items[i].i_qtyToPurchase+ ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
