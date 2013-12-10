@@ -491,6 +491,7 @@ client.connect(function(err) {
 	====================================================================================================================================*/
 
 	//Add a new order
+	//Author: Luis
 	app.post('/BigBoxServer/orders', function(req, res) {
 		console.log("POST ORDER");
 		console.log("ORDER = " + JSON.stringify(req.body));
@@ -509,7 +510,6 @@ client.connect(function(err) {
 		var value = "";
 		console.log("Length: " + req.body.items.length);
 		console.log("Item 0: " + req.body.items[0].i_name);
-		console.log("Qty: " + req.body.items[0].qtytopurchase);
 		
 		for (i=0; i<req.body.items.length; i++){
 			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtytopurchase + ")";
@@ -533,7 +533,7 @@ client.connect(function(err) {
 	});
 
 
-
+	//Author: Luis
 	//Add an item to the cart
 	app.post('/BigBoxServer/cart', function(req, res) {
 		console.log("POST: ADD TO CART");
@@ -576,6 +576,21 @@ client.connect(function(err) {
 						res.json(true);
 					}
 		});
+		
+		
+		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
+						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
+		console.log("Query 2: " + userAddressesQuery);						   
+	   	client.query(itemsOrderQuery,function(err, result) {
+					if (err) {
+						return console.error('error running query 2', err);
+					} else {
+						console.log("Query 2 Done!");
+						res.json(true);
+					}
+		});
+		
+		
 		
 	});
 
