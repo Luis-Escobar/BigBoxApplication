@@ -502,7 +502,7 @@ client.connect(function(err) {
 		console.log("Item 0: " + req.body.items[0].i_name);
 		
 		for (i=0; i<req.body.items.length; i++){
-			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtyToPurchase+ ")";
+			value+="(" + req.body.items[i].i_id + ", currval('orders_o_number_seq'::regclass), "+ req.body.items[i].qtyToPurchase + ")";
 			if(i<req.body.items.length-1)
 				value+=",";		
 		}
@@ -515,7 +515,7 @@ client.connect(function(err) {
 					if (err) {
 						return console.error('error running query 2', err);
 					} else {
-						console.log("Query 2 Done!")
+						console.log("Query 2 Done!");
 						res.json(true);
 					}
 		});

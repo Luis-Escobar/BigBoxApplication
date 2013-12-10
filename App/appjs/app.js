@@ -604,6 +604,9 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
 
 	} else {
 		var item = currentItem;
+		if(currentItem.qtyToPurchase == null){
+			currentItem.qtyToPurchase = 1;
+		}
 		var options = "";
 		shippingTotal = parseFloat(item[0].i_shippingprice);
 		subTotal = parseFloat(item[0].i_price);
@@ -1660,9 +1663,7 @@ function removeUser(username){
 	}
 	
 	var newOrderJSON = JSON.stringify(newOrder);
-	alert("CLIST" + cartList);
-	alert("NEW ORDER" + newOrderJSON);	
-		$.ajax({
+			$.ajax({
 			url : "http://bigbox.herokuapp.com/BigBoxServer/orders",
 			method : 'post',
 			data : newOrderJSON,
@@ -1670,7 +1671,6 @@ function removeUser(username){
 			dataType : "json",
 			success : function(data, textStatus, jqXHR) {
 				$.mobile.loading("hide");
-				alert("success");
 			},
 			error : function(data, textStatus, jqXHR) {
 				console.log("textStatus: " + textStatus);
