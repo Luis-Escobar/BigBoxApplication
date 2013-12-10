@@ -677,7 +677,8 @@ client.connect(function(err) {
 	//Add an item that already there, to the cart
 	//Author: Luis
 	app.put('/BigBoxServer/cart', function(req, res) {
-		console.log("PUT  ITEM: ")
+		console.log("PUT  ITEM: " + data.body[0].i_id);
+		res.json(true);
 //		var id = req.params.id;
 //		console.log("PUT");
 //		console.log(req.body);
