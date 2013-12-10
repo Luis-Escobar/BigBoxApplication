@@ -676,27 +676,27 @@ client.connect(function(err) {
 	====================================================================================================================================*/
 	//Add an item that already there, to the cart
 	//Author: Luis
-	app.put('/BigBoxServer/cart', function(req, res) {
-		console.log("REQ: " + JSON.stringify(req.body));
-		console.log("PUT  ITEM: " + req.body.i_id);
+ 	app.put('/BigBoxServer/cart', function(req, res) {
+ 		console.log("REQ: " + JSON.stringify(req.body));
+ 		console.log("PUT  ITEM: " + req.body.i_id);
 		var queryString = " UPDATE cart_items SET qtyToPurchase="+ req.body.qtyToPuerchase + "WHERE cart_id=" + user_id + " AND " +  i_id=" + req.body.i_id +";"
 		
-		console.log("Query: " + queryString);
+ 		console.log("Query: " + queryString);
 		
-		client.query(queryString, [req.body.username], function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-				console.log("Query Done");
+ 		client.query(queryString, [req.body.username], function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
 				res.json(true);
 			}
-
-		});
+ 
+ 		});
 		
 	});
 
-	app.put('/BigBoxServer/items/:id', function(req, res) {
-		var id = req.params.id;
+ 	app.put('/BigBoxServer/items/:id', function(req, res) {
+ 		var id = req.params.id;
 
 		console.log("PUT item: " + id);
 		console.log(req.body);

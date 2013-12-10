@@ -975,7 +975,6 @@ function AddToCart() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			alert("Success");
 			GetCart(true);
 		},
 	
@@ -992,10 +991,6 @@ function AddToCart() {
 	}
  
 	else{
-		alert("Old qty to purchase: " + cartList[index].qtyToPurchase);
-		cartList[index].qtyToPurchase++;
-		alert("New qty to purchase: " + cartList[index].qtyToPurchase);
-		
 		newItemToCartJSON = JSON.stringify(cartList[index]);
 		
 		$.ajax({
