@@ -1192,6 +1192,7 @@ function checkBid() {
  =============================================================================================*/
 var currentUser;
 function login() {
+	alert("Enter");
 	var user = document.getElementById('username').value;
 	var pass = document.getElementById('password').value;
 	var logInfo = JSON.stringify({
