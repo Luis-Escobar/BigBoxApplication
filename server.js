@@ -652,7 +652,7 @@ client.connect(function(err) {
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
-	//Add an item to the cart
+/*	//Add an item to the cart
 	app.put('/BigBoxServer/cart/:id', function(req, res) {
 		var id = req.params.id;
 		console.log("PUT");
@@ -681,7 +681,7 @@ client.connect(function(err) {
 			res.json(response);
 		}
 	});
-
+*/
 	app.put('/BigBoxServer/items/:id', function(req, res) {
 		var id = req.params.id;
 
