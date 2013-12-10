@@ -565,7 +565,7 @@ client.connect(function(err) {
 		}
 		
 		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
-		"VALUES (" + req.body.street + ", " + req.body.city + "," + req.body.state + ", " + req.body.country + ", " + req.body.zip + ", " + req.body.phone + ", " + req.body.name + ");";
+		"VALUES ( '" + req.body.street + "', '" + req.body.city + "'," + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
 		console.log("Query: " + queryString);
 		
 		client.query(queryString,function(err, result) {
