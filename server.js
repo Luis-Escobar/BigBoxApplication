@@ -564,7 +564,7 @@ client.connect(function(err) {
 			return res.send('Error: Missing fields for the item.');
 		}
 		
-		var queryString("INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
+		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
 		"VALUES (" + req.body.street + ", " + req.body.city + "," + req.body.state + ", " + req.body.country + ", " + req.body.zip + ", " + req.body.phone + ", " + req.body.name + ");";
 		console.log("Query: " + queryString);
 		
