@@ -900,7 +900,7 @@ client.connect(function(err) {
 	app.del('/BigBoxServer/removeUser/', function(req, res) {
 		
 		
-		var queryString = "delete $1 from users";
+		var queryString = "DELETE FROM users WHERE u_username=$1";
 		
 			client.query(queryString,[req.body.username], function(err, result) {
 			if (err) {
