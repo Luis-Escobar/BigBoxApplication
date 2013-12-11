@@ -618,13 +618,13 @@ client.connect(function(err) {
  						" VALUES (" + user_id + ", " + req.body.cardnumber + " )";
   		console.log("Query 2: " + userCreditCardsQuery);						   
   	   	client.query(userCreditCardsQuery,function(err, result) {
-	 				if (err) {
-	 					return console.error('error running query 2', err);
-	 				} else {
-						console.log("Query 2 Done!"); 
+//	 				if (err) {
+//	 					return console.error('error running query 2', err);
+//	 				} else {
+//						console.log("Query 2 Done!"); 
 		 				res.json(true);
-					}
-		});
+//					}
+//		});
 		
  	});
 	
