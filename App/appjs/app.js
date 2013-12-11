@@ -1072,8 +1072,9 @@ function AddCreditCard() {
 	var newCreditCard = ConverToJSON(formData);
 	console.log("New Credit Card: " + JSON.stringify(newCreditCard));
 	console.log("Month: " + newCreditCard.exp_month);
-	switch(newCreditCard.exp_month){
-	
+	var expmonth = newCreditCard.exp_month;
+	switch(expmonth)
+	{
 	case 1: 
 		newCreditCard.exp_month = "JAN";			
 		break;	
