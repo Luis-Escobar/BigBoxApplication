@@ -508,7 +508,7 @@ client.connect(function(err) {
  		});
  		var bidUserQuery= " INSERT INTO bids( " +
             "i_id, buyer_id, bid_date_time, bid_amount)" +
-    		" VALUES (" + req.body.i_id + ", " + user_id + ", NOW(), " + req.body.i_bid;
+    		" VALUES (" + req.body.i_id + ", " + user_id + ", NOW(), " + req.body.i_bid +");";
  		console.log("Bid Query: "  + bidUserQuery);
  		client.query(bidUserQuery, function(err, result) {
  			if (err) {
