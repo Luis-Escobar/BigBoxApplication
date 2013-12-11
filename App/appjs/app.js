@@ -1848,49 +1848,56 @@ $.ajax({
 
 });
 
-
-$(document).on('pagebeforeshow', "#report", function(event, ui) {
-$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
+function report(){
+		var year = document.getElementById('select-choice-year').value;
+		var sort = document.getElementById('select-choice-sort').value;
+		
+		var dat = JSON.stringify({
+		'year' : year
+	});
+	
+	if(year=="Year"){
+		alert("Please select a Year");
+	}
+	else if(sort=="Sort"){
+		alert("Please select a sorting method");
+	}
+	else
+	$.ajax({
+		url : "http://localhost:3412/BigBoxServer/report",
 		contentType : "application/json",
+		type:"post",
+		data:dat,
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("#report_list").listview();
-		 list.empty();
-		 var report_daily = "";
-		  var report_weekly = "";
-		  var report_monthly ="";
-		  str = "";
-		  var result = JSON.parse(data);
-		 console.log("DATA");
-		 console.log(result);
-
-			for (var i = 0; i < result.day.length; i++) {
-				str = JSON.stringify(result.day[i].o_date);
-				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + result.day[i].total + '</li>';
+			
+		  var data_table=$("#data_table");
+		  data_table.table();
+		  var report="";
+		  var t ='<th data-priority="1">'+sort+'</th><th data-priority="2">Total Sales</th>';
+		  		  
+		  if(sort=="Daily")
+			for (var i = 0; i < data.day.length; i++) {
+				str = JSON.stringify(data.day[i].o_date);
+				report += '<tr><th>' + str.substring(1, 11) +'</th><td>$' + data.day[i].total+'</td></tr>';
+			}
+			else if(sort=="Weekly")
+				for (var i = 0; i < data.week.length; i++) {
+				report += '<tr><th>' + data.week[i].w +'</th><td>$' + data.week[i].sum+'</td></tr>';
+			}
+			
+			else
+				for (var i = 0; i < data.month.length; i++) {
+				report += '<tr><th>' + data.month[i].m +'</th><td>$' + data.month[i].sum+'</td></tr>';
 			}
 
-	
-
-		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report_daily+
-		   '<li data-role="list-divider" role="heading">Weekly</li>\
-		   <li>Week Start:2013-12-02, Total: $30</li>\
-		   <li>Week Start:2013-11-25, Total: $40</li>\
-		   <li>Week Start:2013-08-23, Total: $30</li>\
-		   <li>Week Start:2013-07-27, Total: $10</li>\
-		   <li>Week Start:2013-07-15, Total: $55</li>\
-		   <li>Week Start:2013-05-15, Total: $20</li>\
-		   <li>Week Start:2013-14-15, Total: $25</li>\
-		   <li data-role="list-divider" role="heading">Monthly</li>\
-		   <li>Month:2013-12, Total: $30</li>\
-		   <li>Month:2013-11, Total: $40</li>\
-		   <li>Month:2013-08, Total: $30</li>\
-		   <li>Month:2013-07, Total: $65</li>\
-		   <li>Month:2013-05, Total: $20</li>\
-		   <li>Month:2013-14, Total: $25</li>');
-					
-		
-		   list.listview("refresh");
-		   
+			data_table.empty();
+			data_table.append('<table data-role="table" id="movie-table-custom" data-mode="reflow" class="movie-list table-stroke">\
+					<thead>\
+						<tr id="table_title">'+t+'</tr>\
+					</thead>\
+					<tbody>'+report+'</tbody></table>');
+			
+			data_table.table( "refresh" );
 		
 		},
         error : function(data, textStatus, jqXHR) {
@@ -1899,5 +1906,5 @@ $.ajax({
         }
 	});
 
-});
+};
 

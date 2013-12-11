@@ -422,64 +422,37 @@ client.connect(function(err) {
 				});
 		});
 		
+
+	//Derick
+	app.get('/BigBoxServer/selling', function(req, res) {
+
+
+                                var queryString = "select i_id,i_img,i_name,u_username,i_price\
+                                                                 from items natural join users\
+                                                                 where u_username=$1";
+                                                                
+                                        console.log("COOKIE");
+                                        console.log(cookie);
+                                        console.log("USER ID");
+                                        console.log(cookie[0]);
+
+                                client.query(queryString,[cookie[0].username],function(err, result) {
+                                        if (err) {
+                                                return console.error('error running query', err);
+                                        } else {
+
+                                                var response = {
+                                                        "item" : result.rows
+                                                };
+                                                console.log("Response: " + JSON.stringify(response));
+                                                res.json(result);
+
+                                        }
+                                });
+                        
+        });
 		
-		app.get('/BigBoxServer/report', function(req, res) {
-
-
-				var byDay = "select SUM(o_totalprice) as total, o_date\
-								   from orders\
-								   group by  o_date order by o_date DESC";
-				var byWeek = "select extract(week from o_date) as w, SUM(o_totalprice)\
-				from orders\
-				group by w order by w";
-				
-				var byMonth = "select extract(month from o_date) as mon, SUM(o_totalprice)\
-				from orders\
-				group by mon order by mon";
-				
-				var response = "";
-
-		client.query(byDay, function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-
-				response = '{ "day" : ' + JSON.stringify(result.rows);
-				
-				
-
-			}
-		}); 
 		
-				client.query(byWeek, function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-				
-				var temp = ',"week" : ' + JSON.stringify(result.rows);
-				response = response +temp;
-
-			}
-		}); 
-		
-						client.query(byMonth, function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
-			    response  = response + temp;
-			    
-				console.log("Day Query: " + byDay);
-				console.log("Week Query: " + byWeek);
-				console.log("Month Query: " + byMonth);
-				console.log("Response: " + response);
-
-			    res.json(JSON.parse(response));
-			}
-		}); 
-	});
-		
-	
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
@@ -754,6 +727,68 @@ client.connect(function(err) {
 
 		});
 	});
+	
+	//Derick
+	app.post('/BigBoxServer/report', function(req, res) {
+			
+			
+			console.log(req.body);
+
+				var byDay = "select SUM(o_totalprice) as total, o_date from orders where extract(year from o_date)=$1 group by  o_date order by o_date DESC";
+				
+				var byWeek = "select extract(year from o_date) as y,extract(week from o_date) as w, SUM(o_totalprice) from orders where extract(year from o_date)=$1 group by y,w order by y,w";
+				
+				var byMonth = "select extract(year from o_date) as y,extract(month from o_date) as m, SUM(o_totalprice) from orders  where extract(year from o_date)=$1 group by y,m order by y,m";
+				
+				var response = "";
+
+		client.query(byDay,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				response = '{"day" :' + JSON.stringify(result.rows);
+				
+				
+
+			}
+		}); 
+		
+				client.query(byWeek,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				
+				var temp = ',"week":' + JSON.stringify(result.rows);
+				response = response +temp;
+
+			}
+		}); 
+		
+			client.query(byMonth,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var temp =  ',"month":' + JSON.stringify(result.rows)+'}';
+			    response  = response + temp;
+			    
+				console.log("Day Query: "+byDay);
+				console.log("Week Query: "+byWeek);
+				console.log("Month Query: "+byMonth);
+				console.log("Response: "+response);
+
+			    res.json(JSON.parse(response));
+				
+			}
+		}); 
+		
+		
+		
+					
+	});
+		
+	
 
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
