@@ -1656,13 +1656,9 @@ function confirmUserRemoval(username,confirmType){
 		
 				});
 				
-				$.mobile.navigate("/App/view/account/removedUser.html");
-
-				
+				$.mobile.navigate("/App/view/account/removedUser.html");			
 			}
 	
-
-
 }
 
 function removeUser(username){
