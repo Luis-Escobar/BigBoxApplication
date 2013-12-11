@@ -1299,53 +1299,48 @@ function account() {
 
 function register() {
 
-	var fname = document.getElementById('fname').value;
-	var lname = document.getElementById('lname').value;
-	var address = document.getElementById('address').value;
-	var city = document.getElementById('city').value;
-	var state = document.getElementById('state').value;
-	var country = document.getElementById('country').value;
-	var zipcode = document.getElementById('zipcode').value;
-	var phone = document.getElementById('phone').value;
-	var new_username = document.getElementById('new_username').value;
-	var email = document.getElementById('email').value;
-	var new_password = document.getElementById('new_password').value;
-	var renter = document.getElementById('renter').value;
-	var question = document.getElementById('question').value;
-	var answer = document.getElementById('answer').value;
+	// var fname = document.getElementById('fname').value;
+	// var lname = document.getElementById('lname').value;
+	// var address = document.getElementById('address').value;
+	// var city = document.getElementById('city').value;
+	// var state = document.getElementById('state').value;
+	// var country = document.getElementById('country').value;
+	// var zipcode = document.getElementById('zipcode').value;
+	// var phone = document.getElementById('phone').value;
+	// var new_username = document.getElementById('new_username').value;
+	// var email = document.getElementById('email').value;
+	// var new_password = document.getElementById('new_password').value;
+	// var renter = document.getElementById('renter').value;
+	// var question = document.getElementById('question').value;
+	// var answer = document.getElementById('answer').value;
 
-	var registerInfo = JSON.stringify({
-		'fname' : fname,
-		'lname' : lname,
-		'address' : address,
-		'city' : city,
-		'state' : state,
-		'country' : country,
-		'zipcode' : zipcode,
-		'phone' : phone,
-		'new_username' : new_username,
-		'email' : email,
-		'new_password' : new_password,
-		'renter' : renter,
-		'question' : question,
-		'answer' : answer
-	});
+//	$.mobile.loading("show");
+ 	var form = $("#register-form");
+ 	var formData = form.serializeArray();
+ 	console.log("form Data: " + formData);
+ 	var newUser = ConverToJSON(formData);
+ 	
+ 	
+ 	console.log("New user: " + JSON.stringify(newUser));
+	alert("New User name:" + newUser.fname);
+	var newUserJSON = JSON.stringify(newUser);
 
-	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/register",
-		type : "post",
-		contentType : "application/json",
-		data : registerInfo,
-		success : function(data, textStatus, jqXHR) {
-			$.mobile.navigate("/App/view/signedUp.html");
 
-		},
-		error : function(data, textStatus, jqXHR) {
-			console.log("try again");
-			$.mobile.navigate("/index.html");
+//	$.ajax({
+//		url : "http://bigbox.herokuapp.com/BigBoxServer/register",
+//		type : "post",
+//		contentType : "application/json",
+//		data : registerInfo,
+//		success : function(data, textStatus, jqXHR) {
+//			$.mobile.navigate("/App/view/signedUp.html");
 
-		}
-	});
+//		},
+//		error : function(data, textStatus, jqXHR) {
+//			console.log("try again");
+//			$.mobile.navigate("/index.html");
+
+//		}
+//	});
 
 }
 
