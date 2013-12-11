@@ -1174,7 +1174,6 @@ function getSubmitValue() {
 
 	currentItem[0].i_bid = bidValue;
 	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
-	alert("UpdatedItemJSON: " + UpdatedItemJSON);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
 		method : 'put',
