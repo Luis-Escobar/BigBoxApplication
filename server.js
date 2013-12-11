@@ -934,5 +934,4 @@ client.connect(function(err) {
 	app.listen(process.env.PORT || 3412);
 	console.log("server listening port:");
 
-});
 
