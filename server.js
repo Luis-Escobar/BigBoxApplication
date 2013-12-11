@@ -672,16 +672,8 @@ client.connect(function(err) {
 	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
-		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);
-		console.log(temp.length);
-		var val = isValid(temp, req.body.renter);
-		if (val != "valid") {
-			res.send(400, val);
-		} else {
-
-			adduser(temp);
-			res.send(200);
-		}
+		console.log("User info: " + JSON.stringify(req.body));
+		res.json(true);
 
 	});
 	
