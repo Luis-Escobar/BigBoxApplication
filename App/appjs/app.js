@@ -1171,14 +1171,9 @@ function getSubmitValue() {
 	if (userConfirmation == false) {
 		return;
 	}
-	else{
-		alert("Not implemented in this phase");
-	}
-
-	
 
 	currentItem[0].i_bid = bidValue;
-	var UpdatedItemJSON = JSON.stringify(currentItem);
+	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
 	alert("UpdatedItemJSON: " + UpdatedItemJSON);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem[0].id,

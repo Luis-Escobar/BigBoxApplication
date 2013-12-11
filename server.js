@@ -757,16 +757,18 @@ client.connect(function(err) {
  		var id = req.params.id;
 
 		console.log("PUT item: " + id);
-		console.log("Item New: " + JSON.stringify(req.body));
+		console.log("Item New: " + JSON.stringify(req.body.i_name));
 
-//		if (!req.body.hasOwnProperty('img') || !req.body.hasOwnProperty('info') || !req.body.hasOwnProperty('price')) {
-//			res.statusCode = 400;
-//			return res.send('Error: Missing fields for the item.');
-//		} else {
+		var queryString =  "UPDATE items " +
+   							"SET i_id=" + id + ", i_name= " + req.body.i_name + ", i_model= " + req.body.i_model + ", i_year= " + req.body.i_year + ", i_info= " + req.body.i_info + 
+       							", i_price= " + req.body.i_price + ", i_img= " + req.body.i_img + 
+       							", i_shipto= " + req.body.i_shipto + ", i_shipfrom = " + req.body.i_shipfrom +  ", i_shippingprice= " + req.body.i_shippingprice  +  
+      							", i_qtyavailable= " + req.body.i_qtavailable  + ", i_bid= " + req.body.i_bid + ", cid= " + req.item.cid + ", subid= " + req.body.subid + 
+       							", ssubid= " + req.body.ssubid +
+ 							"WHERE <i_id = " + id + ">";
 	
-			res.json(true);
-//		}
-		
+		console.log("Query: " + queryString);	
+		res.json(true);
 	});
 
 
