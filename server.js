@@ -592,6 +592,7 @@ client.connect(function(err) {
 	});
 
 	//Add a credit card to the saved list
+	//Author: Luis
  	app.post('/BigBoxServer/creditcards', function(req, res) {
  		console.log("POST CREDIT CARD");
  		console.log("CreditCard: " + JSON.stringify(req.body));
@@ -764,9 +765,20 @@ client.connect(function(err) {
        							", i_shipto= " + req.body.i_shipto + ", i_shipfrom = " + req.body.i_shipfrom +  ", i_shippingprice= " + req.body.i_shippingprice  +  
       							", i_qtyavailable= " + req.body.i_qtavailable  + ", i_bid= " + req.body.i_bid + ", cid= " + req.body.cid + ", subid= " + req.body.subid + 
        							", ssubid= " + req.body.ssubid +
- 						   " WHERE <i_id = " + req.body.i_id + ">";
+ 						   " WHERE i_id = " + req.body.i_id;
 	
 		console.log("Query: " + queryString);	
+		
+		client.query(queryString, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+				res.json(true);
+			}
+ 
+ 		});
+		
 		res.json(true);
 	});
 
