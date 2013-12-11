@@ -1680,8 +1680,6 @@ function removeUser(username){
 			console.log("got here");
 			confirmUserRemoval(username,2);
 
-
-
 		},
 		error : function(data, textStatus, jqXHR) {
 			alert("This shouldn't happen.");
