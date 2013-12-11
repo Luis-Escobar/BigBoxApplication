@@ -1072,7 +1072,45 @@ function AddCreditCard() {
 	var newCreditCard = ConverToJSON(formData);
 	console.log("New Credit Card: " + JSON.stringify(newCreditCard));
 	console.log("Month: " + newCreditCard.exp_month);
+	switch(newCreditCard.exp_month){
 	
+	case 1: 
+		newCreditCard.exp_month = "JAN";			
+		break;	
+	case 2:
+		newCreditCard.exp_month = FEB;
+		break;
+	case 3:
+		newCreditCard.exp_month = MAR;
+		break;
+	case 4:
+		newCreditCard.exp_month = APR;
+		break;	
+	case 5:
+		newCreditCard.exp_month = MAY;
+		break;
+	case 6:
+		newCreditCard.exp_month = JUN;
+		break;
+	case 7:
+		newCreditCard.exp_month = JUL;
+		break;
+	case 8:
+		newCreditCard.exp_month = AUG;
+		break;
+	case 9:
+		newCreditCard.exp_month = SEP;
+		break;
+	case 10:
+		newCreditCard.exp_month = OCT;
+		break;
+	case 11:
+		newCreditCard.exp_month = NOV;
+		break;
+	case 12:
+		newCreditCard.exp_month = DEC;
+		break;
+	}					
 	var newCreditCardJSON = JSON.stringify(newCreditCard);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/creditcards",
