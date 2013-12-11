@@ -386,7 +386,7 @@ client.connect(function(err) {
 				var queryBid = 'select i_id,i_img,i_name,i_bid\
 				from(select i_id, u_id as seller_id,buyer_id, i_name, i_bid,i_img\
 					from bids natural join items) as tmp natural join users\
-					where buyer_id = u_id and u_username =$1;
+					where buyer_id = u_id and u_username =$1';
 				var response ="";
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
