@@ -672,7 +672,7 @@ client.connect(function(err) {
 
  	app.post('/BigBoxServer/register', function(req, res) {
  		console.log("User info: " + JSON.stringify(req.body));
-		var selectQuery = " SELECT *  FROM users WHERE u_email=" + req.body.email + " OR u_username = " + req.body.new_username;
+		var selectQuery = " SELECT *  FROM users WHERE u_email= '" + req.body.email + "' OR u_username = '" + req.body.new_username + "'";
 		console.log("Query select: " + selectQuery);
 		client.query(selectQuery, function(err, result) {
 				if (err) {
