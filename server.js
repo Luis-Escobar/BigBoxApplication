@@ -761,7 +761,7 @@ client.connect(function(err) {
 
 //		if (!req.body.hasOwnProperty('img') || !req.body.hasOwnProperty('info') || !req.body.hasOwnProperty('price')) {
 //			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
+//			return res.send('Error: Missing fields for the item.');
 //		} else {
 	
 			res.json(true);
