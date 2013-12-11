@@ -755,7 +755,7 @@ client.connect(function(err) {
 
  	app.put('/BigBoxServer/items', function(req, res) {
 
-		console.log("PUT item: " + req.body.i_id;
+		console.log("PUT item: " + req.body.i_id);
 		console.log("Item New: " + JSON.stringify(req.body.i_name));
 
 		var queryString =  "UPDATE items " +
