@@ -753,19 +753,18 @@ client.connect(function(err) {
 		
 	});
 
- 	app.put('/BigBoxServer/items/:id', function(req, res) {
- 		var id = req.params.id;
+ 	app.put('/BigBoxServer/items', function(req, res) {
 
-		console.log("PUT item: " + id);
+		console.log("PUT item: " + req.body.i_id;
 		console.log("Item New: " + JSON.stringify(req.body.i_name));
 
 		var queryString =  "UPDATE items " +
-   							"SET i_id=" + id + ", i_name= " + req.body.i_name + ", i_model= " + req.body.i_model + ", i_year= " + req.body.i_year + ", i_info= " + req.body.i_info + 
+   							"SET i_name= " + req.body.i_name + ", i_model= " + req.body.i_model + ", i_year= " + req.body.i_year + ", i_info= " + req.body.i_info + 
        							", i_price= " + req.body.i_price + ", i_img= " + req.body.i_img + 
        							", i_shipto= " + req.body.i_shipto + ", i_shipfrom = " + req.body.i_shipfrom +  ", i_shippingprice= " + req.body.i_shippingprice  +  
       							", i_qtyavailable= " + req.body.i_qtavailable  + ", i_bid= " + req.body.i_bid + ", cid= " + req.body.cid + ", subid= " + req.body.subid + 
        							", ssubid= " + req.body.ssubid +
- 							"WHERE <i_id = " + id + ">";
+ 						   " WHERE <i_id = " + req.body.i_id + ">";
 	
 		console.log("Query: " + queryString);	
 		res.json(true);

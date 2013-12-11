@@ -1176,7 +1176,7 @@ function getSubmitValue() {
 	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
 	alert("UpdatedItemJSON: " + UpdatedItemJSON);
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem[0].id,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
 		method : 'put',
 		data : UpdatedItemJSON,
 		contentType : "application/json",
@@ -1184,7 +1184,6 @@ function getSubmitValue() {
 		success : function(data, textStatus, jqXHR) {
 			alert("success");
 			GetItem(currentItem[0].i_id, true);
-			//refresh Current Item
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
