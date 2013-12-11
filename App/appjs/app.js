@@ -1337,7 +1337,7 @@ function register() {
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
 			alert("textStatus: " + textStatus);
-			alert("data: " + data);
+			console.log(data);
 			alert("data.rows[0]: " + data.rows[0]);
 			alert("jqXHR: " + jqXHR);
 
