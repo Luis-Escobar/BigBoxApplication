@@ -678,14 +678,15 @@ client.connect(function(err) {
 				if (err) {
 					return console.error('error running query', err);
 				}
-				console.log(" " + JSON.stringify(result.rows));
 				
-				elseif(JSON.stringify(result.rows) != "[]"){
+				else if(JSON.stringify(result.rows) != "[]"){
+					console.log(" " + JSON.stringify(result.rows));
 					len = result.rows.length;
 					console.log("Length = " + len);
 					res.send(400, "It seems you already have an account");
 					return;	
 				}
+				console.log(" " + JSON.stringify(result.rows));
 				if(req.body.new_password==req.body.renter){
 					console.log("Checked passwords");
 					res.json(true);
