@@ -1581,7 +1581,7 @@ function recoverPassword(username){
 				
 			});
 		
-			$.mobile.navigate("/App/view/accoun1t/passwordRecoverd.html");
+			$.mobile.navigate("/App/view/account/passwordRecoverd.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1865,7 +1865,7 @@ function report(){
 	}
 	else
 	$.ajax({
-		url : "http://localhost:3412/BigBoxServer/report",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
 		contentType : "application/json",
 		type:"post",
 		data:dat,
