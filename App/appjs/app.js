@@ -1181,7 +1181,6 @@ function getSubmitValue() {
 		contentType : "application/json",
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			alert("success");
 			GetItem(currentItem[0].i_id, true);
 		},
 		error : function(data, textStatus, jqXHR) {
