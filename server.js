@@ -667,13 +667,12 @@ client.connect(function(err) {
 				cookie.push(req.session);
 				res.json(response);
 			}
-
 		});
 	});
 
 	app.post('/BigBoxServer/register', function(req, res) {
 		console.log("User info: " + JSON.stringify(req.body));
-		res.json(true);
+		res.send(400, "Error");
 
 	});
 	

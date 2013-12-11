@@ -1336,9 +1336,10 @@ function register() {
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
+			alert("textStatus: " + textStatus);
 			alert("data: " + data);
-			alert("textstatus: " + textstatus);
 			alert("jqXHR: " + jqXHR);
+			alert("texStatus[0]" + textStatus[0]);
 			$.mobile.navigate("/index.html");
 		}
 	});
