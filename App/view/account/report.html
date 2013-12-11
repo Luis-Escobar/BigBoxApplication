@@ -17,20 +17,52 @@
 		<!-- homepage -->
 		<div data-role="page" id="report">
 			<div class="user_header" data-role="header" data-nobackbtn="true">
-				<script type="text/javascript"> registerChecker(4);</script>
+				<script type="text/javascript">
+					registerChecker(4);
+				</script>
 
-			<div data-role="controlgroup" data-type="horizontal" data-inline="true" align="right">
+				<div data-role="controlgroup" data-type="horizontal" data-inline="true" align="right">
 					<a href="/App/view/user.html" data-role="button" data-icon="home">Home</a>
 					<a data-rel="page" data-role="button" onclick="logout()">Log Out </a>
 				</div>
+			</div>
+			<div >
 
-				<div >
-					<ul data-role="listview" data-theme="d" data-divider-theme="d" id="report_list">
-						
-					</ul>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup"  data-type="horizontal">
+						<legend>
+							Select:
+						</legend>
+						<label for="select-choice-year">Year</label>
+						<select name="select-choice-year" id="select-choice-year">
+							<option>Year</option>
+							<option value="2013">2013</option>
+							<option value="2012">2012</option>
+
+						</select>
+						<label for="select-choice-sort">Sort</label>
+						<select name="select-choice-sort" id="select-choice-sort">
+							<option>Sort</option>
+							<option value="Daily">Daily</option>
+							<option value="Weekly">Weekly</option>
+							<option value="Monthly">Monthly</option>
+						</select>
+
+					</fieldset>
+
+					<div data-role="content" id="data_table">
+					</div>
+					
+						<div>
+							<input type="submit" onclick="report()" data-inline="true" data-theme="b" value="Submit"/>
+						</div>
+
 				</div>
 			</div>
+
 		</div>
+
 	</body>
 
 </html>
+
