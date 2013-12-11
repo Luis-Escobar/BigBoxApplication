@@ -680,7 +680,7 @@ client.connect(function(err) {
 				}
 				console.log(" " + JSON.stringify(result.rows));
 				
-				else if(JSON.stringify(result.rows) != "[]"){
+				elseif(JSON.stringify(result.rows) != "[]"){
 					len = result.rows.length;
 					console.log("Length = " + len);
 					res.send(400, "It seems you already have an account");
