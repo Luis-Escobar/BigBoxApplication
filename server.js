@@ -757,50 +757,16 @@ client.connect(function(err) {
  		var id = req.params.id;
 
 		console.log("PUT item: " + id);
-		console.log(req.body);
-		if ((id < 0) || (id >= itemNextId)) {
-			// not found
-			res.statusCode = 404;
-			res.send("Item not found.");
-		} else if (!req.body.hasOwnProperty('img') || !req.body.hasOwnProperty('info') || !req.body.hasOwnProperty('price')) {
-			res.statusCode = 400;
+		console.log("Item New: " + JSON.stringify(req.body));
+
+//		if (!req.body.hasOwnProperty('img') || !req.body.hasOwnProperty('info') || !req.body.hasOwnProperty('price')) {
+//			res.statusCode = 400;
 			return res.send('Error: Missing fields for the item.');
-		} else {
-			var target = -1;
-			for (var i = 0; i < itemList.length; ++i) {
-				if (itemList[i].id == id) {
-					target = i;
-					break;
-				}
-			}
-			if (target == -1) {
-				res.statusCode = 404;
-				res.send("Item not found.");
-			} else {
-				var theitem = itemList[target];
-				theitem.bid = req.body.bid;
-				theitem.name = req.body.name;
-				theitem.model = req.body.model;
-				theitem.year = req.body.year;
-				theitem.info = req.body.info;
-				theitem.buyItNow = req.body.buyItNow;
-				theitem.price = req.body.price;
-				theitem.img = req.body.img;
-				theitem.dimension = " " + req.body.width + "x" + req.body.length + "x" + req.body.heigth;
-				theitem.weigth = req.body.weigth;
-				theitem.shipTo = req.body.shipTo;
-				theitem.shipFrom = req.body.shipFrom;
-				theitem.condition = req.body.condition;
-				theitem.hasBid = req.body.hasBid;
-				theitem.bid = req.body.bid;
-				theitem.seller = req.body.seller;
-				theitem.shippingPrice = req.body.shippingPrice;
-				var response = {
-					"item" : theitem
-				};
-				res.json(response);
-			}
-		}
+//		} else {
+	
+			res.json(true);
+//		}
+		
 	});
 
 

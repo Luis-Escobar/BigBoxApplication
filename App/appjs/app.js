@@ -1175,22 +1175,20 @@ function getSubmitValue() {
 		alert("Not implemented in this phase");
 	}
 
-	/*
-	 var jsonData={"name":""+currentItem.name, "model":""+currentItem.model, "year":""+currentItem.year,"info":""+currentItem.info,"buyItNow":""+currentItem.buyItNow, "price":""+currentItem.price, "img":""+currentItem.img,
-	 "width":""+currentItem.width, "length":""+currentItem.length, "heigth":""+currentItem.heigth, "weigth":""+currentItem.weigth, "shipTo":""+currentItem.shipTo, "shipFrom":""+currentItem.shipFrom, "condition":""+currentItem.condition ,
-	 "hasBid":""+currentItem.hasBid, "bid":""+currentItem.bid, "seller":""+currentItem.seller, "shippingPrice":""+currentItem.shippingPrice){
+	
 
-	 var j = JSON.stringify(jsonData);*/
-	//currentItem.bid = bidValue;
-	//var newProdJSON = JSON.stringify(currentItem);
-	/**$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem.id,
+	currentItem[0].i_bid = bidValue;
+	var UpdatedItemJSON = JSON.stringify(currentItem);
+	alert("UpdatedItemJSON: " + UpdatedItemJSON);
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem[0].id,
 		method : 'put',
-		data : newProdJSON,
+		data : UpdatedItemJSON,
 		contentType : "application/json",
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			GetItem(currentItem.id, true);
+			alert("success");
+			GetItem(currentItem[0].i_id, true);
 			//refresh Current Item
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1202,7 +1200,7 @@ function getSubmitValue() {
 				alert("Internal Server Error.");
 			}
 		}
-	});*/
+ 	});
 
 }
 
