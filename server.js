@@ -670,11 +670,29 @@ client.connect(function(err) {
 		});
 	});
 
-	app.post('/BigBoxServer/register', function(req, res) {
-		console.log("User info: " + JSON.stringify(req.body));
-		res.send(400, "Error");
+ 	app.post('/BigBoxServer/register', function(req, res) {
+ 		console.log("User info: " + JSON.stringify(req.body));
+		var selectQuery = " SELECT *  FROM users WHERE u_email=" + req.body.email + "OR u_username = " + req.body.new_username;
+		console.log("Query select: " + selectQuery);
+		client.query(selectQuery, function(err, result) {
+				if (err) {
+					return console.error('error running query', err);
+				}
+				console.log(" " + JSON.stringify(result.rows));
+				
+				else if(JSON.stringify(result.rows) != "[]"){
+					len = result.rows.length;
+					console.log("Length = " + len);
+					res.send(400, "It seems you already have an account");
+					return;	
+				}
+				if(req.body.new_password==req.body.renter){
+					console.log("Checked passwords");
+					res.json(true);
+				}
+			});
 
-	});
+ 	});
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
 		console.log("req.body:");
