@@ -1585,7 +1585,7 @@ function recoverPassword(username){
 				
 			});
 		
-			$.mobile.navigate("/App/view/accoun1t/passwordRecoverd.html");
+			$.mobile.navigate("/App/view/account/passwordRecoverd.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
