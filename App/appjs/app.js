@@ -1111,6 +1111,7 @@ function AddCreditCard() {
 		newCreditCard.exp_month = DEC;
 		break;
 	}					
+	alert("Month: " + newCreditCard.exp_month);
 	var newCreditCardJSON = JSON.stringify(newCreditCard);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/creditcards",
