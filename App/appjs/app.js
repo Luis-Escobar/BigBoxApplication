@@ -1068,8 +1068,10 @@ function AddCreditCard() {
 	var form = $("#card-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
+	console.log("Month: " + formData.exp_month);
 	var newCreditCard = ConverToJSON(formData);
 	console.log("New Credit Card: " + JSON.stringify(newCreditCard));
+	
 	var newCreditCardJSON = JSON.stringify(newCreditCard);
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/creditcards",
@@ -1079,6 +1081,7 @@ function AddCreditCard() {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
+			alert("success");
 			GetCreditCards();
 		},
 		error : function(data, textStatus, jqXHR) {
