@@ -1325,22 +1325,23 @@ function register() {
 	alert("New User name:" + newUser.fname);
 	var newUserJSON = JSON.stringify(newUser);
 
-
-//	$.ajax({
-//		url : "http://bigbox.herokuapp.com/BigBoxServer/register",
-//		type : "post",
-//		contentType : "application/json",
-//		data : registerInfo,
-//		success : function(data, textStatus, jqXHR) {
-//			$.mobile.navigate("/App/view/signedUp.html");
-
-//		},
-//		error : function(data, textStatus, jqXHR) {
-//			console.log("try again");
-//			$.mobile.navigate("/index.html");
-
-//		}
-//	});
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/register",
+		type : "post",
+		contentType : "application/json",
+		data : newUserJSON,
+		success : function(data, textStatus, jqXHR) {
+			alert(data);
+			$.mobile.navigate("/App/view/signedUp.html");
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("try again");
+			alert("data: " + data);
+			alert("textstatus: " + textstatus);
+			alert("jqXHR: " + jqXHR);
+			$.mobile.navigate("/index.html");
+		}
+	});
 
 }
 
