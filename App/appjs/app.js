@@ -1079,37 +1079,37 @@ function AddCreditCard() {
 		newCreditCard.exp_month = "JAN";			
 		break;	
 	case 2:
-		newCreditCard.exp_month = FEB;
+		newCreditCard.exp_month = "FEB";
 		break;
 	case 3:
-		newCreditCard.exp_month = MAR;
+		newCreditCard.exp_month = "MAR";
 		break;
 	case 4:
-		newCreditCard.exp_month = APR;
+		newCreditCard.exp_month = "APR";
 		break;	
 	case 5:
-		newCreditCard.exp_month = MAY;
+		newCreditCard.exp_month = "MAY";
 		break;
 	case 6:
-		newCreditCard.exp_month = JUN;
+		newCreditCard.exp_month = "JUN";
 		break;
 	case 7:
-		newCreditCard.exp_month = JUL;
+		newCreditCard.exp_month = "JUL";
 		break;
 	case 8:
-		newCreditCard.exp_month = AUG;
+		newCreditCard.exp_month = "AUG";
 		break;
 	case 9:
-		newCreditCard.exp_month = SEP;
+		newCreditCard.exp_month = "SEP";
 		break;
 	case 10:
-		newCreditCard.exp_month = OCT;
+		newCreditCard.exp_month = "OCT";
 		break;
 	case 11:
-		newCreditCard.exp_month = NOV;
+		newCreditCard.exp_month = "NOV";
 		break;
 	case 12:
-		newCreditCard.exp_month = DEC;
+		newCreditCard.exp_month = "DEC";
 		break;
 	}					
 	alert("Month: " + newCreditCard.exp_month);
