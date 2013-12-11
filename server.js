@@ -466,23 +466,17 @@ client.connect(function(err) {
 			if (err) {
 				return console.error('error running query', err);
 			} else {
-
 				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
 			    response  = response + temp;
 			    
-				console.log("Day Query: "+byDay);
-				console.log("Week Query: "+byWeek);
-				console.log("Month Query: "+byMonth);
-				console.log("Response: "+response);
+				console.log("Day Query: " + byDay);
+				console.log("Week Query: " + byWeek);
+				console.log("Month Query: " + byMonth);
+				console.log("Response: " + response);
 
 			    res.json(JSON.parse(response));
-				
 			}
 		}); 
-		
-		
-		
-					
 	});
 		
 	
