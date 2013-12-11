@@ -1337,7 +1337,8 @@ function register() {
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
 			alert("textStatus: " + textStatus);
-			alert("data: [0] " + data[0]);
+			alert("data: " data);
+			alert("data.rows[0]: " + data.rows[0]);
 			alert("jqXHR: " + jqXHR);
 
 			$.mobile.navigate("/index.html");
