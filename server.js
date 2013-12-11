@@ -489,7 +489,39 @@ client.connect(function(err) {
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
-
+	//Place bid
+	//Author: Luis 
+	app.post('/BigBoxServer/bids', function(req, res) {
+		//Update item with new bid price and add the bid to the Bid table
+		var updateItemQuery = "UPDATE items " +
+   							"SET i_bid= " + req.body.i_bid +
+ 						   " WHERE i_id = " + req.body.i_id;
+		
+ 		console.log("Query: " + updateItemQuery);
+		
+ 		client.query(updateItemQuery, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+			}
+ 		});
+ 		var bidUserQuery= " INSERT INTO bids( " +
+            "i_id, buyer_id, bid_date_time, bid_amount)" +
+    		" VALUES (" + req.body.i_id + ", " + user_id + ", NOW(), " + req.body.i_bid;
+ 		console.log("Bid Query: "  + bidUserQuery);
+ 		client.query(bidUserQuery, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query 2 Done");
+ 				res.json(true);
+			}
+ 		});		
+ 	});
+	
+	
+	
 	//Add a new order
 	//Author: Luis
 	app.post('/BigBoxServer/orders', function(req, res) {
@@ -754,6 +786,8 @@ client.connect(function(err) {
 		
 	});
 
+	//Update an item
+	//Author: Luis
  	app.put('/BigBoxServer/items', function(req, res) {
 
 		console.log("PUT item: " + req.body.i_id);
@@ -780,6 +814,8 @@ client.connect(function(err) {
  		});
 
 	});
+	
+	
 
 
 	app.put('/BigBoxServer/updateAdmin', function(req, res) {

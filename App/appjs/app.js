@@ -1175,8 +1175,8 @@ function getSubmitValue() {
 	currentItem[0].i_bid = bidValue;
 	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
 	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
-		method : 'put',
+		url : "http://bigbox.herokuapp.com/BigBoxServer/bids",
+		method : 'post',
 		data : UpdatedItemJSON,
 		contentType : "application/json",
 		dataType : "json",
@@ -1193,6 +1193,30 @@ function getSubmitValue() {
 			}
 		}
  	});
+	
+	
+	
+    //codigo para hacer un update a un item
+//	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
+//	$.ajax({
+//		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
+//		method : 'put',
+//		data : UpdatedItemJSON,
+//		contentType : "application/json",
+//		dataType : "json",
+//		success : function(data, textStatus, jqXHR) {
+//			GetItem(currentItem[0].i_id, true);
+//		},
+//		error : function(data, textStatus, jqXHR) {
+//			console.log("textStatus: " + textStatus);
+//			$.mobile.loading("hide");
+//			if (data.status == 404) {
+//				alert("Item not found. GET ITEM");
+//			} else {
+//				alert("Internal Server Error.");
+//			}
+//		}
+// 	});
 
 }
 
