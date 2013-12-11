@@ -616,15 +616,16 @@ client.connect(function(err) {
  		
  		var userCreditCardsQuery = "INSERT INTO user_addresses (u_id, cc_number) " +
  						" VALUES (" + user_id + ", " + req.body.cardnumber + " )";
-  		console.log("Query 2: " + userCreditCardsQuery);						   
+  		console.log("Query 2: " + userCrediCardsQuery);						   
+  	   	
   	   	client.query(userCreditCardsQuery,function(err, result) {
-//	 				if (err) {
-//	 					return console.error('error running query 2', err);
-//	 				} else {
-//						console.log("Query 2 Done!"); 
+	 				if (err) {
+	 					return console.error('error running query 2', err);
+	 				} else {
+						console.log("Query 2 Done!"); 
 		 				res.json(true);
-//					}
-//		});
+					}
+		});
 		
  	});
 	
@@ -934,4 +935,5 @@ client.connect(function(err) {
 	app.listen(process.env.PORT || 3412);
 	console.log("server listening port:");
 
+});
 
