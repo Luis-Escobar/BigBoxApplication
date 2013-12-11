@@ -1338,8 +1338,8 @@ function register() {
 			console.log("try again");
 			alert("textStatus: " + textStatus);
 			console.log(data);
-			alert("data.rows[0]: " + data.rows[0]);
-			alert("jqXHR: " + jqXHR);
+			alert("data.status: " + data.status);
+			alert("data.responseText: " + data.responseText);
 
 			$.mobile.navigate("/index.html");
 		}
