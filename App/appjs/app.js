@@ -1657,13 +1657,9 @@ function confirmUserRemoval(username,confirmType){
 		
 				});
 				
-				$.mobile.navigate("/App/view/account/removedUser.html");
-
-				
+				$.mobile.navigate("/App/view/account/removedUser.html");			
 			}
 	
-
-
 }
 
 function removeUser(username){
@@ -1681,8 +1677,6 @@ function removeUser(username){
 			
 			console.log("got here");
 			confirmUserRemoval(username,2);
-
-
 
 		},
 		error : function(data, textStatus, jqXHR) {

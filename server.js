@@ -895,6 +895,25 @@ client.connect(function(err) {
 			}
 		}
 	});
+	
+	app.del('/BigBoxServer/removeUser/', function(req, res) {
+		
+		
+		var queryString = "delete $1 from users";
+		
+			client.query(queryString,[req.body.username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {		
+
+			    res.send(200);
+				
+			}
+		}); 
+		
+	});
+	
+	
 
 	/*====================================================================================================================================
 	 Support Functions
