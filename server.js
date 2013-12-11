@@ -614,7 +614,7 @@ client.connect(function(err) {
  		});
  		
  		
- 		var userCreditCardsQuery = "INSERT INTO user_addresses (u_id, cc_number) " +
+ 		var userCreditCardsQuery = "INSERT INTO user_creditcards (u_id, cc_number) " +
  						" VALUES (" + user_id + ", " + req.body.cardnumber + " )";
   		
   		console.log("Query 2: " + userCreditCardsQuery);						   
