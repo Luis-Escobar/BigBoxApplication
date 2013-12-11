@@ -1068,9 +1068,10 @@ function AddCreditCard() {
 	var form = $("#card-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
-	console.log("Month: " + formData.exp_month);
+	
 	var newCreditCard = ConverToJSON(formData);
 	console.log("New Credit Card: " + JSON.stringify(newCreditCard));
+	console.log("Month: " + newCreditCard.exp_month);
 	
 	var newCreditCardJSON = JSON.stringify(newCreditCard);
 	$.ajax({
