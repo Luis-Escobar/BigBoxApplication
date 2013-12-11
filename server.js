@@ -555,63 +555,72 @@ client.connect(function(err) {
 	
 	//Add a new address to the saved addresses
 	//Author: Luis
-	app.post('/BigBoxServer/addresses', function(req, res) {
-		console.log("POST ADDRESS");
-		console.log("REQ: " + JSON.stringify(req.body));
-		
-		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
-			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
-		}
-		
-		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
-		"VALUES ( '" + req.body.street + "', '" + req.body.city + "', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
-		console.log("Query: " + queryString);
-		
-		client.query(queryString,function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
-						console.log("Query Done!");
+ 	app.post('/BigBoxServer/addresses', function(req, res) {
+ 		console.log("POST ADDRESS");
+ 		console.log("REQ: " + JSON.stringify(req.body));
+ 		
+ 		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
+ 			res.statusCode = 400;
+ 			return res.send('Error: Missing fields for the item.');
+ 		}
+ 		
+ 		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
+ 		"VALUES ( '" + req.body.street + "', '" + req.body.city + "', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
+ 		console.log("Query: " + queryString);
+ 		
+ 		client.query(queryString,function(err, result) {
+ 					if (err) {
+ 						return console.error('error running query', err);
+ 					} else {
+ 						console.log("Query Done!");
+ 					}
+ 		});
+ 		
+ 		
+ 		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
+ 						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
+  		console.log("Query 2: " + userAddressesQuery);						   
+  	   	client.query(userAddressesQuery,function(err, result) {
+	 				if (err) {
+	 					return console.error('error running query 2', err);
+	 				} else {
+						console.log("Query 2 Done!"); 
+		 				res.json(true);
 					}
 		});
-		
-		
-		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
-						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
-		console.log("Query 2: " + userAddressesQuery);						   
-	   	client.query(userAddressesQuery,function(err, result) {
-					if (err) {
-						return console.error('error running query 2', err);
-					} else {
-						console.log("Query 2 Done!");
-						res.json(true);
-					}
-		});
-		
-		
 		
 	});
 
 	//Add a credit card to the saved list
-	app.post('/BigBoxServer/creditcards', function(req, res) {
-		console.log("POST CREDIT CARD");
-		console.log("CreditCard: " + JSON.stringify(req.body));
-		
-		if (!req.body.hasOwnProperty('cardnumber') || !req.body.hasOwnProperty('exp_month') || !req.body.hasOwnProperty('exp_year') || !req.body.hasOwnProperty('holder_name')) {
-			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
-		}
-
+ 	app.post('/BigBoxServer/creditcards', function(req, res) {
+ 		console.log("POST CREDIT CARD");
+ 		console.log("CreditCard: " + JSON.stringify(req.body));
+ 		
+ 		if (!req.body.hasOwnProperty('cardnumber') || !req.body.hasOwnProperty('exp_month') || !req.body.hasOwnProperty('exp_year') || !req.body.hasOwnProperty('holder_name')) {
+ 			res.statusCode = 400;
+ 			return res.send('Error: Missing fields for the item.');
+ 		}
+ 		
+ 		var queryString = "INSERT INTO creditcards (cc_expmonth, cc_number, cc_expyear, cc_holdername) " +
+ 		"VALUES ( '" + req.body.exp_month + "', '" + req.body.cardnumber + "', '" + req.body.exp_year + "', '" + req.body.holder_name + "')";
+ 		console.log("Query: " + queryString);
+ 		
+ 		client.query(queryString,function(err, result) {
+ 					if (err) {
+ 						return console.error('error running query', err);
+ 					} else {
+ 						console.log("Query Done!");
+ 					}
+ 		});
 		res.json(true);
-	});
+ 	});
 	
 	//Add a categories to the saved list
-	app.post('/BigBoxServer/categoryForm', function(req, res) {
-		console.log("BLHAAAAAA");
-		console.log("POST categoriesForm");
-		var txt = req;
-		console.log("req"+req);
+ 	app.post('/BigBoxServer/categoryForm', function(req, res) {
+ 		console.log("BLHAAAAAA");
+ 		console.log("POST categoriesForm");
+ 		var txt = req;
+ 		console.log("req"+req);
 		for(var i = 0 ; i< categoryFormArray.length ; i++)
 			console.log(categoryFormArray[i]);
 		res.json(true);
