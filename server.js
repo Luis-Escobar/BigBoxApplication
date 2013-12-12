@@ -742,9 +742,9 @@ client.connect(function(err) {
 //		if(req.body.new_password.trim()==req.body.renter.trim()){
 			
 		function insertUser(insert, userToAdd){	
-			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)" +
+			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer)" +
 									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.question, userToAdd.answer];
+			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.email, userToAdd.question, userToAdd.answer];
 			
 			client.query(insertQueryString, queryArray, function(err, result) {
 				if (err) {
