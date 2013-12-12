@@ -287,7 +287,7 @@ function AddCategoriesForm() {
 					
 				
 					
-					<FORM>
+					<form  id="element" name="element">
 						
 						<H2>Dynamically add new category.</H2>
 						<SELECT id="select" name="element" >
@@ -296,7 +296,7 @@ function AddCategoriesForm() {
 							<OPTION id="2subcategory" value="2nd subcategory"disabled>Second Subcategory</OPTION>
 						</SELECT>
 
-					</FORM>	
+					</form>	
 						<div id="inputBar" align="center"></div>
 						<input type="button" value="Add a field" onclick="add(document.forms[0].element.value)">
 
