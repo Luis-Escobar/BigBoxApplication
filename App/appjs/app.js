@@ -2019,12 +2019,13 @@ function removeUser(username){
  =============================================================================================*/
 function refreshPage() {
 	console.log(window.location.href);
-	$.mobile.changePage(window.location.href, {
-		allowSamePageTransition : true,
-		transition : 'none',
-		showLoadMsg : false,
-		reloadPage : true
-	});
+	location.reload();
+//	$.mobile.changePage(window.location.href, {
+//		allowSamePageTransition : true,
+//		transition : 'none',
+//		showLoadMsg : false,
+//		reloadPage : true
+//	});
 }
  function clearInfo(){
 	s_address_selected = false;
