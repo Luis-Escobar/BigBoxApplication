@@ -94,14 +94,11 @@ $.ajax({
 			for (var i = 0; i < categoriesList.length; i++) {
 				//alert();
 				
-				list.append('<li>\
-						<input type="checkbox"  id="checkbox-'+categoriesList[i].cid+'"/>\
-						<label for="checkbox-'+categoriesList[i].cid+'">'+ categoriesList[i].cname + '</label>\
-					</li>').listview('refresh');
+				list.append("<li><a onclick= RmvCategory(" + categoriesList[i].cid + ",'"+categoriesList[i].cname+"')>" + categoriesList[i].cname + "</a></li>");
              // list.append('<li>' + categoriesList[i].cname + " ("+categoriesList[i].count+')</li>');
 		 	
 		 }
-				//list.listview("refresh");
+				list.listview("refresh");
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
@@ -111,6 +108,34 @@ $.ajax({
 
 		
 });
+
+function  RmvCategory(cid,name){
+	var userConfirmation = confirm("Are you sure you want to delete "+name+" category and his subcategories?");
+	if (userConfirmation == false) {
+		return;
+	}
+	$.ajax({
+		async : false,
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/rmvCategoryByAdmin/" + cid,
+		method : 'delete',
+		contentType : "application/json",
+ 		dataType : "json",
+ 		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+ 			refreshPage();
+ 		},
+ 		error : function(data, textStatus, jqXHR) {
+  			console.log("textStatus: " + textStatus);
+ 			$.mobile.loading("hide");
+ 			if (data.status == 404) {
+ 				alert("Item not found.");
+ 			} else {
+ 				alert("Internal Server Error.");
+			}
+		}
+	});
+	
+}
 
 $(document).on('pagebeforeshow', "#changecategories", function(event, ui) {
 $.ajax({
