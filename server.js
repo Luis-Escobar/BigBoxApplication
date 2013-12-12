@@ -1032,7 +1032,23 @@ client.connect(function(err) {
 		}); 
 		
 	});
-	
+	 
+	app.del('/BigBoxServer/rmvCategoryByAdmin/:rmvid', function(req, res) {
+		//var id = req.params.rmvid;
+		//console.log("DELETE item: " + id);
+		var queryString = "DELETE FROM category WHERE cid=$1";
+		
+			client.query(queryString,[rmvid], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {		
+
+			    res.send(200);
+				
+			}
+		});
+				
+	});
 	
 
 	/*====================================================================================================================================
