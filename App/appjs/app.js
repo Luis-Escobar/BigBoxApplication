@@ -541,7 +541,7 @@ $(document).on('pagebeforeshow', "#bidPage", function(event, ui) {
 
 //cart page
 $(document).on('pagebeforeshow', "#cart", function(event, ui) {
-	GetCart(true);
+	GetCart(false);
 	var len = cartList.length;
  	var cList = $("#cart-list");
  	var subtotal = $("#subtotal");
