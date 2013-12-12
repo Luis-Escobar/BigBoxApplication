@@ -13,7 +13,6 @@ client.connect(function(err) {
 		return console.error('could not connect to postgres', err);
 	}
 
-
 	var allowCrossDomain = function(req, res, next) {
 		res.header('Access-Control-Allow-Origin', '*');
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -421,7 +420,9 @@ client.connect(function(err) {
 					}
 				});
 		});
-//Derick
+		
+
+	//Derick
 	app.get('/BigBoxServer/selling', function(req, res) {
 
 
@@ -438,12 +439,22 @@ client.connect(function(err) {
                                         if (err) {
                                                 return console.error('error running query', err);
                                         } else {
-                                   }
+
+                                                var response = {
+                                                        "item" : result.rows
+                                                };
+                                                console.log("Response: " + JSON.stringify(response));
+                                                res.json(result);
+
+                                        }
                                 });
                         
-        });		
+        });
 		
-     	//Derick
+		
+	
+        
+        	//Derick
 	app.get('/BigBoxServer/seller', function(req, res) {
 
 	var queryString = "select * from users where u_username = $1";
@@ -463,6 +474,7 @@ client.connect(function(err) {
 		});
 
 	});
+		
 		
 		
 	/*====================================================================================================================================
@@ -599,7 +611,7 @@ client.connect(function(err) {
 		 				res.json(true);
 					}
 		});
-
+		
 	});
 
 	//Add a credit card to the saved list
@@ -643,11 +655,11 @@ client.connect(function(err) {
  	});
 	
 	//Add a categories to the saved list
-	app.post('/BigBoxServer/categoryForm', function(req, res) {
-		console.log("BLHAAAAAA");
-		console.log("POST categoriesForm");
-		var txt = req;
-		console.log("req"+req);
+ 	app.post('/BigBoxServer/categoryForm', function(req, res) {
+ 		console.log("BLHAAAAAA");
+ 		console.log("POST categoriesForm");
+ 		var txt = req;
+ 		console.log("req"+req);
 		for(var i = 0 ; i< categoryFormArray.length ; i++)
 			console.log(categoryFormArray[i]);
 		res.json(true);
@@ -679,7 +691,6 @@ client.connect(function(err) {
 				cookie.push(req.session);
 				res.json(response);
 			}
-
 		});
 	});
 	
@@ -794,20 +805,19 @@ client.connect(function(err) {
 		});
 	});
 	
+<<<<<<< HEAD
 	app.post('/BigBoxServer/sellingNewItem', function(req, res) {
 		console.log(req.body);
 		
 		var queryString = "INSERT INTO items(i_name, i_model, i_year, i_info, i_buyitnow, i_price, i_img,i_width, i_length, i_heigth, i_weigth, i_shipto, i_shipfrom,i_condition, i_hasbid, i_shippingprice, i_shippingtype, i_qtyavailable,u_id, i_bid, cid, subid, ssubid)" +
-		"VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)";
+		"VALUES ('"+req.body.name+"','"+ req.body.model+"',"+ req.body.year+",'"+ req.body.description+"',"+ req.body.buyItNow+","+ req.body.price+",'"+ req.body.img+"',"+ req.body.width+","+req.body.length+","+
+		 req.body.heigth+","+req.body.weigth+",'"+ req.body.shipTo+"','"+req.body.shipFrom+"','"+ req.body.condition+"',"+ req.body.itHasBid+","+ req.body.shippingPrice+",'"+req.body.shippingType+"',"+
+		 req.body.quantity+","+ user_id+","+ req.body.initialBid+","+ req.body.category+","+ req.body.subCategory+","+ req.body.subSubCategory+")";
 		
 		
 		console.log("Query: " + queryString);
 	
-		client.query(queryString,[req.body.name,req.body.model,req.body.year,req.body.description,req.body.buyItNow,
-			req.body.price,req.body.img,req.body.width,req.body.length,req.body.heigth,req.body.weigth,
-			req.body.shipTo,req.body.shipFrom,req.body.condition,req.body.itHasBid,req.body.shippingPrice,
-			req.body.shippingType,req.body.quantity,user_id,req.body.initialBid,req.body.category,
-			req.body.subCategory,req.body.subSubCategory], function(err, result) {
+		client.query(queryString, function(err, result) {
  			if (err) {
  				return console.error('error running query', err);
  			} else {
@@ -817,7 +827,7 @@ client.connect(function(err) {
  
  		});
 	});
-
+=======
 	//Derick
 	app.post('/BigBoxServer/report', function(req, res) {
 			
@@ -841,6 +851,9 @@ client.connect(function(err) {
 			} else {
 
 				response = '{"day" :' + JSON.stringify(result.rows);
+				
+				
+
 			}
 		}); 
 		
@@ -879,6 +892,7 @@ client.connect(function(err) {
 	});
 		
 	
+>>>>>>> 77033973066727b404942174cd23a84e0ef0dc56
 
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
@@ -957,7 +971,6 @@ client.connect(function(err) {
 							"user" : result.rows
 						};
 						res.json(result);
-
 					});
 
 				}
@@ -1036,7 +1049,6 @@ client.connect(function(err) {
 
 	};
 
-	
 
 	function isValid(arr, renter) {
 

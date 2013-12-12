@@ -14,14 +14,15 @@
 
 		<div id ="" data-role="page">
 			<div data-role="header" data-theme="a" data-position="fixed">
-				<a data-role="button" data-rel="back"> Back </a>
-				<h1 id = "detailsHeader"></h1>
+				<a data-role="button" data-rel="back" > Back </a>
+				<h1 id = "">Selling New Item</h1>
 			</div>
 
 			<ul data-role="listview" data-divider-theme="c" data-inset="true" >
+				<!--<li data-icon="home"><a href="selling/addPhoto.html">Photo</a></li>-->
 
 				<li data-theme="d">
-					<a href="selling/addPhoto.html" data-transition="none">
+					<a  href="selling/addPhoto.html" data-transition="none" data-icon="check">
 					<p>
 						Photo
 					</p></a>
@@ -59,7 +60,7 @@
 				<li data-theme="c">
 					<a href="selling/price.html" data-transition="none">
 					<p>
-						Format and price
+						Selling Options
 					</p></a>
 				</li>
 				<li data-theme="c">
@@ -68,14 +69,8 @@
 						Shipping
 					</p></a>
 				</li>
-				<li data-theme="c">
-					<a href="selling/preferences.html" data-transition="none">
-					<p>
-						Preferences
-					</p></a>
-				</li>
-
 			</ul>
+			<center><input type="button" onclick="SendNewItemForm()" data-theme="b" value="Done"/></center>
 
 		</div>
 	</body>
