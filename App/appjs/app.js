@@ -2243,16 +2243,41 @@ $.ajax({
 		success : function(data, textStatus, jqXHR) {
 		var sellerName =$("#seller_name");
 		sellerName.empty();
-		
 		sellerName.append('<h1>'+data.rows[0].u_username+'<img src="../raty/star-on.png" /></h1>');
-		
 		},
         error : function(data, textStatus, jqXHR) {
   	      console.log("textStatus: " + textStatus);
     	  alert("Data not found!");
         }
 	});
+});
 
+var sellerItemsList;
+$(document).on('pagebeforeshow', "#otheritems", function(event, ui) {
+
+$.ajax({
+			url : "http://bigbox.herokuapp.com/BigBoxServer/otheritems/ + currentItem[0].u_id",
+			method : 'get',
+			contentType : "application/json",
+			dataType : "json",
+			success : function(data, textStatus, jqXHR) {
+				$.mobile.loading("hide");
+				sellerItemsList = data.selleritems;
+				var len = sellerItemsList.length;
+				var list = $("#items-list");
+				list.empty();
+				var item;
+				for (var i = 0; i < len; ++i) {
+				item = sellerItemsList[i];
+				list.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='info'>" + item.i_name + "</p>" + "<p class='ui-li-aside'> $" + item.i_price + "</p>" + "</a></li>");
+			}
+			list.listview("refresh");
+			
+			},
+			error : function(data, textStatus, jqXHR) {
+				alert("Exploto");
+			}
+		});
 });
 
 

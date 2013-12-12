@@ -135,6 +135,20 @@ client.connect(function(err) {
 			res.json(response);
 		});
 	});
+	
+	app.get('/BigBoxServer/otheritems/:id', function(req, res) {
+		client.query("select  * from items where u_id= " + req.params.id, function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			}
+			console.log("GET-categories");
+				var response = {
+					"selleritems" : result.rows
+				};
+			console.log("reponse:" + JSON.stringify(response));
+			res.json(response);
+		});
+	});
 
 	app.get('/BigBoxServer/subcategories/:id', function(req, res) {
 		var id = req.params.id;
