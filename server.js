@@ -644,13 +644,48 @@ client.connect(function(err) {
 	
 	//Add a categories to the saved list
 	app.post('/BigBoxServer/categoryForm', function(req, res) {
-		console.log("BLHAAAAAA");
 		console.log("POST categoriesForm");
-		var txt = req;
-		console.log("req"+req);
-		for(var i = 0 ; i< categoryFormArray.length ; i++)
-			console.log(categoryFormArray[i]);
-		res.json(true);
+		console.log("Arrays: " + JSON.stringify(req.body));
+		//console.log(req.body.parseArrayName[0]);
+		//console.log(req.body.parseArrayName.length);
+		var queryString;
+		for(var i = 0; i < req.body.parseArrayName.length; i++){
+			if(req.body.parseArrayDesignation[i]=="category"){
+				queryString = "INSERT INTO category (cname) VALUES ('"+req.body.parseArrayName[0]+"')";
+				console.log("Query: " + queryString);
+		
+				client.query(queryString,function(err, result) {
+							if (err) {
+								return console.error('error running query', err);
+							} else {
+								console.log("Query Done!");
+							}
+				});
+			}
+			else if(req.body.parseArrayDesignation[i]=="subcategory"){
+				queryString = "INSERT INTO subcategory (cid,scname) VALUES (currval('category_cid_seq'::regclass),'"+req.body.parseArrayName[i]+"')";
+				console.log("Query: " + queryString);
+				client.query(queryString,function(err, result) {
+							if (err) {
+								return console.error('error running query', err);
+							} else {
+								console.log("Query Done!");
+							}
+				});
+			}
+			else{
+				queryString = "INSERT INTO secondsubcategory (subid,sscname) VALUES (currval('subcategory_subid_seq'::regclass),'"+req.body.parseArrayName[i]+"')";
+				console.log("Query: " + queryString);
+				client.query(queryString,function(err, result) {
+							if (err) {
+								return console.error('error running query', err);
+							} else {
+								console.log("Query Done!");
+							}
+				});
+			}
+		}
+		//currval('category_cid_seq'::regclass);
 	});
 
 	//Login
