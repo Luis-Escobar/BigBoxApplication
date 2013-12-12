@@ -860,7 +860,7 @@ function getTitle4Sell(){
 
 $(document).on('pagebeforeshow', "#category4Sell", function(event, ui) {
 	$.ajax({
-		url : "http://localhost:3412/BigBoxServer/categories",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/categories",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 				
@@ -889,7 +889,7 @@ $(document).on('pagebeforeshow', "#category4Sell", function(event, ui) {
 
 $(document).on('pagebeforeshow', "#subcategory4Sell", function(event, ui) {
 	$.ajax({
-		url : "http://localhost:3412/BigBoxServer/subcategories/" + newSetCategoryID,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/subcategories/" + newSetCategoryID,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 
@@ -918,7 +918,7 @@ $(document).on('pagebeforeshow', "#subcategory4Sell", function(event, ui) {
 $(document).on('pagebeforeshow', "#2subcategory4Sell", function(event, ui) {
 	$.ajax({
 
-		url : "http://localhost:3412/BigBoxServer/2subcategories/" + newSetSubCategoryID,
+		url : "http://bigbox.herokuapp.com/BigBoxServer/2subcategories/" + newSetSubCategoryID,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var categoriesList = data.categories;
@@ -1081,7 +1081,7 @@ function SendNewItemForm(){
 	//var newtempJSON = JSON.stringify(tempJSON);
 	
 		$.ajax({
- 		url : "http://localhost:3412/BigBoxServer/sellingNewItem",
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/sellingNewItem",
  		type : 'post',
  		data : sendPaq,
  		contentType : "application/json",
@@ -2138,7 +2138,7 @@ function report() {
 		alert("Please select a sorting method");
 	} else
 		$.ajax({
-			url : "http://localhost:3412/BigBoxServer/report",
+			url : "http://bigbox.herokuapp.com/BigBoxServer/report",
 			contentType : "application/json",
 			type : "post",
 			data : dat,
