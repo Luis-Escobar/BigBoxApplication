@@ -1004,16 +1004,14 @@ client.connect(function(err) {
 	REST Opertaion : HTTP DELETE
 	====================================================================================================================================*/
 	//Remove item from cart
-	app.del('/BigBoxServer/cart/:id', function(req, res) {
-		var id = req.params.id;
+	app.del('/BigBoxServer/cart/, function(req, res) {
+		var id = req.body.i_id;
 		console.log("DELETE item: " + id);
 				res.json(true);
 	});
 	
 	app.del('/BigBoxServer/removeUser/', function(req, res) {
-		
-		
-		var queryString = "DELETE FROM users WHERE u_username=$1";
+			var queryString = "DELETE FROM users WHERE u_username=$1";
 		
 			client.query(queryString,[req.body.username], function(err, result) {
 			if (err) {

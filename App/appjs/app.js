@@ -1314,16 +1314,17 @@ function deleteCartItem(ItemId) {
 	if (userConfirmation == false) {
 		return;
 	}
-
-//	var cartList = document.getElementById("cart-list");
-
+	alert("ITEM ID: " + ItemId);
+	var IdJSON = JSON.stringify({
+		'i_id':ItemId
+	});
 	$.mobile.loading("show");
 	$.ajax({
 		async : false,
- 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/" + ItemId,
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
 		method : 'delete',
 		contentType : "application/json",
- 		dataType : "json",
+ 		dataType : "IdJSON",
  		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
  			GetCart(false);
@@ -2018,14 +2019,7 @@ function removeUser(username){
  Helper Function
  =============================================================================================*/
 function refreshPage() {
-	console.log(window.location.href);
 	location.reload();
-//	$.mobile.changePage(window.location.href, {
-//		allowSamePageTransition : true,
-//		transition : 'none',
-//		showLoadMsg : false,
-//		reloadPage : true
-//	});
 }
  function clearInfo(){
 	s_address_selected = false;
