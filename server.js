@@ -828,9 +828,6 @@ client.connect(function(err) {
 			} else {
 
 				response = '{"day" :' + JSON.stringify(result.rows);
-				
-				
-
 			}
 		}); 
 		
