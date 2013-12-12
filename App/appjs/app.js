@@ -541,9 +541,11 @@ $(document).on('pagebeforeshow', "#details", function(event, ui) {
 	detailsPrice.empty();
 	detailsPrice.append("" + currentItem[0].i_price);
 
+	if(currentItem[0].i_bid!=null){
 	var detailsBid = $("#detailsBid");
 	detailsBid.empty();
 	detailsBid.append("" + currentItem[0].i_bid);
+	}
 
 	var detailsShipFrom = $("#detailsShipFrom");
 	detailsShipFrom.empty();
@@ -1125,6 +1127,7 @@ function SendNewItemForm(){
  		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Success");
+			$.mobile.navigate("/App/view/sellItemConfirm.html");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
