@@ -1314,8 +1314,6 @@ function deleteCartItem(ItemId) {
 	if (userConfirmation == false) {
 		return;
 	}
-	alert("ITEM ID: " + ItemId);
-	
 	$.mobile.loading("show");
 	$.ajax({
 		async : false,
