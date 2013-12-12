@@ -137,6 +137,7 @@ client.connect(function(err) {
 	});
 	
 	app.get('/BigBoxServer/otheritems/:id', function(req, res) {
+		cosole.log(req.params.id);
 		client.query("select  * from items where u_id= " + req.params.id, function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
