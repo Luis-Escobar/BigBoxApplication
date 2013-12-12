@@ -818,6 +818,290 @@ function GetItem(id, display) {
 }
 
 /*===============================================================================================
+ Methods related to getting product to sellInfo
+ =============================================================================================*/
+var newImage;
+var newTitle;
+var newSetCategoryID;//This is for the item
+var newSetSubCategoryID;
+var new2SetSubCategoryID;
+var newItemCondition;
+var	newModel; 
+var	newYear;
+var	newWeigth; 
+var	newLength; 
+var	newHeigth; 
+var	newWidth; 
+var newDescription;
+var newInitialBid;
+var	newItHasBid;
+var newPrice;
+var newBuyItNow;
+var newQuantity;
+var newShipTo;
+var	newShipFrom;
+var	newShippingType; 
+var newShippingPrice;
+
+function getImage4Sell(){
+	newImage = document.getElementById("newSellImage").value;
+	//alert(newImage);
+	
+	
+	
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+function getTitle4Sell(){
+	newTitle = document.getElementById("newSellTitle").value;
+	//alert(newTitle);
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+
+$(document).on('pagebeforeshow', "#category4Sell", function(event, ui) {
+	$.ajax({
+		url : "http://localhost:3412/BigBoxServer/categories",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+				
+
+				var categoriesList = data.categories;
+				var list = $("#categoriesSelectorList");
+				list.empty();
+
+				for (var i = 0; i < categoriesList.length; i++) {
+
+					if(categoriesList[i].count == 0)
+						list.append("<li><a onclick= SetCategory(" + categoriesList[i].cid + ",false)  >" + categoriesList[i].cname + "</a></li>");
+					else
+						list.append("<li><a onclick= SetCategory(" + categoriesList[i].cid + ",true) >" + categoriesList[i].cname + "</a></li>");
+				}
+				list.listview("refresh");
+			
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#subcategory4Sell", function(event, ui) {
+	$.ajax({
+		url : "http://localhost:3412/BigBoxServer/subcategories/" + newSetCategoryID,
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+
+			var categoriesList = data.categories;
+			
+			var list = $("#subcategoriesSelectorList");
+			list.empty();
+
+			for (var i = 0; i < categoriesList.length; i++) {
+				
+				if(categoriesList[i].count == 0)
+					list.append("<li><a onclick= SetSecondCategory(" + categoriesList[i].subid + ",false)  >" + categoriesList[i].scname + "</a></li>");
+				else
+					list.append("<li><a onclick= SetSecondCategory(" + categoriesList[i].subid + ",true)  >" + categoriesList[i].scname + "</a></li>");
+			}
+			list.listview("refresh");
+			
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+$(document).on('pagebeforeshow', "#2subcategory4Sell", function(event, ui) {
+	$.ajax({
+
+		url : "http://localhost:3412/BigBoxServer/2subcategories/" + newSetSubCategoryID,
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+			var categoriesList = data.categories;
+			var list = $("#2subcategoriesSelectorList");
+			list.empty();
+			
+			for (var i = 0; i < categoriesList.length; i++) {
+
+				list.append("<li><a onclick= SetThirdCategory(" + categoriesList[i].ssubid + ")  >" + categoriesList[i].sscname + "</a></li>");
+
+			}
+			
+			list.listview("refresh");
+		
+
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+function SetCategory(cid, condition) {
+	newSetCategoryID = cid;
+	newSetSubCategoryID = -1;
+	new2SetSubCategoryID = -1;
+	if(condition)
+		$.mobile.navigate("/App/view/selling/subcategory4Sell.html");
+	else{
+		//alert(newSetCategoryID);
+		$.mobile.navigate("/App/view/sellItem.html");
+	}
+}
+
+function SetSecondCategory(sid, condition) {
+	newSetSubCategoryID = sid;
+	new2SetSubCategoryID = -1;
+	if(condition)
+		$.mobile.navigate("/App/view/selling/2subcategory4Sell.html");
+	else{
+		//alert(newSetSubCategoryID);
+		$.mobile.navigate("/App/view/sellItem.html");
+	}
+}
+
+function SetThirdCategory(ssid){
+	new2SetSubCategoryID = ssid;
+	//alert(new2SetSubCategoryID);
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+
+function getCondition4Sell(itemCondition){
+	newItemCondition = itemCondition;
+	//alert(newItemCondition);
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+
+function getSpec4Sell(){
+	
+	newModel = document.getElementById("newSellModel").value;
+	newYear = document.getElementById("newSellYear").value;
+	newWeigth = document.getElementById("newSellWeigth").value;
+	newLength = document.getElementById("newSellLength").value;
+	newHeigth = document.getElementById("newSellHeigth").value;
+	newWidth = document.getElementById("newSellWidth").value;
+	$.mobile.navigate("/App/view/sellItem.html");
+	//alert(""+newModel+" "+newYear+" "+newWeigth+" "+newLength+" "+newHeigth+" "+newWidth);
+}
+
+function getDescription4Sell(){
+	newDescription = document.getElementById("newSellDescription").value;
+	//alert(newDescription);
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+
+function toggleBid(){
+	if( $("#inputBid").attr('disabled')){
+		$("#inputBid").textinput('enable');}
+	
+	else{
+	$("#inputBid").textinput('disable');
+	}	
+}
+function toggleFixPrice(){
+	if( $("#inputFixPrice").attr('disabled')){
+		$("#inputFixPrice").textinput('enable');}
+	
+	else{
+	$("#inputFixPrice").textinput('disable');
+	}	
+}
+
+function getPrice4Sell(){
+	if(!$("#inputBid").attr('disabled')){
+		newInitialBid = document.getElementById("inputBid").value;
+		newItHasBid = true;
+	}
+	else{
+		newInitialBid = "-1";
+		newItHasBid = false;
+	}
+	if( !$("#inputFixPrice").attr('disabled')){
+		newPrice = document.getElementById("inputFixPrice").value;
+		newBuyItNow = true;
+	}
+	else{
+		newPrice = -1;
+		newBuyItNow = false;
+	}
+	newQuantity= document.getElementById("inputQuantity").value;
+	//alert(" "+newInitialBid+" "+newItHasBid+" "+newPrice+" "+newBuyItNow+" "+newPrice+" "+newQuantity);
+	$.mobile.navigate("/App/view/sellItem.html");
+	
+}
+
+function getShippingInfo4Sell(itemShipTo,itemShipFrom,service){
+	newShipTo = itemShipTo;
+	newShipFrom = itemShipFrom;
+	newShippingType = service; 
+	newShippingPrice= document.getElementById("itemShippingPrice").value;
+	
+	//alert(newShipTo);
+	//alert(newShipFrom);
+	//alert(newShippingType);
+	//alert(newShippingPrice);
+	$.mobile.navigate("/App/view/sellItem.html");
+}
+function SendNewItemForm(){
+	//$.mobile.loading("show");
+	var sendPaq = JSON.stringify({
+			"img"	: newImage,
+			"name"	: newTitle,
+			"category"	: newSetCategoryID,
+			"subCategory"	: newSetSubCategoryID,
+			"subSubCategory"	: new2SetSubCategoryID,
+			"condition"	: newItemCondition,
+			"model"	: newModel,
+			"year"	: newYear,
+			"weigth"	: newWeigth, 
+			"length"	: newLength,
+			"heigth"	: newHeigth, 
+			"width"	: newWidth, 
+			"description"	: newDescription,
+			"initialBid"	: newInitialBid,
+			"itHasBid"	: newItHasBid,
+			"price"	: newPrice,
+			"buyItNow"	: newBuyItNow,
+			"quantity"	: newQuantity,
+			"shipTo"	: newShipTo,
+			"shipFrom"	: newShipFrom,
+			"shippingType"	: newShippingType, 
+			"shippingPrice"	: newShippingPrice			
+			});
+ 	
+ 	
+ 	//alert(JSON.stringify(sendPaq));
+ 	
+ 	
+	//var newtempJSON = JSON.stringify(tempJSON);
+	
+		$.ajax({
+ 		url : "http://localhost:3412/BigBoxServer/sellingNewItem",
+ 		type : 'post',
+ 		data : sendPaq,
+ 		contentType : "application/json",
+ 		dataType : "json",
+ 		success : function(data, textStatus, jqXHR) {
+			$.mobile.loading("hide");
+			alert("Success");
+		},
+		error : function(data, textStatus, jqXHR) {
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Item could not be added!");
+		}
+	});
+	
+}
+
+
+
+
+/*===============================================================================================
  Methods related to shipping and billing addresses
  =============================================================================================*/
 var shipping_address;

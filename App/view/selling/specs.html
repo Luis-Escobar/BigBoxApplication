@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Details</title>
+		<title>specs</title>
 		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
-		<link rel="stylesheet" href="../css/jquery.mobile-1.3.1.css" />
-		<link  rel="stylesheet" type="text/css" href="../css/custom.css"/>
-		<script src="../js/jquery-1.10.2.js"></script>
-		<script src="../js/jquery.mobile-1.3.1.js"></script>
-		<script src="../appjs/item.js"></script>
-		<script src="../appjs/app.js"></script>
+		<link rel="stylesheet" href="../../css/jquery.mobile-1.3.1.css" />
+		<link  rel="stylesheet" type="text/css" href="../../css/custom.css"/>
+		<script src="../../js/jquery-1.10.2.js"></script>
+		<script src="../../js/jquery.mobile-1.3.1.js"></script>
+		<script src="../../appjs/item.js"></script>
+		<script src="../../appjs/app.js"></script>
 	</head>
 	<body>
 
 		<div id ="" data-role="page">
 			<div data-role="header" data-theme="a" data-position="fixed">
 				<a data-role="button" data-rel="back"> Back </a>
-				<h1 id = "detailsHeader"></h1>
+				<h1 id = "">Specs</h1>
 			</div>
 
 			<div data-role="content" data-inset="true">
@@ -25,15 +25,20 @@
 					<h3>Item Specifics</h3>
 
 					<div data-role="fieldcontain">
-
-						<div data-role="fieldcontain">
-							<input align="left"  type="text" id="tile" name="title" placeholder="Item Specifics"  />
-						</div>
-
+						<p>Model:</p>
+							<input id="newSellModel"  placeholder="Model"  />
+						<p>Year:</p>	
+							<input id= "newSellYear" type="date"  placeholder="Date"  />
+						<p>Weigth:</p>		
+							<input  id="newSellWeigth" placeholder="Weigth"  >
+						<p>Dimension:</p>
+							<input  id="newSellLength" placeholder="Length"  >
+							<input  id="newSellHeigth" placeholder="Heigth"  >
+							<input  id="newSellWidth" placeholder="Width"  >
 					</div>
 
 					<div align="left">
-						<input type="submit"  data-inline="true" data-theme="b" value="Done"/>
+						<input type="button" onclick="getSpec4Sell()" data-inline="true" data-theme="b" value="Done"/>
 					</div>
 				</form>
 

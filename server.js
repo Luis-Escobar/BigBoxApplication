@@ -703,6 +703,28 @@ client.connect(function(err) {
 
 		});
 	});
+	
+	app.post('/BigBoxServer/sellingNewItem', function(req, res) {
+		console.log(req.body);
+		
+		var queryString = "INSERT INTO items(i_name, i_model, i_year, i_info, i_buyitnow, i_price, i_img,i_width, i_length, i_heigth, i_weigth, i_shipto, i_shipfrom,i_condition, i_hasbid, i_shippingprice, i_shippingtype, i_qtyavailable,u_id, i_bid, cid, subid, ssubid)" +
+		"VALUES ('"+req.body.name+"','"+ req.body.model+"',"+ req.body.year+",'"+ req.body.description+"',"+ req.body.buyItNow+","+ req.body.price+",'"+ req.body.img+"',"+ req.body.width+","+req.body.length+","+
+		 req.body.heigth+","+req.body.weigth+",'"+ req.body.shipTo+"','"+req.body.shipFrom+"','"+ req.body.condition+"',"+ req.body.itHasBid+","+ req.body.shippingPrice+",'"+req.body.shippingType+"',"+
+		 req.body.quantity+","+ user_id+","+ req.body.initialBid+","+ req.body.category+","+ req.body.subCategory+","+ req.body.subSubCategory+")";
+		
+		
+		console.log("Query: " + queryString);
+	
+		client.query(queryString, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+				res.json(true);
+			}
+ 
+ 		});
+	});
 
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
