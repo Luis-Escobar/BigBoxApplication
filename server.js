@@ -703,7 +703,8 @@ client.connect(function(err) {
 		}
 		if(req.body.new_password.trim()==req.body.renter.trim()){
 			console.log("Equal");
-			insertUser(true);
+			var response = insertUser(true, req.body);
+			res.json(response);
 		}
 		else{
 			res.send(402,"Pasword mismatch. Try again!");	
@@ -729,14 +730,14 @@ client.connect(function(err) {
 			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) )";
 			client.query(insertCart, function(err, result) {
 				if (err) {
-						return console.error('error running insert query', err);
+					return console.error('error running insert query', err);
 				}
 				else{
-					res.json(true);
+					return true;
 				}		
 			});
 		}	
-	}	
+		
  	
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
@@ -761,6 +762,7 @@ client.connect(function(err) {
 		});
 
 	});
+	
 	app.post('/BigBoxServer/recoverPassword', function(req, res) {
 
 		var queryString = "select u_username, u_password from users where u_username = $1";
