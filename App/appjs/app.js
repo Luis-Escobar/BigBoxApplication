@@ -2018,7 +2018,8 @@ function removeUser(username){
  Helper Function
  =============================================================================================*/
 function refreshPage() {
-	$.mobile.changePage('http://bigbox.herokuapp.com/App/view/cart.html', {
+	console.log(window.location.href);
+	$.mobile.changePage(window.location.href, {
 		allowSamePageTransition : true,
 		transition : 'none',
 		showLoadMsg : false,
