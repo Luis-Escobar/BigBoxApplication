@@ -1067,7 +1067,7 @@ client.connect(function(err) {
 				return console.error('error running query', err);
 			} else {		
 
-			    res.send(200);
+			    res.json(true);
 				
 			}
 		});
