@@ -17,11 +17,13 @@
 		<div data-role="page" id="changeCategories">
 			<div data-role="header" >
 				<a data-role="button" data-rel="back"> Back </a>
+				<a href="/App/view/user.html" data-role="button" data-icon="home">Home</a>
 				<h1>Add Categories</h1>
 			</div>
 			
 
 					<SCRIPT language="javascript">
+					
 					var nextId = 0;
 					//No va a estar aqui es por testing
 	
@@ -238,7 +240,7 @@ var parseArrayDesignation = new Array();
 			
 		//parseCategoryArray(txt);	
 		AddCategoriesForm();
-		document.getElementById("demo").innerHTML=txt;
+		//document.getElementById("demo").innerHTML=txt;
 		
 		
 }	
@@ -265,6 +267,7 @@ function AddCategoriesForm() {
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Sucess");
+			//refreshPage();
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);

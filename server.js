@@ -689,7 +689,7 @@ client.connect(function(err) {
 		var queryString;
 		for(var i = 0; i < req.body.parseArrayName.length; i++){
 			if(req.body.parseArrayDesignation[i]=="category"){
-				queryString = "INSERT INTO category (cname) VALUES ('"+req.body.parseArrayName[0]+"')";
+				queryString = "INSERT INTO category (cname) VALUES ('"+req.body.parseArrayName[i]+"')";
 				console.log("Query: " + queryString);
 		
 				client.query(queryString,function(err, result) {

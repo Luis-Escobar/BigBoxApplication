@@ -24,19 +24,15 @@
 				<fieldset data-role="controlgroup"  data-type="horizontal">
 
 					<label for="select-choice-item-sort">Sort</label>
-					<select name="select-choice-item-sort" id="select-choice-item-sort">
-						<option onclick="sort(document.getElementById('select-choice-item-sort').value,
-						document.getElementById('select-choice-sort-type').value)" value="i_name">Sort By: Name</option>
-						<option onclick="sort(document.getElementById('select-choice-item-sort').value,
-						document.getElementById('select-choice-sort-type').value)" value="i_price">Sort By: Price</option>
+					<select onchange="sort(document.getElementById('select-choice-item-sort').value,document.getElementById('select-choice-sort-type').value)" name="select-choice-item-sort" id="select-choice-item-sort">
+						<option value="i_name">Sort By: Name</option>
+						<option value="i_price">Sort By: Price</option>
 
 					</select>
 					<label for="select-choice-sort-type">Type</label>
-					<select name="select-choice-sort-type" id="select-choice-sort-type">
-						<option onclick="sort(document.getElementById('select-choice-item-sort').value,
-						document.getElementById('select-choice-sort-type').value)" value="ASC">Ascending</option>
-						<option onclick="sort(document.getElementById('select-choice-item-sort').value,
-						document.getElementById('select-choice-sort-type').value)" value="DESC">Descending</option>
+					<select onchange="sort(document.getElementById('select-choice-item-sort').value,document.getElementById('select-choice-sort-type').value)" name="select-choice-sort-type" id="select-choice-sort-type">
+						<option value="ASC">Ascending</option>
+						 <option value="DESC">Descending</option>
 					</select>
 
 				</fieldset>
@@ -44,6 +40,7 @@
 					<ul id="items-list" data-role="listview" data-inset="false" ></ul>
 				</div>
 			</div>
+		</div>
 
 	</body>
 </html>
