@@ -1,4 +1,5 @@
 var isSearchbyCat;
+var monthArray =new Array("0","January","February","March","April","May","June","July", "August","September","October","November","December");
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
@@ -1844,63 +1845,84 @@ $.ajax({
 
 });
 
-function report(){
-		var year = document.getElementById('select-choice-year').value;
-		var sort = document.getElementById('select-choice-sort').value;
-		
-		var dat = JSON.stringify({
+function report() {
+	var year = document.getElementById('select-choice-year').value;
+	var sort = document.getElementById('select-choice-sort').value;
+
+	var dat = JSON.stringify({
 		'year' : year
 	});
-	
-	if(year=="Year"){
-		alert("Please select a Year");
-	}
-	else if(sort=="Sort"){
-		alert("Please select a sorting method");
-	}
-	else
-	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
-		contentType : "application/json",
-		type:"post",
-		data:dat,
-		success : function(data, textStatus, jqXHR) {
-			
-		  var data_table=$("#data_table");
-		  data_table.table();
-		  var report="";
-		  var t ='<th data-priority="1">'+sort+'</th><th data-priority="2">Total Sales</th>';
-		  		  
-		  if(sort=="Daily")
-			for (var i = 0; i < data.day.length; i++) {
-				str = JSON.stringify(data.day[i].o_date);
-				report += '<tr><th>' + str.substring(1, 11) +'</th><td>$' + data.day[i].total+'</td></tr>';
-			}
-			else if(sort=="Weekly")
-				for (var i = 0; i < data.week.length; i++) {
-				report += '<tr><th>' + data.week[i].w +'</th><td>$' + data.week[i].sum+'</td></tr>';
-			}
-			
-			else
-				for (var i = 0; i < data.month.length; i++) {
-				report += '<tr><th>' + data.month[i].m +'</th><td>$' + data.month[i].sum+'</td></tr>';
-			}
 
-			data_table.empty();
-			data_table.append('<table data-role="table" id="movie-table-custom" data-mode="reflow" class="movie-list table-stroke">\
-					<thead>\
-						<tr id="table_title">'+t+'</tr>\
-					</thead>\
-					<tbody>'+report+'</tbody></table>');
-			
-			data_table.table( "refresh" );
-		
-		},
-        error : function(data, textStatus, jqXHR) {
-  	      console.log("textStatus: " + textStatus);
-    	  alert("Data not found!");
-        }
-	});
+	if (year == "Year") {
+		alert("Please select a Year");
+	} else if (sort == "Sort") {
+		alert("Please select a sorting method");
+	} else
+		$.ajax({
+			url : "http://localhost:3412/BigBoxServer/report",
+			contentType : "application/json",
+			type : "post",
+			data : dat,
+			success : function(data, textStatus, jqXHR) {
+
+				var data_table = $("#data_table");
+				data_table.table();
+				var report = "";
+				var count = 0;
+				var currMonth = "";
+				var weekCount=0;
+
+				if (sort == "Day") {					
+					for (var i = 0; i < data.day.length; i++) {
+						if (currMonth != monthArray[data.day[i].m]) {
+							currMonth = monthArray[data.day[i].m];
+							report += '<thead><tr><th data-priority="1">' + currMonth + '</th><th data-priority="2">Total Sales</th></tr></thead><tbody><tr><th>' + data.day[i].d + '</th><td>$' + data.day[i].sum + '</td></tr></tbody>';
+						} else {
+							report += '<tbody><tr><th>' + data.day[i].d + '</th><td>$' + data.day[i].sum + '</td></tr></tbody>';
+						}
+					}					
+				} else if (sort == "Week") {
+					report +='<thead><tr><th data-priority="1">Week</th><th data-priority="2">Total Sales</th></tr></thead>';
+					
+					
+					for (var i = 1; i <= 52; i++) {
+						if(weekCount<data.week.length && i==data.week[weekCount].w){
+						report += '<tbody><tr><th>' + data.week[weekCount].w + '</th><td>$' + data.week[weekCount].sum + '</td></tr></tbody>';
+						weekCount++;
+						}
+						else{
+						report += '<tbody><tr><th>' + i + '</th><td>$0</td></tr></tbody>';
+
+						}
+						
+						
+					}
+				} else {
+					report +='<thead><tr><th data-priority="1">Month</th><th data-priority="2">Total Sales</th></tr></thead>';
+
+					for (var i = 1; i < monthArray.length; i++) {
+						
+						
+						if (i != data.month[count].m) {
+							report += '<tbody><tr><th>' + monthArray[i] + '</th><td>$0</td></tr></tbody>';
+						} else {
+							report += '<tbody><tr><th>' + monthArray[data.month[count].m] + '</th><td>$' + data.month[count].sum + '</td></tr></tbody>';
+							count += 1;
+						}
+					}
+				}
+
+				data_table.empty();
+				data_table.append('<table data-role="table" id="movie-table-custom" data-mode="reflow" class="movie-list table-stroke">' + report + '</table>');
+
+				data_table.table("refresh");
+
+			},
+			error : function(data, textStatus, jqXHR) {
+				console.log("textStatus: " + textStatus);
+				alert("Data not found!");
+			}
+		});
 
 };
 
