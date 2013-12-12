@@ -690,9 +690,13 @@ client.connect(function(err) {
 							res.send(400, "It seems you already have an account.");
 							break;		
 						}
+						console.log("Checked: );
 					}
-					if(!isUser)
+					console.log("User?" + isUser);
+					if(!isUser){
 						res.send(401, "We are sorry, but the username is taken already.");
+					}
+					
 					return;	
 				}
 				console.log(" " + JSON.stringify(result.rows));
