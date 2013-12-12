@@ -2,6 +2,8 @@ var isSearchbyCat;
 var monthArray =new Array("0","January","February","March","April","May","June","July", "August","September","October","November","December");
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	var sortBy= document.getElementById('select-choice-item-sort').value;
+	var sortType = document.getElementById('select-choice-sort-type').value;
 	
 	if(isSearchbyCat){
 		//alert("cid"+currentcid+"subid"+currentcid2+"ssubid"+currentcid3);	
@@ -34,11 +36,22 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	}
 	else{
-	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
+		
+		sort(sortBy,sortType);
+
+	}
+});
+
+
+function sort(sortBy,sortType){
+	
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue+"/"+sortBy+"/"+sortType,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
+			console.log("ITEM DATA");
+			console.log(data);
 
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
@@ -61,9 +74,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			alert("Data not found!");
 		}
 	});
-	}
-});
-
+}
 $(document).on('pagebeforeshow', "#rmvcategories", function(event, ui) {
 	
 $.ajax({
