@@ -2,6 +2,7 @@ var isSearchbyCat;
 var monthArray =new Array("0","January","February","March","April","May","June","July", "August","September","October","November","December");
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	
 	var sortBy= document.getElementById('select-choice-item-sort').value;
 	var sortType = document.getElementById('select-choice-sort-type').value;
 	
