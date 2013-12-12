@@ -687,7 +687,8 @@ client.connect(function(err) {
 					for(i=0;i<len;i++){
 						console.log(result.rows[i].u_email);
 						console.log(req.body.email);
-						if(result.rows[i].u_email==req.body.email){
+						
+						if(result.rows[i].u_email.trim()==req.body.email.trim()){
 							console.log("Equaaaal");
 							isUser = true;
 							res.send(400, "It seems you already have an account.");
