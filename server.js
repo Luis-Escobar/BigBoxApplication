@@ -711,6 +711,7 @@ client.connect(function(err) {
 			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)" +
 									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 			var queryArray = [req.body.fname, req.body.lname, req.body.new_username, req.body.new_password, req.body.question, req.body.answer];
+			
 			client.query(selectQuery, function(err, result) {
 				if (err) {
 					return console.error('error running insert query', err);
@@ -725,12 +726,12 @@ client.connect(function(err) {
 					else{
 						res.json(true);
 						}		
-					});
-				}
-				else{
-					res.send(402,"Pasword mismatch. Try again!");
-				}
 			});
+		}	
+		else{
+			res.send(402,"Pasword mismatch. Try again!");
+		}
+		
  	});
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
