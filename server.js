@@ -669,21 +669,20 @@ client.connect(function(err) {
 			}
 		});
 	});
-
+	
  	app.post('/BigBoxServer/register', function(req, res) {
  		console.log("User info: " + JSON.stringify(req.body));
 		var selectQuery = " SELECT *  FROM users WHERE u_email= '" + req.body.email + "' OR u_username = '" + req.body.new_username + "'";
 		console.log("Query select: " + selectQuery);
 	 	var theResult;
+	 	
 	 	client.query(selectQuery, function(err, result) {
 	 			if (err) {
 	 				return console.error('error running query', err);
 	 			}
 	 			theResult = result.rows;
 				
- 		});
-				
-		if(JSON.stringify(theResult) != "[]"){
+ 		if(JSON.stringify(theResult) != "[]"){
  			console.log(" " + JSON.stringify(theResult));
  			len = theResult.length;
  			console.log("Length = " + len);
@@ -703,16 +702,26 @@ client.connect(function(err) {
 				
 			return;	
 		}
-			
-		console.log(" " + JSON.stringify(theResult));
-				
-		//Check if passwords match
 		if(req.body.new_password.trim()==req.body.renter.trim()){
+			console.log("Equal");
+			insertUser(true);
+		}
+		else{
+			res.send(402,"Pasword mismatch. Try again!");	
+		}
+		
+		});
+	});
+			
+		//Check if passwords match
+//		if(req.body.new_password.trim()==req.body.renter.trim()){
+			
+		function insertUser(insert, userToAdd){	
 			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)" +
 									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-			var queryArray = [req.body.fname, req.body.lname, req.body.new_username, req.body.new_password, req.body.question, req.body.answer];
+			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.question, userToAdd.answer];
 			
-			client.query(selectQuery, function(err, result) {
+			client.query(insertQueryString, function(err, result) {
 				if (err) {
 					return console.error('error running insert query', err);
 				}		
@@ -728,11 +737,8 @@ client.connect(function(err) {
 				}		
 			});
 		}	
-		else{
-			res.send(402,"Pasword mismatch. Try again!");
-		}
-		
- 	});
+	}	
+ 	
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
 		console.log("req.body:");
