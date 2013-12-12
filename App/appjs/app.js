@@ -2023,6 +2023,9 @@ function refreshPage() {
 	payment_selected = false; 	
  }
  
+function updateQty(newValue){
+	alert("newValue= " + newValue);
+} 
 //Selling
  
 $(document).on('pagebeforeshow', "#buying", function(event, ui) {
