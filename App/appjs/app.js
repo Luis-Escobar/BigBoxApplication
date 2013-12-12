@@ -1315,16 +1315,14 @@ function deleteCartItem(ItemId) {
 		return;
 	}
 	alert("ITEM ID: " + ItemId);
-	var IdJSON = JSON.stringify({
-		'i_id':ItemId
-	});
+	
 	$.mobile.loading("show");
 	$.ajax({
 		async : false,
- 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/",
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/" + ItemId,
 		method : 'delete',
 		contentType : "application/json",
- 		dataType : "IdJSON",
+ 		dataType : "json",
  		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
  			GetCart(false);

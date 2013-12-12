@@ -1005,7 +1005,7 @@ client.connect(function(err) {
 	====================================================================================================================================*/
 	//Remove item from cart
 	app.del('/BigBoxServer/cart/', function(req, res) {
-		var id = req.body.i_id;
+		console.log(req.body);
 		console.log("DELETE item: " + id);
 		var queryArray = [id, user_id];		
 		var deleteQuery = "DELETE FROM cart_items WHERE i_id = $1 AND cart_id = $2";
