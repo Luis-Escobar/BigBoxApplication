@@ -542,9 +542,11 @@ $(document).on('pagebeforeshow', "#details", function(event, ui) {
 	detailsPrice.empty();
 	detailsPrice.append("" + currentItem[0].i_price);
 
+	if(currentItem[0].i_bid!=null){
 	var detailsBid = $("#detailsBid");
 	detailsBid.empty();
 	detailsBid.append("" + currentItem[0].i_bid);
+	}
 
 	var detailsShipFrom = $("#detailsShipFrom");
 	detailsShipFrom.empty();
@@ -635,12 +637,12 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside'> <pre>Qty: </pre>" + item.qtytopurchase + "</div></li>");
+ 			"</p>" + "<div class='ui-li-aside'> Qty: " + item.qtytopurchase + "</div></li>");
  //			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' >" + options + "</select></fieldset></div></li>");
  
  		}
 
-	} else {
+	} else { 
 		
 		if(currentItem[0].qtytopurchase == null){
 			currentItem[0].qtytopurchase = 1;
@@ -1126,6 +1128,7 @@ function SendNewItemForm(){
  		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Success");
+			$.mobile.navigate("/App/view/sellItemConfirm.html");
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);

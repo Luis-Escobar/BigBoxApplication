@@ -22,6 +22,7 @@
 			
 
 					<SCRIPT language="javascript">
+					
 					var nextId = 0;
 					//No va a estar aqui es por testing
 	
@@ -265,6 +266,7 @@ function AddCategoriesForm() {
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Sucess");
+			refreshPage();
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
