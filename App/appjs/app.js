@@ -1337,6 +1337,7 @@ function register() {
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
 			alert(data.responseText);
+			alert(JSON.stringify(data));
 		}
 	});
 

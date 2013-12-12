@@ -728,8 +728,8 @@ client.connect(function(err) {
 		}
 		if(req.body.new_password.trim()==req.body.renter.trim()){
 			console.log("Equal");
-			var response = insertUser(true, req.body);
-			res.json(response);
+			insertUser(true, req.body);
+			res.json(true);
 		}
 		else{
 			res.send(402,"Pasword mismatch. Try again!");	
@@ -739,7 +739,6 @@ client.connect(function(err) {
 	});
 			
 		//Check if passwords match
-//		if(req.body.new_password.trim()==req.body.renter.trim()){
 			
 		function insertUser(insert, userToAdd){	
 			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer)" +
@@ -757,9 +756,6 @@ client.connect(function(err) {
 				if (err) {
 					return console.error('error running insert query', err);
 				}
-				else{
-					return true;
-				}		
 			});
 		}	
 		
