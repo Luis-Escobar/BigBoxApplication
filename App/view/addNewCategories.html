@@ -17,6 +17,7 @@
 		<div data-role="page" id="changeCategories">
 			<div data-role="header" >
 				<a data-role="button" data-rel="back"> Back </a>
+				<a href="/App/view/user.html" data-role="button" data-icon="home">Home</a>
 				<h1>Add Categories</h1>
 			</div>
 			
@@ -266,7 +267,7 @@ function AddCategoriesForm() {
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
 			alert("Sucess");
-			refreshPage();
+			//refreshPage();
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
