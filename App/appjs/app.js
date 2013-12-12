@@ -1323,7 +1323,6 @@ function register() {
  	
  	
  	console.log("New user: " + JSON.stringify(newUser));
-	alert("New User name:" + newUser.fname);
 	var newUserJSON = JSON.stringify(newUser);
 
 	$.ajax({
@@ -1337,11 +1336,7 @@ function register() {
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
-			alert("textStatus: " + textStatus);
-			alert("data: [0] " + data[0]);
-			alert("jqXHR: " + jqXHR);
-
-			$.mobile.navigate("/index.html");
+			alert(data.responseText);
 		}
 	});
 
