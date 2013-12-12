@@ -2,6 +2,8 @@ var isSearchbyCat;
 var monthArray =new Array("0","January","February","March","April","May","June","July", "August","September","October","November","December");
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
+	var sortBy= document.getElementById('select-choice-item-sort').value;
+	var sortType = document.getElementById('select-choice-sort-type').value;
 	
 	if(isSearchbyCat){
 		//alert("cid"+currentcid+"subid"+currentcid2+"ssubid"+currentcid3);	
@@ -34,11 +36,22 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
 	}
 	else{
-	$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue,
+		
+		sort(sortBy,sortType);
+
+	}
+});
+
+
+function sort(sortBy,sortType){
+	
+		$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/itemsearch/"+searchValue+"/"+sortBy+"/"+sortType,
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
 			var itemList = data.items;
+			console.log("ITEM DATA");
+			console.log(data);
 
 			//alert(JSON.stringify(itemList));
 			//alert(JSON.stringify(itemList[0].i_name));
@@ -61,9 +74,7 @@ $(document).on('pagebeforeshow', "#results", function(event, ui) {
 			alert("Data not found!");
 		}
 	});
-	}
-});
-
+}
 $(document).on('pagebeforeshow', "#rmvcategories", function(event, ui) {
 	
 $.ajax({
@@ -618,7 +629,6 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			for ( j = 1; j <= item.i_qtyavailable; j++) {
  				if (j == item.qtytopurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
-					alert("Hey");
   				} else {
 	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
 				}
@@ -626,8 +636,9 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside' data-role='fieldcontain'> <legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></div></li>");
-			// onchange='updateQty(document.forms[0].qty.value)' 
+ 			"</p>" + "<div class='ui-li-aside'> <pre>Qty: </pre>" + item.qtytopurchase + "</div></li>");
+ //			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' >" + options + "</select></fieldset></div></li>");
+ 
  		}
 
 	} else {
@@ -2050,9 +2061,6 @@ function refreshPage() {
 	payment_selected = false; 	
  }
  
-function updateQty(newValue){
-	alert("newValue= " + newValue);
-} 
 //Selling
  
 $(document).on('pagebeforeshow', "#buying", function(event, ui) {

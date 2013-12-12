@@ -198,7 +198,7 @@ client.connect(function(err) {
 		});
 
 
-	app.get('/BigBoxServer/itemsearch/:searchValue', function(req, res) {
+		app.get('/BigBoxServer/itemsearch/:searchValue/:sortBy/:sortType', function(req, res) {
 		var searchValue = req.params.searchValue;
 		console.log("searchValue: " + searchValue.slice(1, searchValue.length));
 
@@ -208,18 +208,42 @@ client.connect(function(err) {
 		Upper = Upper.replace(/ /g, "%");
 		console.log("upper:" + Upper);
 		console.log("GET-itemS");
+		var queryString = "";
 
-		client.query("select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%'", function(err, result) {
+		console.log("req.params.sortType");
+		console.log(req.params.sortBy);
+		if (req.params.sortBy == "i_name") {
+			if (req.params.sortType == "ASC") {
+				var queryString = "select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%' order by i_name ASC";
+			} else {
+				var queryString = "select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%' order by i_name DESC";
+			}
+		} else {
+			if (req.params.sortType == "ASC") {
+				var queryString = "select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%' order by i_price ASC";
+			} else {
+				var queryString = "select * from items where upper(replace(i_name, ' ', '')) like '%" + Upper + "%' order by i_price DESC";
+			}
+		}
+
+		console.log("queryString");
+		console.log(queryString);
+		client.query(queryString, function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			}
-			console.log(" " + JSON.stringify(result.rows[0]));
+
+			console.log("Inside");
+			console.log(queryString);
+			console.log(JSON.stringify(result.rows));
 			var response = {
 				"items" : result.rows
 			};
 			res.json(response);
 		});
 	});
+
+
 
 	//Read all items in the cart
 	app.get('/BigBoxServer/cart', function(req, res) {
