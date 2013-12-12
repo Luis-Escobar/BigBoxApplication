@@ -721,7 +721,7 @@ client.connect(function(err) {
 									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.question, userToAdd.answer];
 			
-			client.query(insertQueryString, function(err, result) {
+			client.query(insertQueryString, queryArray, function(err, result) {
 				if (err) {
 					return console.error('error running insert query', err);
 				}		
