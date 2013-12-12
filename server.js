@@ -685,12 +685,14 @@ client.connect(function(err) {
 					console.log("Length = " + len);
 					var isUser = false;
 					for(i=0;i<len;i++){
+						console.log(result.rows[i].u_email);
+						console.log(req.body.email);
 						if(result.rows[i].u_email== req.body.email){
 							isUser = true;
 							res.send(400, "It seems you already have an account.");
 							break;		
 						}
-						console.log("Checked: );
+						console.log("Checked" );
 					}
 					console.log("User?" + isUser);
 					if(!isUser){
