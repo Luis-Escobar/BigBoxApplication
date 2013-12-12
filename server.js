@@ -501,7 +501,7 @@ client.connect(function(err) {
 					if (err) {
 						return console.error('error running query', err);
 					}else{
-					console.log("Query 1 done")
+					console.log("Query 1 done");
 					res.json(true);
 					}
 		});
@@ -717,7 +717,7 @@ client.connect(function(err) {
 				}		
 			});
 					
-			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
+			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) )";
 			client.query(insertCart, function(err, result) {
 				if (err) {
 						return console.error('error running insert query', err);
