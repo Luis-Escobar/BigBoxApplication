@@ -13,7 +13,6 @@ client.connect(function(err) {
 		return console.error('could not connect to postgres', err);
 	}
 
-
 	var allowCrossDomain = function(req, res, next) {
 		res.header('Access-Control-Allow-Origin', '*');
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -502,7 +501,7 @@ client.connect(function(err) {
 					if (err) {
 						return console.error('error running query', err);
 					}else{
-					console.log("Query 1 done")
+					console.log("Query 1 done");
 					res.json(true);
 					}
 		});
@@ -727,7 +726,7 @@ client.connect(function(err) {
 				}		
 			});
 					
-			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
+			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) )";
 			client.query(insertCart, function(err, result) {
 				if (err) {
 						return console.error('error running insert query', err);
@@ -789,7 +788,10 @@ client.connect(function(err) {
 			
 			console.log(req.body);
 
-				var byDay = "select SUM(o_totalprice) as total, o_date from orders where extract(year from o_date)=$1 group by  o_date order by o_date DESC";
+				var byDay = "select extract(year from o_date) as y,extract(month from o_date) as m,extract(day from o_date) as d, SUM(o_totalprice)\
+				from orders\
+				where extract(year from o_date)=$1\
+				group by y,m,d order by y,m,d";
 				
 				var byWeek = "select extract(year from o_date) as y,extract(week from o_date) as w, SUM(o_totalprice) from orders where extract(year from o_date)=$1 group by y,w order by y,w";
 				
