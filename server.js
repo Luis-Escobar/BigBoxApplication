@@ -683,13 +683,23 @@ client.connect(function(err) {
 					console.log(" " + JSON.stringify(result.rows));
 					len = result.rows.length;
 					console.log("Length = " + len);
-					res.send(400, "It seems you already have an account");
+					var isUser;
+					for(i=0;i<len;i++){
+						if(result.rows[i].u_email== req.body.email){
+							isUSer = true;
+							res.send(400, "It seems you already have an account.");		
+						}
+					}
+					if(!isUser)
+						res.send(401, "We are sorry, but the username is taken already.");
 					return;	
 				}
 				console.log(" " + JSON.stringify(result.rows));
 				if(req.body.new_password==req.body.renter){
-					console.log("Checked passwords");
 					res.json(true);
+				}
+				else{
+					res.send(402,"Pasword mismatch. Try again!");
 				}
 			});
 

@@ -1322,7 +1322,6 @@ function register() {
  	
  	
  	console.log("New user: " + JSON.stringify(newUser));
-	alert("New User name:" + newUser.fname);
 	var newUserJSON = JSON.stringify(newUser);
 
 	$.ajax({
