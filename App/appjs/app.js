@@ -582,7 +582,7 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 		item = cartList[i];
 		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtytopurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
-		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
+		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.i_id + ")'></a></a></li>");
 		sTotal += parseFloat(item.i_price) * item.qtytopurchase;
 		itemsQty += item.qtytopurchase;
 	
@@ -616,6 +616,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			for ( j = 1; j <= item.i_qtyavailable; j++) {
  				if (j == item.qtytopurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
+					alert("Hey");
   				} else {
 	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
 				}
@@ -623,10 +624,8 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty'>" + options + "</select></fieldset></div></li>");
- 
-			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
-			//			"<li><a href='#shipSelect'><p style='padding-top:10px'>Shpping type <br> Estimated shipping time</p></li><hr style='padding:0; margin:0'>");
+ 			"</p>" + "<div class='ui-li-aside' data-role='fieldcontain'> <legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></div></li>");
+			// onchange='updateQty(document.forms[0].qty.value)' 
  		}
 
 	} else {
@@ -1339,9 +1338,6 @@ function deleteCartItem(ItemId) {
 	if (userConfirmation == false) {
 		return;
 	}
-
-//	var cartList = document.getElementById("cart-list");
-
 	$.mobile.loading("show");
 	$.ajax({
 		async : false,
@@ -2043,13 +2039,7 @@ function removeUser(username){
  Helper Function
  =============================================================================================*/
 function refreshPage() {
-	console.log(window.location.href);
-	$.mobile.changePage(window.location.href, {
-		allowSamePageTransition : true,
-		transition : 'none',
-		showLoadMsg : false,
-		reloadPage : true
-	});
+	location.reload();
 }
  function clearInfo(){
 	s_address_selected = false;
@@ -2057,6 +2047,9 @@ function refreshPage() {
 	payment_selected = false; 	
  }
  
+function updateQty(newValue){
+	alert("newValue= " + newValue);
+} 
 //Selling
  
 $(document).on('pagebeforeshow', "#buying", function(event, ui) {

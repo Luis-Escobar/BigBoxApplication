@@ -1006,14 +1006,20 @@ client.connect(function(err) {
 	//Remove item from cart
 	app.del('/BigBoxServer/cart/:id', function(req, res) {
 		var id = req.params.id;
-		console.log("DELETE item: " + id);
-				res.json(true);
+		console.log("GET item: " + id);
+		var queryArray = [id, user_id];		
+		var deleteQuery = "DELETE FROM cart_items WHERE i_id = $1 AND cart_id = $2";
+		client.query(deleteQuery, queryArray, function(err, result) {
+				if (err) {
+					return console.error('error running query', err);
+				} else {
+					res.json(true);
+				}
+		});
 	});
 	
 	app.del('/BigBoxServer/removeUser/', function(req, res) {
-		
-		
-		var queryString = "DELETE FROM users WHERE u_username=$1";
+			var queryString = "DELETE FROM users WHERE u_username=$1";
 		
 			client.query(queryString,[req.body.username], function(err, result) {
 			if (err) {
