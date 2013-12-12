@@ -674,52 +674,56 @@ client.connect(function(err) {
  		console.log("User info: " + JSON.stringify(req.body));
 		var selectQuery = " SELECT *  FROM users WHERE u_email= '" + req.body.email + "' OR u_username = '" + req.body.new_username + "'";
 		console.log("Query select: " + selectQuery);
-		client.query(selectQuery, function(err, result) {
+	 	
+	 	client.query(selectQuery, function(err, result) {
+	 			if (err) {
+	 				return console.error('error running query', err);
+	 			}
+	 			var theResult = result.rows;
+				
+ 		});
+				
+		if(JSON.stringify(theResult) != "[]"){
+ 			console.log(" " + JSON.stringify(theResult));
+ 			len = theResult.length;
+ 			console.log("Length = " + len);
+ 			var isUser = false;
+ 			for(i=0;i<len;i++){
+ 				console.log(theResult[i].u_email);
+ 				console.log(req.body.email);						
+ 				if(theResult[i].u_email.trim()==req.body.email.trim()){
+					isUser = true;
+					res.send(400, "It seems you already have an account.");
+ 					break;		
+ 				}
+			}
+			if(!isUser){
+				res.send(401, "We are sorry, but the username is taken already.");
+			}
+				
+			return;	
+		}
+			
+		console.log(" " + JSON.stringify(theResult));
+				
+		//Check if passwords match
+		if(req.body.new_password.trim()==req.body.renter.trim()){
+			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)" +
+									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+			var queryArray = [req.body.fname, req.body.lname, req.body.new_username, req.body.new_password, req.body.question, req.body.answer];
+			client.query(selectQuery, function(err, result) {
 				if (err) {
-					return console.error('error running query', err);
-				}
-				
-				else if(JSON.stringify(result.rows) != "[]"){
-					console.log(" " + JSON.stringify(result.rows));
-					len = result.rows.length;
-					console.log("Length = " + len);
-					var isUser = false;
-					for(i=0;i<len;i++){
-						console.log(result.rows[i].u_email);
-						console.log(req.body.email);
-						
-						if(result.rows[i].u_email.trim()==req.body.email.trim()){
-							console.log("Equaaaal");
-							isUser = true;
-							res.send(400, "It seems you already have an account.");
-							break;		
-						}
-					}
-					if(!isUser){
-						res.send(401, "We are sorry, but the username is taken already.");
-					}
-					return;	
-				}
-				console.log(" " + JSON.stringify(result.rows));
-				
-				//Check if passwords match
-				if(req.body.new_password.trim()==req.body.renter.trim()){
-					var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)" +
-											"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-					var queryArray = [req.body.fname, req.body.lname, req.body.new_username, req.body.new_password, req.body.question, req.body.answer];
-					client.query(selectQuery, function(err, result) {
-						if (err) {
-							return console.error('error running insert query', err);
-						}		
-					});
+					return console.error('error running insert query', err);
+				}		
+			});
 					
-					var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
-					client.query(insertCart, function(err, result) {
-						if (err) {
+			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
+			client.query(insertCart, function(err, result) {
+					if (err) {
 							return console.error('error running insert query', err);
-						}
-						else{
-							res.json(true);
+					}
+					else{
+						res.json(true);
 						}		
 					});
 				}
