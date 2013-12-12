@@ -443,12 +443,6 @@ client.connect(function(err) {
                         
         });		
 		
-
-	
-		
-
-		
-});
      	//Derick
 	app.get('/BigBoxServer/seller', function(req, res) {
 
