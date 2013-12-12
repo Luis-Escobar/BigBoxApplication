@@ -1309,38 +1309,37 @@ function AddToCart() {
 }
 
 function deleteCartItem(ItemId) {
-	//Comentado por fase 2
-	/*
+	
 	var userConfirmation = confirm("Are you sure you want to remove this item?");
 	if (userConfirmation == false) {
 		return;
 	}
 
-	var cartList = document.getElementById("cart-list");
+//	var cartList = document.getElementById("cart-list");
 
 	$.mobile.loading("show");
 	$.ajax({
 		async : false,
-		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/" + ItemId,
+ 		url : "http://bigbox.herokuapp.com/BigBoxServer/cart/" + ItemId,
 		method : 'delete',
 		contentType : "application/json",
-		dataType : "json",
-		success : function(data, textStatus, jqXHR) {
+ 		dataType : "json",
+ 		success : function(data, textStatus, jqXHR) {
 			$.mobile.loading("hide");
-			GetCart(false);
-			refreshPage();
-		},
-		error : function(data, textStatus, jqXHR) {
-			console.log("textStatus: " + textStatus);
-			$.mobile.loading("hide");
-			if (data.status == 404) {
-				alert("Item not found.");
-			} else {
-				alert("Internal Server Error.");
+ 			GetCart(false);
+ 			refreshPage();
+ 		},
+ 		error : function(data, textStatus, jqXHR) {
+  			console.log("textStatus: " + textStatus);
+ 			$.mobile.loading("hide");
+ 			if (data.status == 404) {
+ 				alert("Item not found.");
+ 			} else {
+ 				alert("Internal Server Error.");
 			}
 		}
 	});
-	*/
+	
 	
 }
 
