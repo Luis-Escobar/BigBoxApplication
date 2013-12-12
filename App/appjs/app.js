@@ -1,4 +1,5 @@
 var isSearchbyCat;
+var monthArray =new Array("0","January","February","March","April","May","June","July", "August","September","October","November","December");
 
 $(document).on('pagebeforeshow', "#results", function(event, ui) {
 	
@@ -1352,9 +1353,12 @@ function AddCreditCard() {
 	var form = $("#card-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
+	
 	var newCreditCard = ConverToJSON(formData);
 	console.log("New Credit Card: " + JSON.stringify(newCreditCard));
+
 	var newCreditCardJSON = JSON.stringify(newCreditCard);
+	
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/creditcards",
 		method : 'post',
@@ -1452,27 +1456,17 @@ function getSubmitValue() {
 	if (userConfirmation == false) {
 		return;
 	}
-	else{
-		alert("Not implemented in this phase");
-	}
 
-	/*
-	 var jsonData={"name":""+currentItem.name, "model":""+currentItem.model, "year":""+currentItem.year,"info":""+currentItem.info,"buyItNow":""+currentItem.buyItNow, "price":""+currentItem.price, "img":""+currentItem.img,
-	 "width":""+currentItem.width, "length":""+currentItem.length, "heigth":""+currentItem.heigth, "weigth":""+currentItem.weigth, "shipTo":""+currentItem.shipTo, "shipFrom":""+currentItem.shipFrom, "condition":""+currentItem.condition ,
-	 "hasBid":""+currentItem.hasBid, "bid":""+currentItem.bid, "seller":""+currentItem.seller, "shippingPrice":""+currentItem.shippingPrice){
-
-	 var j = JSON.stringify(jsonData);*/
-	//currentItem.bid = bidValue;
-	//var newProdJSON = JSON.stringify(currentItem);
-	/**$.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/items/" + currentItem.id,
-		method : 'put',
-		data : newProdJSON,
+	currentItem[0].i_bid = bidValue;
+	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
+	$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/bids",
+		method : 'post',
+		data : UpdatedItemJSON,
 		contentType : "application/json",
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
-			GetItem(currentItem.id, true);
-			//refresh Current Item
+			GetItem(currentItem[0].i_id, true);
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("textStatus: " + textStatus);
@@ -1483,7 +1477,31 @@ function getSubmitValue() {
 				alert("Internal Server Error.");
 			}
 		}
-	});*/
+ 	});
+	
+	
+	
+    //codigo para hacer un update a un item
+//	var UpdatedItemJSON = JSON.stringify(currentItem[0]);
+//	$.ajax({
+//		url : "http://bigbox.herokuapp.com/BigBoxServer/items",
+//		method : 'put',
+//		data : UpdatedItemJSON,
+//		contentType : "application/json",
+//		dataType : "json",
+//		success : function(data, textStatus, jqXHR) {
+//			GetItem(currentItem[0].i_id, true);
+//		},
+//		error : function(data, textStatus, jqXHR) {
+//			console.log("textStatus: " + textStatus);
+//			$.mobile.loading("hide");
+//			if (data.status == 404) {
+//				alert("Item not found. GET ITEM");
+//			} else {
+//				alert("Internal Server Error.");
+//			}
+//		}
+// 	});
 
 }
 
@@ -1566,51 +1584,43 @@ function account() {
 
 function register() {
 
-	var fname = document.getElementById('fname').value;
-	var lname = document.getElementById('lname').value;
-	var address = document.getElementById('address').value;
-	var city = document.getElementById('city').value;
-	var state = document.getElementById('state').value;
-	var country = document.getElementById('country').value;
-	var zipcode = document.getElementById('zipcode').value;
-	var phone = document.getElementById('phone').value;
-	var new_username = document.getElementById('new_username').value;
-	var email = document.getElementById('email').value;
-	var new_password = document.getElementById('new_password').value;
-	var renter = document.getElementById('renter').value;
-	var question = document.getElementById('question').value;
-	var answer = document.getElementById('answer').value;
+	// var fname = document.getElementById('fname').value;
+	// var lname = document.getElementById('lname').value;
+	// var address = document.getElementById('address').value;
+	// var city = document.getElementById('city').value;
+	// var state = document.getElementById('state').value;
+	// var country = document.getElementById('country').value;
+	// var zipcode = document.getElementById('zipcode').value;
+	// var phone = document.getElementById('phone').value;
+	// var new_username = document.getElementById('new_username').value;
+	// var email = document.getElementById('email').value;
+	// var new_password = document.getElementById('new_password').value;
+	// var renter = document.getElementById('renter').value;
+	// var question = document.getElementById('question').value;
+	// var answer = document.getElementById('answer').value;
 
-	var registerInfo = JSON.stringify({
-		'fname' : fname,
-		'lname' : lname,
-		'address' : address,
-		'city' : city,
-		'state' : state,
-		'country' : country,
-		'zipcode' : zipcode,
-		'phone' : phone,
-		'new_username' : new_username,
-		'email' : email,
-		'new_password' : new_password,
-		'renter' : renter,
-		'question' : question,
-		'answer' : answer
-	});
+//	$.mobile.loading("show");
+ 	var form = $("#register-form");
+ 	var formData = form.serializeArray();
+ 	console.log("form Data: " + formData);
+ 	var newUser = ConverToJSON(formData);
+ 	
+ 	
+ 	console.log("New user: " + JSON.stringify(newUser));
+	var newUserJSON = JSON.stringify(newUser);
 
 	$.ajax({
 		url : "http://bigbox.herokuapp.com/BigBoxServer/register",
 		type : "post",
 		contentType : "application/json",
-		data : registerInfo,
+		data : newUserJSON,
 		success : function(data, textStatus, jqXHR) {
 			$.mobile.navigate("/App/view/signedUp.html");
-
 		},
 		error : function(data, textStatus, jqXHR) {
 			console.log("try again");
-			$.mobile.navigate("/index.html");
-
+			alert(data.responseText);
+			alert(JSON.stringify(data));
 		}
 	});
 
@@ -1852,7 +1862,7 @@ function recoverPassword(username){
 				
 			});
 		
-			$.mobile.navigate("/App/view/accoun1t/passwordRecoverd.html");
+			$.mobile.navigate("/App/view/account/passwordRecoverd.html");
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -1927,13 +1937,9 @@ function confirmUserRemoval(username,confirmType){
 		
 				});
 				
-				$.mobile.navigate("/App/view/account/removedUser.html");
-
-				
+				$.mobile.navigate("/App/view/account/removedUser.html");			
 			}
 	
-
-
 }
 
 function removeUser(username){
@@ -1951,8 +1957,6 @@ function removeUser(username){
 			
 			console.log("got here");
 			confirmUserRemoval(username,2);
-
-
 
 		},
 		error : function(data, textStatus, jqXHR) {
@@ -2120,49 +2124,97 @@ $.ajax({
 
 });
 
+function report() {
+	var year = document.getElementById('select-choice-year').value;
+	var sort = document.getElementById('select-choice-sort').value;
 
-$(document).on('pagebeforeshow', "#report", function(event, ui) {
+	var dat = JSON.stringify({
+		'year' : year
+	});
+ 
+	if (year == "Year") {
+		alert("Please select a Year");
+	} else if (sort == "Sort") {
+		alert("Please select a sorting method");
+	} else
+		$.ajax({
+			url : "http://localhost:3412/BigBoxServer/report",
+			contentType : "application/json",
+			type : "post",
+			data : dat,
+			success : function(data, textStatus, jqXHR) {
+
+				var data_table = $("#data_table");
+				data_table.table();
+				var report = "";
+				var count = 0;
+				var currMonth = "";
+				var weekCount=0;
+
+				if (sort == "Day") {					
+					for (var i = 0; i < data.day.length; i++) {
+						if (currMonth != monthArray[data.day[i].m]) {
+							currMonth = monthArray[data.day[i].m];
+							report += '<thead><tr><th data-priority="1">' + currMonth + '</th><th data-priority="2">Total Sales</th></tr></thead><tbody><tr><th>' + data.day[i].d + '</th><td>$' + data.day[i].sum + '</td></tr></tbody>';
+						} else {
+							report += '<tbody><tr><th>' + data.day[i].d + '</th><td>$' + data.day[i].sum + '</td></tr></tbody>';
+						}
+					}					
+				} else if (sort == "Week") {
+					report +='<thead><tr><th data-priority="1">Week</th><th data-priority="2">Total Sales</th></tr></thead>';
+					
+					
+					for (var i = 1; i <= 52; i++) {
+						if(weekCount<data.week.length && i==data.week[weekCount].w){
+						report += '<tbody><tr><th>' + data.week[weekCount].w + '</th><td>$' + data.week[weekCount].sum + '</td></tr></tbody>';
+						weekCount++;
+						}
+						else{
+						report += '<tbody><tr><th>' + i + '</th><td>$0</td></tr></tbody>';
+
+						}
+						
+						
+					}
+				} else {
+					report +='<thead><tr><th data-priority="1">Month</th><th data-priority="2">Total Sales</th></tr></thead>';
+
+					for (var i = 1; i < monthArray.length; i++) {
+						
+						
+						if (i != data.month[count].m) {
+							report += '<tbody><tr><th>' + monthArray[i] + '</th><td>$0</td></tr></tbody>';
+						} else {
+							report += '<tbody><tr><th>' + monthArray[data.month[count].m] + '</th><td>$' + data.month[count].sum + '</td></tr></tbody>';
+							count += 1;
+						}
+					}
+				}
+
+				data_table.empty();
+				data_table.append('<table data-role="table" id="movie-table-custom" data-mode="reflow" class="movie-list table-stroke">' + report + '</table>');
+
+				data_table.table("refresh");
+
+			},
+			error : function(data, textStatus, jqXHR) {
+				console.log("textStatus: " + textStatus);
+				alert("Data not found!");
+			}
+		});
+
+};
+
+
+$(document).on('pagebeforeshow', "#seller", function(event, ui) {
 $.ajax({
-		url : "http://bigbox.herokuapp.com/BigBoxServer/report",
+		url : "http://bigbox.herokuapp.com/BigBoxServer/seller",
 		contentType : "application/json",
 		success : function(data, textStatus, jqXHR) {
-		 var list=$("#report_list").listview();
-		 list.empty();
-		 var report_daily = "";
-		  var report_weekly = "";
-		  var report_monthly ="";
-		  str = "";
-		  var result = JSON.parse(data);
-		 console.log("DATA");
-		 console.log(result);
-
-			for (var i = 0; i < result.day.length; i++) {
-				str = JSON.stringify(result.day[i].o_date);
-				report_daily += '<li>Day:' + str.substring(0, 10) + ', Total: $' + result.day[i].total + '</li>';
-			}
-
-	
-
-		   list.append('<li data-role="list-divider" role="heading">Daily</li>'+report_daily+
-		   '<li data-role="list-divider" role="heading">Weekly</li>\
-		   <li>Week Start:2013-12-02, Total: $30</li>\
-		   <li>Week Start:2013-11-25, Total: $40</li>\
-		   <li>Week Start:2013-08-23, Total: $30</li>\
-		   <li>Week Start:2013-07-27, Total: $10</li>\
-		   <li>Week Start:2013-07-15, Total: $55</li>\
-		   <li>Week Start:2013-05-15, Total: $20</li>\
-		   <li>Week Start:2013-14-15, Total: $25</li>\
-		   <li data-role="list-divider" role="heading">Monthly</li>\
-		   <li>Month:2013-12, Total: $30</li>\
-		   <li>Month:2013-11, Total: $40</li>\
-		   <li>Month:2013-08, Total: $30</li>\
-		   <li>Month:2013-07, Total: $65</li>\
-		   <li>Month:2013-05, Total: $20</li>\
-		   <li>Month:2013-14, Total: $25</li>');
-					
+		var sellerName =$("#seller_name");
+		sellerName.empty();
 		
-		   list.listview("refresh");
-		   
+		sellerName.append('<h1>'+data.rows[0].u_username+'<img src="../raty/star-on.png" /></h1>');
 		
 		},
         error : function(data, textStatus, jqXHR) {
@@ -2172,4 +2224,7 @@ $.ajax({
 	});
 
 });
+
+
+
 

@@ -384,9 +384,9 @@ client.connect(function(err) {
 				
 								   
 				var queryBid = 'select i_id,i_img,i_name,i_bid\
-				from(select bid_id, i_id, seller_id,buyer_id, sold, i_name, i_bid,i_img\
-				from bids natural join items) as tmp natural join users\
-				where buyer_id = u_id and u_username = $1';
+				from(select i_id, u_id as seller_id,buyer_id, i_name, i_bid,i_img\
+					from bids natural join items) as tmp natural join users\
+					where buyer_id = u_id and u_username =$1';
 				var response ="";
 
 				client.query(queryString,[cookie[0].username],function(err, result) {
@@ -421,75 +421,92 @@ client.connect(function(err) {
 					}
 				});
 		});
+//Derick
+	app.get('/BigBoxServer/selling', function(req, res) {
+
+
+                                var queryString = "select i_id,i_img,i_name,u_username,i_price\
+                                                                 from items natural join users\
+                                                                 where u_username=$1";
+                                                                
+                                        console.log("COOKIE");
+                                        console.log(cookie);
+                                        console.log("USER ID");
+                                        console.log(cookie[0]);
+
+                                client.query(queryString,[cookie[0].username],function(err, result) {
+                                        if (err) {
+                                                return console.error('error running query', err);
+                                        } else {
+                                   }
+                                });
+                        
+        });		
 		
+
+	
 		
-		app.get('/BigBoxServer/report', function(req, res) {
 
+		
+});
+     	//Derick
+	app.get('/BigBoxServer/seller', function(req, res) {
 
-				var byDay = "select SUM(o_totalprice) as total, o_date\
-								   from orders\
-								   group by  o_date order by o_date DESC";
-				var byWeek = "select extract(week from o_date) as w, SUM(o_totalprice)\
-				from orders\
-				group by w order by w";
-				
-				var byMonth = "select extract(month from o_date) as mon, SUM(o_totalprice)\
-				from orders\
-				group by mon order by mon";
-				
-				var response = "";
+	var queryString = "select * from users where u_username = $1";
 
-		client.query(byDay, function(err, result) {
+		client.query(queryString, [cookie[0].username], function(err, result) {
 			if (err) {
 				return console.error('error running query', err);
 			} else {
 
-				response = '{ "day" : ' + JSON.stringify(result.rows);
-				
-				
+				var response = {
+					"user" : result.rows
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
 
 			}
-		}); 
-		
-				client.query(byWeek, function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-				
-				var temp = ',"week" : ' + JSON.stringify(result.rows);
-				response = response +temp;
+		});
 
-			}
-		}); 
-		
-						client.query(byMonth, function(err, result) {
-			if (err) {
-				return console.error('error running query', err);
-			} else {
-
-				var temp =  ',"month" : ' + JSON.stringify(result.rows)+'}';
-			    response  = response + temp;
-			    
-				console.log("Day Query: "+byDay);
-				console.log("Week Query: "+byWeek);
-				console.log("Month Query: "+byMonth);
-				console.log("Response: "+response);
-
-			    res.json(JSON.parse(response));
-				
-			}
-		}); 
-		
-		
-		
-					
 	});
 		
-	
+		
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
-
+	//Place bid
+	//Author: Luis 
+	app.post('/BigBoxServer/bids', function(req, res) {
+		//Update item with new bid price and add the bid to the Bid table
+		var updateItemQuery = "UPDATE items " +
+   							"SET i_bid= " + req.body.i_bid +
+ 						   " WHERE i_id = " + req.body.i_id;
+		
+ 		console.log("Query: " + updateItemQuery);
+		
+ 		client.query(updateItemQuery, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+			}
+ 		});
+ 		var bidUserQuery= " INSERT INTO bids( " +
+            "i_id, buyer_id, bid_date_time, bid_amount)" +
+    		" VALUES (" + req.body.i_id + ", " + user_id + ", NOW(), " + req.body.i_bid +");";
+ 		console.log("Bid Query: "  + bidUserQuery);
+ 		client.query(bidUserQuery, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query 2 Done");
+ 				res.json(true);
+			}
+ 		});		
+ 	});
+	
+	
+	
 	//Add a new order
 	//Author: Luis
 	app.post('/BigBoxServer/orders', function(req, res) {
@@ -503,7 +520,7 @@ client.connect(function(err) {
 					if (err) {
 						return console.error('error running query', err);
 					}else{
-					console.log("Query 1 done")
+					console.log("Query 1 done");
 					res.json(true);
 					}
 		});
@@ -555,56 +572,81 @@ client.connect(function(err) {
 	
 	//Add a new address to the saved addresses
 	//Author: Luis
-	app.post('/BigBoxServer/addresses', function(req, res) {
-		console.log("POST ADDRESS");
-		console.log("REQ: " + JSON.stringify(req.body));
-		
-		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
-			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
-		}
-		
-		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
-		"VALUES ( '" + req.body.street + "', '" + req.body.city + "', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
-		console.log("Query: " + queryString);
-		
-		client.query(queryString,function(err, result) {
-					if (err) {
-						return console.error('error running query', err);
-					} else {
-						console.log("Query Done!");
+ 	app.post('/BigBoxServer/addresses', function(req, res) {
+ 		console.log("POST ADDRESS");
+ 		console.log("REQ: " + JSON.stringify(req.body));
+ 		
+ 		if (!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('street') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('zip') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('phone')) {
+ 			res.statusCode = 400;
+ 			return res.send('Error: Missing fields for the item.');
+ 		}
+ 		
+ 		var queryString = "INSERT INTO addresses (a_street, a_city, a_state, a_country, a_zip, a_phone, a_name) " +
+ 		"VALUES ( '" + req.body.street + "', '" + req.body.city + "', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zip + "', '" + req.body.phone + "', '" + req.body.name +  "')";
+ 		console.log("Query: " + queryString);
+ 		
+ 		client.query(queryString,function(err, result) {
+ 					if (err) {
+ 						return console.error('error running query', err);
+ 					} else {
+ 						console.log("Query Done!");
+ 					}
+ 		});
+ 		
+ 		
+ 		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
+ 						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
+  		console.log("Query 2: " + userAddressesQuery);						   
+  	   	client.query(userAddressesQuery,function(err, result) {
+	 				if (err) {
+	 					return console.error('error running query 2', err);
+	 				} else {
+						console.log("Query 2 Done!"); 
+		 				res.json(true);
 					}
 		});
-		
-		
-		var userAddressesQuery = "INSERT INTO user_addresses (u_id, a_id) " +
-						" VALUES (" + user_id + ", currval('addresses_a_id_seq'::regclass) );";
-		console.log("Query 2: " + userAddressesQuery);						   
-	   	client.query(userAddressesQuery,function(err, result) {
-					if (err) {
-						return console.error('error running query 2', err);
-					} else {
-						console.log("Query 2 Done!");
-						res.json(true);
-					}
-		});
-		
-		
-		
+
 	});
 
 	//Add a credit card to the saved list
-	app.post('/BigBoxServer/creditcards', function(req, res) {
-		console.log("POST CREDIT CARD");
-		console.log("CreditCard: " + JSON.stringify(req.body));
+	//Author: Luis
+ 	app.post('/BigBoxServer/creditcards', function(req, res) {
+ 		console.log("POST CREDIT CARD");
+ 		console.log("CreditCard: " + JSON.stringify(req.body));
+ 		
+ 		if (!req.body.hasOwnProperty('cardnumber') || !req.body.hasOwnProperty('exp_month') || !req.body.hasOwnProperty('exp_year') || !req.body.hasOwnProperty('holder_name')) {
+ 			res.statusCode = 400;
+ 			return res.send('Error: Missing fields for the item.');
+ 		}
+ 		
+ 		var queryString = "INSERT INTO creditcards (cc_expmonth, cc_number, cc_expyear, cc_holdername) " +
+ 		"VALUES ( '" + req.body.exp_month + "', '" + req.body.cardnumber + "', '" + req.body.exp_year + "', '" + req.body.holder_name + "')";
+ 		console.log("Query: " + queryString);
+ 		
+ 		client.query(queryString,function(err, result) {
+ 					if (err) {
+ 						return console.error('error running query', err);
+ 					} else {
+ 						console.log("Query Done!");
+ 					}
+ 		});
+ 		
+ 		
+ 		var userCreditCardsQuery = "INSERT INTO user_creditcards (u_id, cc_number) " +
+ 						" VALUES (" + user_id + ", " + req.body.cardnumber + " )";
+  		
+  		console.log("Query 2: " + userCreditCardsQuery);						   
+  	   	
+  	   	client.query(userCreditCardsQuery,function(err, result) {
+	 				if (err) {
+	 					return console.error('error running query 2', err);
+	 				} else {
+						console.log("Query 2 Done!"); 
+		 				res.json(true);
+					}
+		});
 		
-		if (!req.body.hasOwnProperty('cardnumber') || !req.body.hasOwnProperty('exp_month') || !req.body.hasOwnProperty('exp_year') || !req.body.hasOwnProperty('holder_name')) {
-			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
-		}
-
-		res.json(true);
-	});
+ 	});
 	
 	//Add a categories to the saved list
 	app.post('/BigBoxServer/categoryForm', function(req, res) {
@@ -646,20 +688,73 @@ client.connect(function(err) {
 
 		});
 	});
-
-	app.post('/BigBoxServer/register', function(req, res) {
-		var temp = new Array(req.body.fname, req.body.lname, req.body.address, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.phone, req.body.new_username, req.body.email, req.body.new_password, req.body.question, req.body.answer);
-		console.log(temp.length);
-		var val = isValid(temp, req.body.renter);
-		if (val != "valid") {
-			res.send(400, val);
-		} else {
-
-			adduser(temp);
-			res.send(200);
+	
+ 	app.post('/BigBoxServer/register', function(req, res) {
+ 		console.log("User info: " + JSON.stringify(req.body));
+		var selectQuery = " SELECT *  FROM users WHERE u_email= '" + req.body.email + "' OR u_username = '" + req.body.new_username + "'";
+		console.log("Query select: " + selectQuery);
+	 	var theResult;
+	 	
+	 	client.query(selectQuery, function(err, result) {
+	 			if (err) {
+	 				return console.error('error running query', err);
+	 			}
+	 			theResult = result.rows;
+				
+ 		if(JSON.stringify(theResult) != "[]"){
+ 			console.log(" " + JSON.stringify(theResult));
+ 			len = theResult.length;
+ 			console.log("Length = " + len);
+ 			var isUser = false;
+ 			for(i=0;i<len;i++){
+ 				console.log(theResult[i].u_email);
+ 				console.log(req.body.email);						
+ 				if(theResult[i].u_email.trim()==req.body.email.trim()){
+					isUser = true;
+					res.send(400, "It seems you already have an account.");
+ 					break;		
+ 				}
+			}
+			if(!isUser){
+				res.send(401, "We are sorry, but the username is taken already.");
+			}
+				
+			return;	
 		}
-
+		if(req.body.new_password.trim()==req.body.renter.trim()){
+			console.log("Equal");
+			insertUser(true, req.body);
+			res.json(true);
+		}
+		else{
+			res.send(402,"Pasword mismatch. Try again!");	
+		}
+		
+		});
 	});
+			
+		//Check if passwords match
+			
+		function insertUser(insert, userToAdd){	
+			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer)" +
+									"VALUES ($1, $2, $3, $4, $5, $6, $7)";
+			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.email, userToAdd.question, userToAdd.answer];
+			
+			client.query(insertQueryString, queryArray, function(err, result) {
+				if (err) {
+					return console.error('error running insert query', err);
+				}		
+			});
+					
+			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) )";
+			client.query(insertCart, function(err, result) {
+				if (err) {
+					return console.error('error running insert query', err);
+				}
+			});
+		}	
+		
+ 	
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
 		console.log("req.body:");
@@ -683,6 +778,7 @@ client.connect(function(err) {
 		});
 
 	});
+	
 	app.post('/BigBoxServer/recoverPassword', function(req, res) {
 
 		var queryString = "select u_username, u_password from users where u_username = $1";
@@ -726,6 +822,71 @@ client.connect(function(err) {
  		});
 	});
 
+	//Derick
+	app.post('/BigBoxServer/report', function(req, res) {
+			
+			
+			console.log(req.body);
+
+				var byDay = "select extract(year from o_date) as y,extract(month from o_date) as m,extract(day from o_date) as d, SUM(o_totalprice)\
+				from orders\
+				where extract(year from o_date)=$1\
+				group by y,m,d order by y,m,d";
+				
+				var byWeek = "select extract(year from o_date) as y,extract(week from o_date) as w, SUM(o_totalprice) from orders where extract(year from o_date)=$1 group by y,w order by y,w";
+				
+				var byMonth = "select extract(year from o_date) as y,extract(month from o_date) as m, SUM(o_totalprice) from orders  where extract(year from o_date)=$1 group by y,m order by y,m";
+				
+				var response = "";
+
+		client.query(byDay,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				response = '{"day" :' + JSON.stringify(result.rows);
+				
+				
+
+			}
+		}); 
+		
+				client.query(byWeek,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+				
+				var temp = ',"week":' + JSON.stringify(result.rows);
+				response = response +temp;
+
+			}
+		}); 
+		
+			client.query(byMonth,[req.body.year], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var temp =  ',"month":' + JSON.stringify(result.rows)+'}';
+			    response  = response + temp;
+			    
+				console.log("Day Query: "+byDay);
+				console.log("Week Query: "+byWeek);
+				console.log("Month Query: "+byMonth);
+				console.log("Response: "+response);
+
+			    res.json(JSON.parse(response));
+				
+			}
+		}); 
+		
+		
+		
+					
+	});
+		
+	
+
 	/*====================================================================================================================================
 	REST Opertaion : HTTP PUT
 	====================================================================================================================================*/
@@ -751,55 +912,36 @@ client.connect(function(err) {
 		
 	});
 
- 	app.put('/BigBoxServer/items/:id', function(req, res) {
- 		var id = req.params.id;
+	//Update an item
+	//Author: Luis
+ 	app.put('/BigBoxServer/items', function(req, res) {
 
-		console.log("PUT item: " + id);
-		console.log(req.body);
-		if ((id < 0) || (id >= itemNextId)) {
-			// not found
-			res.statusCode = 404;
-			res.send("Item not found.");
-		} else if (!req.body.hasOwnProperty('img') || !req.body.hasOwnProperty('info') || !req.body.hasOwnProperty('price')) {
-			res.statusCode = 400;
-			return res.send('Error: Missing fields for the item.');
-		} else {
-			var target = -1;
-			for (var i = 0; i < itemList.length; ++i) {
-				if (itemList[i].id == id) {
-					target = i;
-					break;
-				}
+		console.log("PUT item: " + req.body.i_id);
+		console.log("Item New: " + JSON.stringify(req.body.i_name));
+
+		var queryString =  "UPDATE items " +
+   							"SET i_name= '" + req.body.i_name + "', i_year= " + req.body.i_year + ", i_info= '" + req.body.i_info + 
+       							"', i_price= " + req.body.i_price + ", i_img= '" + req.body.i_img + 
+       							"', i_shipto= '" + req.body.i_shipto + "', i_shipfrom = '" + req.body.i_shipfrom +  "', i_shippingprice= " + req.body.i_shippingprice  +  
+      							", i_qtyavailable= " + req.body.i_qtyavailable  + ", i_bid= " + req.body.i_bid + ", cid= " + req.body.cid + ", subid= " + req.body.subid + 
+       							", ssubid= " + req.body.ssubid +
+ 						   " WHERE i_id = " + req.body.i_id;
+	
+		console.log("Query: " + queryString);	
+		
+		client.query(queryString, function(err, result) {
+ 			if (err) {
+ 				return console.error('error running query', err);
+ 			} else {
+ 				console.log("Query Done");
+				res.json(true);
 			}
-			if (target == -1) {
-				res.statusCode = 404;
-				res.send("Item not found.");
-			} else {
-				var theitem = itemList[target];
-				theitem.bid = req.body.bid;
-				theitem.name = req.body.name;
-				theitem.model = req.body.model;
-				theitem.year = req.body.year;
-				theitem.info = req.body.info;
-				theitem.buyItNow = req.body.buyItNow;
-				theitem.price = req.body.price;
-				theitem.img = req.body.img;
-				theitem.dimension = " " + req.body.width + "x" + req.body.length + "x" + req.body.heigth;
-				theitem.weigth = req.body.weigth;
-				theitem.shipTo = req.body.shipTo;
-				theitem.shipFrom = req.body.shipFrom;
-				theitem.condition = req.body.condition;
-				theitem.hasBid = req.body.hasBid;
-				theitem.bid = req.body.bid;
-				theitem.seller = req.body.seller;
-				theitem.shippingPrice = req.body.shippingPrice;
-				var response = {
-					"item" : theitem
-				};
-				res.json(response);
-			}
-		}
+ 
+ 		});
+
 	});
+	
+	
 
 
 	app.put('/BigBoxServer/updateAdmin', function(req, res) {
@@ -859,6 +1001,25 @@ client.connect(function(err) {
 			}
 		}
 	});
+	
+	app.del('/BigBoxServer/removeUser/', function(req, res) {
+		
+		
+		var queryString = "DELETE FROM users WHERE u_username=$1";
+		
+			client.query(queryString,[req.body.username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {		
+
+			    res.send(200);
+				
+			}
+		}); 
+		
+	});
+	
+	
 
 	/*====================================================================================================================================
 	 Support Functions
@@ -882,27 +1043,7 @@ client.connect(function(err) {
 
 	};
 
-	function adduser(arr) {
-
-		users = users.concat({
-			id : users.length,
-			fname : arr[0],
-			lname : arr[1],
-			address : arr[2],
-			city : arr[3],
-			state : arr[4],
-			country : arr[5],
-			zipcode : arr[6],
-			phone : arr[7],
-			username : arr[8],
-			email : arr[9],
-			password : arr[10],
-			question : arr[11],
-			answer : arr[12]
-		});
-
-		return users[users.length - 1];
-	}
+	
 
 	function isValid(arr, renter) {
 
