@@ -598,7 +598,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside'><form id='myForm'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></form></div></li>");
+ 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'><form id='myForm'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></form></fieldset></div></li>");
  
 			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
 			//			"<li><a href='#shipSelect'><p style='padding-top:10px'>Shpping type <br> Estimated shipping time</p></li><hr style='padding:0; margin:0'>");
