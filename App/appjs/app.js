@@ -591,6 +591,7 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			for ( j = 1; j <= item.i_qtyavailable; j++) {
  				if (j == item.qtytopurchase) {
 					options += "<option value=' " + j + "' selected='selected'>  " + j + "  </option>";
+					alert("Hey");
   				} else {
 	 				options += "<option value=' " + j + "'>  " + j + "  </option>";
 				}
@@ -598,10 +599,8 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></fieldset></div></li>");
+ 			"</p>" + "<div class='ui-li-aside' data-role='fieldcontain'> <legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' onchange='updateQty(document.forms[0].qty.value)'>" + options + "</select></div></li>");
 			// onchange='updateQty(document.forms[0].qty.value)' 
-			//			"<li><a href='#addSelect'><p style='padding-top:10px'>Quantity 3</p></a></li>" +
-			//			"<li><a href='#shipSelect'><p style='padding-top:10px'>Shpping type <br> Estimated shipping time</p></li><hr style='padding:0; margin:0'>");
  		}
 
 	} else {
