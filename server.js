@@ -685,7 +685,7 @@ client.connect(function(err) {
 				});
 			}
 		}
-		//currval('category_cid_seq'::regclass);
+		res.json(true);
 	});
 
 	//Login
