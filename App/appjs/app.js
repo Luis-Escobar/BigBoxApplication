@@ -557,7 +557,7 @@ $(document).on('pagebeforeshow', "#cart", function(event, ui) {
 		item = cartList[i];
 		cList.append("<li><a onclick=GetItem(" + item.i_id + ",true)>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + "</p>" + "<p> Qty: " + item.qtytopurchase + "</p>" +
 		//				"<form class='ui-li-aside'><div data-role='fieldcontain'><label for='qty'>Qty:</label><br /><input onclick='#' style='width:35px' name='qty' id='qty' type='number' /></div></form>" +
-		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.id + ")'></a></a></li>");
+		"<a data-icon='delete' data-role='button' onclick='deleteCartItem(" + item.i_id + ")'></a></a></li>");
 		sTotal += parseFloat(item.i_price) * item.qtytopurchase;
 		itemsQty += item.qtytopurchase;
 	
