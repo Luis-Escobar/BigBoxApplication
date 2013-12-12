@@ -1075,10 +1075,10 @@ function SendNewItemForm(){
 			});
  	
  	
- 	//alert(JSON.stringify(sendPaq));
+ 	alert(JSON.stringify(sendPaq));
  	
  	
-	//var newtempJSON = JSON.stringify(tempJSON);
+	var newtempJSON = JSON.stringify(tempJSON);
 	
 		$.ajax({
  		url : "http://bigbox.herokuapp.com/BigBoxServer/sellingNewItem",

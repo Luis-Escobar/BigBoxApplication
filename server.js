@@ -798,7 +798,7 @@ client.connect(function(err) {
 		console.log(req.body);
 		
 		var queryString = "INSERT INTO items(i_name, i_model, i_year, i_info, i_buyitnow, i_price, i_img,i_width, i_length, i_heigth, i_weigth, i_shipto, i_shipfrom,i_condition, i_hasbid, i_shippingprice, i_shippingtype, i_qtyavailable,u_id, i_bid, cid, subid, ssubid)" +
-		"VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)";
+		"VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)";
 		
 		
 		console.log("Query: " + queryString);
