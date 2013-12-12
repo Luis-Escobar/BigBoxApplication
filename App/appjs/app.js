@@ -1847,7 +1847,7 @@ function report() {
 	var dat = JSON.stringify({
 		'year' : year
 	});
-
+ 
 	if (year == "Year") {
 		alert("Please select a Year");
 	} else if (sort == "Sort") {
