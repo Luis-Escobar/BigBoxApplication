@@ -1114,9 +1114,6 @@ function SendNewItemForm(){
 			});
  	
  	
- 	alert(JSON.stringify(sendPaq));
- 	
- 	
 	//var newtempJSON = JSON.stringify(tempJSON);
 	
 		$.ajax({
@@ -2255,7 +2252,6 @@ $.ajax({
 
 var sellerItemsList;
 $(document).on('pagebeforeshow', "#otheritems", function(event, ui) {
-alert(currentItem[0].u_id);
 $.ajax({
 			url : 'http://bigbox.herokuapp.com/BigBoxServer/otheritems/' + currentItem[0].u_id,
 			method : 'get',
