@@ -694,24 +694,37 @@ client.connect(function(err) {
 							res.send(400, "It seems you already have an account.");
 							break;		
 						}
-						console.log("Checked" );
 					}
-					console.log("User?" + isUser);
 					if(!isUser){
 						res.send(401, "We are sorry, but the username is taken already.");
 					}
-					
 					return;	
 				}
 				console.log(" " + JSON.stringify(result.rows));
-				if(req.body.new_password==req.body.renter){
-					res.json(true);
+				if(req.body.new_password.trim()==req.body.renter.trim()){
+//					var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_id, u_username, u_password, u_email, u_secquestion, u_secanswer, u_admin)"+
+//					;
+//				
+//						client.query(selectQuery, function(err, result) {
+//						if (err) {
+//							return console.error('error running insert query', err);
+//						}		
+//					});
+					
+//					var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
+//					client.query(insertCart, function(err, result) {
+//						if (err) {
+//							return console.error('error running insert query', err);
+//						}
+//						else{
+//							res.json(true);
+//						}		
+//					});
 				}
 				else{
 					res.send(402,"Pasword mismatch. Try again!");
 				}
 			});
-
  	});
 	
 	app.post('/BigBoxServer/searchUser', function(req, res) {
