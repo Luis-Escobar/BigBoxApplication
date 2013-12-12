@@ -636,12 +636,12 @@ $(document).on('pagebeforeshow', "#checkout-page", function(event, ui) {
  			shippingTotal += parseFloat(item.i_shippingprice);
  			subTotal += parseFloat(item.i_price);
  			items_ship.append("<li>" + "<img src='" + item.i_img + "'/>" + "<p id='infoCart'>" + item.i_name + "</p>" + "<p> $" + item.i_price + 
- 			"</p>" + "<div class='ui-li-aside'> <pre>Qty: </pre>" + item.qtytopurchase + "</div></li>");
+ 			"</p>" + "<div class='ui-li-aside'> Qty: " + item.qtytopurchase + "</div></li>");
  //			"</p>" + "<div class='ui-li-aside'><fieldset data-role='controlgroup'>" + "<legend><pre>Qty: </pre> </legend>" + "<select name='qty' id='qty' >" + options + "</select></fieldset></div></li>");
  
  		}
 
-	} else {
+	} else { 
 		
 		if(currentItem[0].qtytopurchase == null){
 			currentItem[0].qtytopurchase = 1;
