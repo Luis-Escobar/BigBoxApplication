@@ -674,12 +674,12 @@ client.connect(function(err) {
  		console.log("User info: " + JSON.stringify(req.body));
 		var selectQuery = " SELECT *  FROM users WHERE u_email= '" + req.body.email + "' OR u_username = '" + req.body.new_username + "'";
 		console.log("Query select: " + selectQuery);
-	 	
+	 	var theResult;
 	 	client.query(selectQuery, function(err, result) {
 	 			if (err) {
 	 				return console.error('error running query', err);
 	 			}
-	 			var theResult = result.rows;
+	 			theResult = result.rows;
 				
  		});
 				
@@ -720,12 +720,12 @@ client.connect(function(err) {
 					
 			var insertCart = "INSERT INTO cart VALUES ( currval('users_u_id_seq'::regclass), currval('users_u_id_seq'::regclass) );"
 			client.query(insertCart, function(err, result) {
-					if (err) {
-							return console.error('error running insert query', err);
-					}
-					else{
-						res.json(true);
-						}		
+				if (err) {
+						return console.error('error running insert query', err);
+				}
+				else{
+					res.json(true);
+				}		
 			});
 		}	
 		else{
