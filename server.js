@@ -1004,7 +1004,7 @@ client.connect(function(err) {
 	REST Opertaion : HTTP DELETE
 	====================================================================================================================================*/
 	//Remove item from cart
-	app.del('/BigBoxServer/cart/, function(req, res) {
+	app.del('/BigBoxServer/cart/', function(req, res) {
 		var id = req.body.i_id;
 		console.log("DELETE item: " + id);
 				res.json(true);
