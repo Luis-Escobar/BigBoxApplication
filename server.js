@@ -1032,7 +1032,7 @@ client.connect(function(err) {
 		}); 
 		
 	});
-	
+	 
 	app.del('/BigBoxServer/rmvCategoryByAdmin/:rmvid', function(req, res) {
 		//var id = req.params.rmvid;
 		//console.log("DELETE item: " + id);
