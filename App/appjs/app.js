@@ -541,10 +541,11 @@ $(document).on('pagebeforeshow', "#bidPage", function(event, ui) {
 
 //cart page
 $(document).on('pagebeforeshow', "#cart", function(event, ui) {
+	GetCart(false);
 	var len = cartList.length;
-	var cList = $("#cart-list");
-	var subtotal = $("#subtotal");
-	var page = $("#cart");
+ 	var cList = $("#cart-list");
+ 	var subtotal = $("#subtotal");
+ 	var page = $("#cart");
 	var sTotal = 0.00;
 	var itemsQty = 0;
 
