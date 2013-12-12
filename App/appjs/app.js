@@ -1921,3 +1921,26 @@ function report() {
 
 };
 
+
+$(document).on('pagebeforeshow', "#seller", function(event, ui) {
+$.ajax({
+		url : "http://bigbox.herokuapp.com/BigBoxServer/seller",
+		contentType : "application/json",
+		success : function(data, textStatus, jqXHR) {
+		var sellerName =$("#seller_name");
+		sellerName.empty();
+		
+		sellerName.append('<h1>'+data.rows[0].u_username+'<img src="../raty/star-on.png" /></h1>');
+		
+		},
+        error : function(data, textStatus, jqXHR) {
+  	      console.log("textStatus: " + textStatus);
+    	  alert("Data not found!");
+        }
+	});
+
+});
+
+
+
+

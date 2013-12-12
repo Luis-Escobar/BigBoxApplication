@@ -452,6 +452,31 @@ client.connect(function(err) {
         });
 		
 		
+	
+        
+        	//Derick
+	app.get('/BigBoxServer/seller', function(req, res) {
+
+	var queryString = "select * from users where u_username = $1";
+
+		client.query(queryString, [cookie[0].username], function(err, result) {
+			if (err) {
+				return console.error('error running query', err);
+			} else {
+
+				var response = {
+					"user" : result.rows
+				};
+				console.log("Response: " + JSON.stringify(response));
+				res.json(result);
+
+			}
+		});
+
+	});
+		
+		
+		
 	/*====================================================================================================================================
 	REST Opertaion : HTTP POST
 	====================================================================================================================================*/
