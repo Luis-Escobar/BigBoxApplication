@@ -743,7 +743,7 @@ client.connect(function(err) {
 			
 		function insertUser(insert, userToAdd){	
 			var insertQueryString = "INSERT INTO users( u_fname, u_lname, u_username, u_password, u_email, u_secquestion, u_secanswer)" +
-									"VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+									"VALUES ($1, $2, $3, $4, $5, $6, $7)";
 			var queryArray = [userToAdd.fname, userToAdd.lname, userToAdd.new_username, userToAdd.new_password, userToAdd.email, userToAdd.question, userToAdd.answer];
 			
 			client.query(insertQueryString, queryArray, function(err, result) {
