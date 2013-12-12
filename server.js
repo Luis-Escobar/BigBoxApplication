@@ -683,11 +683,12 @@ client.connect(function(err) {
 					console.log(" " + JSON.stringify(result.rows));
 					len = result.rows.length;
 					console.log("Length = " + len);
-					var isUser;
+					var isUser = false;
 					for(i=0;i<len;i++){
 						if(result.rows[i].u_email== req.body.email){
-							isUSer = true;
-							res.send(400, "It seems you already have an account.");		
+							isUser = true;
+							res.send(400, "It seems you already have an account.");
+							break;		
 						}
 					}
 					if(!isUser)
