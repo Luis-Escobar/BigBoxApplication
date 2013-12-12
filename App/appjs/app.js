@@ -1331,7 +1331,6 @@ function register() {
 		contentType : "application/json",
 		data : newUserJSON,
 		success : function(data, textStatus, jqXHR) {
-			alert(data);
 			$.mobile.navigate("/App/view/signedUp.html");
 		},
 		error : function(data, textStatus, jqXHR) {
